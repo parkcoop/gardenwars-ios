@@ -12,9 +12,14 @@ class GameScene: SKScene {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
-    
+    var background = SKSpriteNode(imageNamed: "image/sky")
+    let player = SKSpriteNode(imageNamed: "image/me")
+
     override func didMove(to view: SKView) {
-        
+        background.position = CGPoint(x: 0, y: 0)
+         addChild(background)
+        player.position = CGPoint(x: 0, y: 0)
+        addChild(player)
         // Get label node from scene and store it for use later
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         if let label = self.label {
@@ -34,6 +39,13 @@ class GameScene: SKScene {
                                               SKAction.fadeOut(withDuration: 0.5),
                                               SKAction.removeFromParent()]))
         }
+        
+        run(SKAction.repeatForever(
+              SKAction.sequence([
+                SKAction.run(addMonster),
+                SKAction.wait(forDuration: 1.0)
+                ])
+            ))
     }
     
     
@@ -70,7 +82,11 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+        for touch in touches {
+            let location = touch.location(in: self)
+            player.position.x = location.x
+            player.position.y = location.y
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -84,5 +100,37 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    }
+    
+    func random(min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max-min) + min
+    }
+    
+    func addMonster() {
+        // Create sprite
+         let monster = SKSpriteNode(imageNamed: "image/thunder")
+         
+         // Determine where to spawn the monster along the Y axis
+         let actualY = random(min: monster.size.height/2, max: size.height - monster.size.height/2)
+         
+         // Position the monster slightly off-screen along the right edge,
+         // and along a random position along the Y axis as calculated above
+         monster.position = CGPoint(x: size.width + monster.size.width/2, y: actualY)
+         
+         // Add the monster to the scene
+         addChild(monster)
+         
+         // Determine speed of the monster
+         let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+         
+         // Create the actions
+         let actionMove = SKAction.move(to: CGPoint(x: -monster.size.width/2, y: actualY),
+                                        duration: TimeInterval(actualDuration))
+         let actionMoveDone = SKAction.removeFromParent()
+         monster.run(SKAction.sequence([actionMove, actionMoveDone]))
     }
 }
