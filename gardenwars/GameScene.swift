@@ -17,8 +17,12 @@ class GameScene: SKScene {
 
     override func didMove(to view: SKView) {
         background.position = CGPoint(x: 0, y: 0)
+        background.size = CGSize(width: self.size.width, height: self.size.height)
+        background.zPosition = -5
          addChild(background)
+        
         player.position = CGPoint(x: 0, y: 0)
+        player.size = CGSize(width: 30, height: 50)
         addChild(player)
         // Get label node from scene and store it for use later
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
@@ -112,25 +116,25 @@ class GameScene: SKScene {
     
     func addMonster() {
         // Create sprite
-         let monster = SKSpriteNode(imageNamed: "image/thunder")
-         
+         let thunder = SKSpriteNode(imageNamed: "image/thunder")
+        thunder.size = CGSize(width: 50, height: 50)
          // Determine where to spawn the monster along the Y axis
-         let actualY = random(min: monster.size.height/2, max: size.height - monster.size.height/2)
+         let actualX = random(min: thunder.size.height/2, max: size.height - thunder.size.height/2)
          
          // Position the monster slightly off-screen along the right edge,
          // and along a random position along the Y axis as calculated above
-         monster.position = CGPoint(x: size.width + monster.size.width/2, y: actualY)
+         thunder.position = CGPoint(x: actualX, y: size.width + thunder.size.width/2)
          
          // Add the monster to the scene
-         addChild(monster)
+         addChild(thunder)
          
          // Determine speed of the monster
          let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
          
          // Create the actions
-         let actionMove = SKAction.move(to: CGPoint(x: -monster.size.width/2, y: actualY),
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -thunder.size.width),
                                         duration: TimeInterval(actualDuration))
          let actionMoveDone = SKAction.removeFromParent()
-         monster.run(SKAction.sequence([actionMove, actionMoveDone]))
+         thunder.run(SKAction.sequence([actionMove, actionMoveDone]))
     }
 }
