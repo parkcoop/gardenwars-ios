@@ -9,21 +9,45 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    
+     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     var background = SKSpriteNode(imageNamed: "image/sky")
     let player = SKSpriteNode(imageNamed: "image/me")
-
+    let arrowLeft = SKSpriteNode(imageNamed: "image/arrowleft")
+    let arrowRight = SKSpriteNode(imageNamed: "image/arrowright")
+    let arrowUp = SKSpriteNode(imageNamed: "image/arrowup")
     override func didMove(to view: SKView) {
         background.position = CGPoint(x: 0, y: 0)
         background.size = CGSize(width: self.size.width, height: self.size.height)
         background.zPosition = -5
-         addChild(background)
+        
+        arrowLeft.name = "left"
+        arrowLeft.position = CGPoint(x: ((-self.size.width / 3) - 60), y: -self.size.height / 3)
+        arrowLeft.size = CGSize(width: 50, height: 20)
+        arrowLeft.zPosition = 10
+        
+        arrowRight.name = "right"
+        arrowRight.position = CGPoint(x: ((-self.size.width / 3)), y: -self.size.height / 3)
+        arrowRight.size = CGSize(width: 50, height: 20)
+        arrowRight.zPosition = 10
+
+        arrowUp.name = "up"
+        arrowUp.position = CGPoint(x: ((self.size.width / 3)), y: -self.size.height / 3)
+        arrowUp.size = CGSize(width: 50, height: 20)
+        arrowUp.zPosition = 10
         
         player.position = CGPoint(x: 0, y: 0)
         player.size = CGSize(width: 30, height: 50)
+        player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: player.size.width, height: player.size.height))
+        
+        
         addChild(player)
+        addChild(background)
+        addChild(arrowLeft)
+        addChild(arrowRight)
+        addChild(arrowUp)
+
         // Get label node from scene and store it for use later
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         if let label = self.label {
@@ -31,18 +55,7 @@ class GameScene: SKScene {
             label.run(SKAction.fadeIn(withDuration: 2.0))
         }
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
+     
         
         run(SKAction.repeatForever(
               SKAction.sequence([
@@ -81,16 +94,48 @@ class GameScene: SKScene {
         if let label = self.label {
             label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
         }
+        for touch in touches {
+          let location = touch.location(in: self)
+          let touchedNode = self.nodes(at: location)
+          for node in touchedNode {
+//              if node.name == "play_button" {
+//                  startGame()
+//              }
+            if node.name == "left" {
+
+                player.position.x -= 25
+
+            }
+            if node.name == "right" {
+              player.position.x += 25
+            }
+            if node.name == "up" {
+                player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 50))
+            }
+          }
+      }
         
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let location = touch.location(in: self)
-            player.position.x = location.x
-            player.position.y = location.y
-        }
+          let location = touch.location(in: self)
+          let touchedNode = self.nodes(at: location)
+          for node in touchedNode {
+//              if node.name == "play_button" {
+//                  startGame()
+//              }
+            if node.name == "left" {
+                
+                player.position.x -= 25
+                
+            }
+            if node.name == "right" {
+              player.position.x += 25
+            }
+          }
+          }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
