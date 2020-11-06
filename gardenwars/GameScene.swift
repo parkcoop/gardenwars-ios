@@ -59,8 +59,13 @@ class GameScene: SKScene {
         
         run(SKAction.repeatForever(
               SKAction.sequence([
-                SKAction.run(addMonster),
-                SKAction.wait(forDuration: 1.0)
+                SKAction.run(addThunder),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addSun),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addWater),
+                SKAction.wait(forDuration: 1.0),
+
                 ])
             ))
     }
@@ -98,9 +103,7 @@ class GameScene: SKScene {
           let location = touch.location(in: self)
           let touchedNode = self.nodes(at: location)
           for node in touchedNode {
-//              if node.name == "play_button" {
-//                  startGame()
-//              }
+            print(node.name)
             if node.name == "left" {
 
                 player.position.x -= 25
@@ -158,13 +161,13 @@ class GameScene: SKScene {
     func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max-min) + min
     }
-    
-    func addMonster() {
+//    REFACTOR...
+    func addThunder() {
         // Create sprite
          let thunder = SKSpriteNode(imageNamed: "image/thunder")
         thunder.size = CGSize(width: 50, height: 50)
          // Determine where to spawn the monster along the Y axis
-         let actualX = random(min: thunder.size.height/2, max: size.height - thunder.size.height/2)
+        let actualX = random(min: -self.size.width / 2, max: self.size.width / 2)
          
          // Position the monster slightly off-screen along the right edge,
          // and along a random position along the Y axis as calculated above
@@ -177,9 +180,55 @@ class GameScene: SKScene {
          let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
          
          // Create the actions
-        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -thunder.size.width),
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -200),
                                         duration: TimeInterval(actualDuration))
          let actionMoveDone = SKAction.removeFromParent()
          thunder.run(SKAction.sequence([actionMove, actionMoveDone]))
+    }
+    func addSun() {
+        // Create sprite
+         let sun = SKSpriteNode(imageNamed: "image/sun")
+        sun.size = CGSize(width: 50, height: 50)
+         // Determine where to spawn the monster along the Y axis
+        let actualX = random(min: -self.size.width / 2, max: self.size.width / 2)
+         
+         // Position the monster slightly off-screen along the right edge,
+         // and along a random position along the Y axis as calculated above
+         sun.position = CGPoint(x: actualX, y: size.width + sun.size.width/2)
+         
+         // Add the monster to the scene
+         addChild(sun)
+         
+         // Determine speed of the monster
+         let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+         
+         // Create the actions
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -200),
+                                        duration: TimeInterval(actualDuration))
+         let actionMoveDone = SKAction.removeFromParent()
+         sun.run(SKAction.sequence([actionMove, actionMoveDone]))
+    }
+    func addWater() {
+        // Create sprite
+         let water = SKSpriteNode(imageNamed: "image/water")
+        water.size = CGSize(width: 50, height: 50)
+         // Determine where to spawn the monster along the Y axis
+        let actualX = random(min: -self.size.width / 2, max: self.size.width / 2)
+         
+         // Position the monster slightly off-screen along the right edge,
+         // and along a random position along the Y axis as calculated above
+         water.position = CGPoint(x: actualX, y: size.width + water.size.width/2)
+         
+         // Add the monster to the scene
+         addChild(water)
+         
+         // Determine speed of the monster
+         let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+         
+         // Create the actions
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -200),
+                                        duration: TimeInterval(actualDuration))
+         let actionMoveDone = SKAction.removeFromParent()
+         water.run(SKAction.sequence([actionMove, actionMoveDone]))
     }
 }
