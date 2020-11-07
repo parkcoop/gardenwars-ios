@@ -8,16 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		4F11D7EA255351FB0020B931 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D7E9255351FB0020B931 /* AppDelegate.swift */; };
-		4F11D7EC255351FB0020B931 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F11D7EB255351FB0020B931 /* GameScene.sks */; };
-		4F11D7EE255351FB0020B931 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F11D7ED255351FB0020B931 /* Actions.sks */; };
-		4F11D7F0255351FB0020B931 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D7EF255351FB0020B931 /* GameScene.swift */; };
 		4F11D7F2255351FB0020B931 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D7F1255351FB0020B931 /* GameViewController.swift */; };
-		4F11D7F5255351FB0020B931 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F11D7F3255351FB0020B931 /* Main.storyboard */; };
 		4F11D7F7255351FC0020B931 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F11D7F6255351FC0020B931 /* Assets.xcassets */; };
 		4F11D802255351FC0020B931 /* gardenwarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D801255351FC0020B931 /* gardenwarsTests.swift */; };
 		4F11D80D255351FC0020B931 /* gardenwarsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D80C255351FC0020B931 /* gardenwarsUITests.swift */; };
-		4F64243625557ECD00134F68 /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F64243525557ECD00134F68 /* StartScene.sks */; };
-		4F64243B25557EDE00134F68 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F64243A25557EDE00134F68 /* StartScene.swift */; };
+		4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DB02556F97900F59E35 /* MainMenu.swift */; };
+		4F4A7DBE2556FDF800F59E35 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DBD2556FDF800F59E35 /* Extension.swift */; };
+		4F4A7DC32556FFA200F59E35 /* PlayerStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DC22556FFA200F59E35 /* PlayerStats.swift */; };
+		4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DC72556FFE900F59E35 /* GameManager.swift */; };
+		4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DCC2557007200F59E35 /* GamePlay.swift */; };
+		4F4A7DDA2557065B00F59E35 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DD92557065B00F59E35 /* ActionButton.swift */; };
+		4F4A7DE72557091A00F59E35 /* Tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F4A7DE62557091A00F59E35 /* Tap.wav */; };
+		4FB6B74F2555D81100002B31 /* parker.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4FB6B74E2555D81100002B31 /* parker.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,11 +42,7 @@
 /* Begin PBXFileReference section */
 		4F11D7E6255351FB0020B931 /* gardenwars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gardenwars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F11D7E9255351FB0020B931 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4F11D7EB255351FB0020B931 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		4F11D7ED255351FB0020B931 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
-		4F11D7EF255351FB0020B931 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		4F11D7F1255351FB0020B931 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		4F11D7F4255351FB0020B931 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4F11D7F6255351FC0020B931 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F11D7F8255351FC0020B931 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F11D7FD255351FC0020B931 /* gardenwarsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gardenwarsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,8 +51,16 @@
 		4F11D808255351FC0020B931 /* gardenwarsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gardenwarsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F11D80C255351FC0020B931 /* gardenwarsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gardenwarsUITests.swift; sourceTree = "<group>"; };
 		4F11D80E255351FC0020B931 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F64243525557ECD00134F68 /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
-		4F64243A25557EDE00134F68 /* StartScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
+		4F4A7DB02556F97900F59E35 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		4F4A7DBD2556FDF800F59E35 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		4F4A7DC22556FFA200F59E35 /* PlayerStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStats.swift; sourceTree = "<group>"; };
+		4F4A7DC72556FFE900F59E35 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		4F4A7DCC2557007200F59E35 /* GamePlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlay.swift; sourceTree = "<group>"; };
+		4F4A7DD92557065B00F59E35 /* ActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		4F4A7DE1255708C300F59E35 /* awesomeness.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = awesomeness.ogg; sourceTree = "<group>"; };
+		4F4A7DE2255708C300F59E35 /* livelymeadow.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = livelymeadow.ogg; sourceTree = "<group>"; };
+		4F4A7DE62557091A00F59E35 /* Tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Tap.wav; sourceTree = "<group>"; };
+		4FB6B74E2555D81100002B31 /* parker.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = parker.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,16 +111,20 @@
 		4F11D7E8255351FB0020B931 /* gardenwars */ = {
 			isa = PBXGroup;
 			children = (
-				4F11D7E9255351FB0020B931 /* AppDelegate.swift */,
-				4F11D7EB255351FB0020B931 /* GameScene.sks */,
-				4F11D7ED255351FB0020B931 /* Actions.sks */,
-				4F11D7EF255351FB0020B931 /* GameScene.swift */,
-				4F64243525557ECD00134F68 /* StartScene.sks */,
-				4F64243A25557EDE00134F68 /* StartScene.swift */,
+				4F4A7DD92557065B00F59E35 /* ActionButton.swift */,
+				4F4A7DBD2556FDF800F59E35 /* Extension.swift */,
 				4F11D7F1255351FB0020B931 /* GameViewController.swift */,
-				4F11D7F3255351FB0020B931 /* Main.storyboard */,
-				4F11D7F6255351FC0020B931 /* Assets.xcassets */,
+				4F4A7DC72556FFE900F59E35 /* GameManager.swift */,
+				4F4A7DCC2557007200F59E35 /* GamePlay.swift */,
+				4F4A7DB02556F97900F59E35 /* MainMenu.swift */,
+				4F4A7DC22556FFA200F59E35 /* PlayerStats.swift */,
+				4F11D7E9255351FB0020B931 /* AppDelegate.swift */,
 				4F11D7F8255351FC0020B931 /* Info.plist */,
+				4F4A7DE1255708C300F59E35 /* awesomeness.ogg */,
+				4F4A7DE2255708C300F59E35 /* livelymeadow.ogg */,
+				4F4A7DE62557091A00F59E35 /* Tap.wav */,
+				4F11D7F6255351FC0020B931 /* Assets.xcassets */,
+				4FB6B74E2555D81100002B31 /* parker.atlas */,
 			);
 			path = gardenwars;
 			sourceTree = "<group>";
@@ -240,11 +250,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F11D7F5255351FB0020B931 /* Main.storyboard in Resources */,
-				4F11D7EC255351FB0020B931 /* GameScene.sks in Resources */,
+				4F4A7DE72557091A00F59E35 /* Tap.wav in Resources */,
 				4F11D7F7255351FC0020B931 /* Assets.xcassets in Resources */,
-				4F64243625557ECD00134F68 /* StartScene.sks in Resources */,
-				4F11D7EE255351FB0020B931 /* Actions.sks in Resources */,
+				4FB6B74F2555D81100002B31 /* parker.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,10 +277,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F11D7F0255351FB0020B931 /* GameScene.swift in Sources */,
+				4F4A7DC32556FFA200F59E35 /* PlayerStats.swift in Sources */,
+				4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */,
+				4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */,
+				4F4A7DBE2556FDF800F59E35 /* Extension.swift in Sources */,
+				4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */,
 				4F11D7F2255351FB0020B931 /* GameViewController.swift in Sources */,
 				4F11D7EA255351FB0020B931 /* AppDelegate.swift in Sources */,
-				4F64243B25557EDE00134F68 /* StartScene.swift in Sources */,
+				4F4A7DDA2557065B00F59E35 /* ActionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,17 +318,6 @@
 			targetProxy = 4F11D809255351FC0020B931 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		4F11D7F3255351FB0020B931 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4F11D7F4255351FB0020B931 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4F11D80F255351FC0020B931 /* Debug */ = {

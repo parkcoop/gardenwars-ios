@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.3.1 (swiftlang-1200.0.39 clang-1200.0.32.6)"
+options: "44c153e19d905a9396c57ab59e721d00"
+build_time: [1604684724, 628290000]
+inputs:
+  "/Users/pc/Projects/gardenwars/gardenwars/GameScene.swift": [9223372036, 854775807]
+  "/Users/pc/Projects/gardenwars/gardenwars/GameViewController.swift": [9223372036, 854775807]
+  "/Users/pc/Projects/gardenwars/gardenwars/AppDelegate.swift": [9223372036, 854775807]
+  "/Users/pc/Projects/gardenwars/gardenwars/StartScene.swift": [9223372036, 854775807]
