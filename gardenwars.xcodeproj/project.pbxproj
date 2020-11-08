@@ -19,6 +19,7 @@
 		4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DCC2557007200F59E35 /* GamePlay.swift */; };
 		4F4A7DDA2557065B00F59E35 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DD92557065B00F59E35 /* ActionButton.swift */; };
 		4F4A7DE72557091A00F59E35 /* Tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F4A7DE62557091A00F59E35 /* Tap.wav */; };
+		4F7C89EA25586DD90047169C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7C89E925586DD90047169C /* LaunchScreen.storyboard */; };
 		4FB6B74F2555D81100002B31 /* parker.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4FB6B74E2555D81100002B31 /* parker.atlas */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		4F4A7DE1255708C300F59E35 /* awesomeness.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = awesomeness.ogg; sourceTree = "<group>"; };
 		4F4A7DE2255708C300F59E35 /* livelymeadow.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = livelymeadow.ogg; sourceTree = "<group>"; };
 		4F4A7DE62557091A00F59E35 /* Tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Tap.wav; sourceTree = "<group>"; };
+		4F7C89E925586DD90047169C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FB6B74E2555D81100002B31 /* parker.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = parker.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,6 +127,7 @@
 				4F4A7DE62557091A00F59E35 /* Tap.wav */,
 				4F11D7F6255351FC0020B931 /* Assets.xcassets */,
 				4FB6B74E2555D81100002B31 /* parker.atlas */,
+				4F7C89E925586DD90047169C /* LaunchScreen.storyboard */,
 			);
 			path = gardenwars;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F4A7DE72557091A00F59E35 /* Tap.wav in Resources */,
+				4F7C89EA25586DD90047169C /* LaunchScreen.storyboard in Resources */,
 				4F11D7F7255351FC0020B931 /* Assets.xcassets in Resources */,
 				4FB6B74F2555D81100002B31 /* parker.atlas in Resources */,
 			);

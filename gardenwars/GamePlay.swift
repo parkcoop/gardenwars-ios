@@ -57,7 +57,7 @@ class Gameplay: SKScene {
             }
             if node.name == "up" {
                 player1.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                player1.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 55))
+                player1.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
             }
           }
       }
@@ -69,15 +69,17 @@ class Gameplay: SKScene {
         background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
         background.zPosition = -5
         
-        platformLeft.position = CGPoint(x: 100, y: ScreenSize.height / 2)
+        platformLeft.position = CGPoint(x: ScreenSize.width * 0.20, y: ScreenSize.height * 0.35)
         platformLeft.physicsBody = SKPhysicsBody(rectangleOf: CGSize(
                                                     width: platformLeft.size.width,
                                                     height: platformLeft.size.height))
+        platformLeft.scale(to: CGSize(width: ScreenSize.width / 2, height: 25))
         platformLeft.physicsBody?.affectedByGravity = false
         platformLeft.physicsBody?.pinned = true
         platformLeft.physicsBody?.isDynamic = false
         
-        platformRight.position = CGPoint(x: 100, y: ScreenSize.height / 2)
+        platformRight.position = CGPoint(x: ScreenSize.width * 0.75, y: ScreenSize.height * 0.7)
+        platformRight.scale(to: CGSize(width: ScreenSize.width / 2, height: 25))
         platformRight.physicsBody = SKPhysicsBody(rectangleOf: CGSize(
                                                     width: platformRight.size.width,
                                                     height: platformRight.size.height))
@@ -86,7 +88,7 @@ class Gameplay: SKScene {
         platformRight.physicsBody?.isDynamic = false
         
         platformMain.position = CGPoint(x: ScreenSize.width / 2, y: 0)
-        platformMain.scale(to: CGSize(width: ScreenSize.width, height: 25))
+        platformMain.scale(to: CGSize(width: ScreenSize.width, height: 50))
         platformMain.physicsBody = SKPhysicsBody(rectangleOf: CGSize(
                                                     width: platformMain.size.width,
                                                     height: platformMain.size.height))
@@ -145,8 +147,8 @@ class Gameplay: SKScene {
         player1.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(player1)
         player1.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
-        player1.size = CGSize(width: 32, height: 48)
-        player1.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: player1.size.width, height: player1.size.height))
+        player1.size = CGSize(width: 44, height: 77)
+        player1.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "image/parker"), size: player1.size)
         player1.physicsBody?.allowsRotation = false
         player1.physicsBody?.isDynamic = true;
     }
@@ -158,6 +160,10 @@ class Gameplay: SKScene {
         faceForward()
     }
     
+    func checkCollision() {
+        print(player1.position)
+//        print(thunder.position)
+    }
     
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
@@ -199,10 +205,12 @@ class Gameplay: SKScene {
     
     
     // Abstract?
+ 
+
     func addThunder() {
         let thunder = SKSpriteNode(imageNamed: "image/thunder")
         thunder.size = CGSize(width: 50, height: 50)
-        let actualX = random(min: ScreenSize.width / 2, max: ScreenSize.width / 2)
+        let actualX = random(min: 0, max: ScreenSize.width)
         thunder.position = CGPoint(x: actualX, y: size.width + thunder.size.width/2)
         addChild(thunder)
         
@@ -218,7 +226,7 @@ class Gameplay: SKScene {
     func addSun() {
         let sun = SKSpriteNode(imageNamed: "image/sun")
         sun.size = CGSize(width: 50, height: 50)
-        let actualX = random(min: ScreenSize.width / 2, max: ScreenSize.width / 2)
+        let actualX = random(min: 0, max: ScreenSize.width)
         sun.position = CGPoint(x: actualX, y: size.width + sun.size.width/2)
         addChild(sun)
         let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
@@ -230,7 +238,7 @@ class Gameplay: SKScene {
     func addWater() {
         let water = SKSpriteNode(imageNamed: "image/water")
         water.size = CGSize(width: 50, height: 50)
-        let actualX = random(min: ScreenSize.width / 2, max: ScreenSize.width / 2)
+        let actualX = random(min: 0, max: ScreenSize.width)
         water.position = CGPoint(x: actualX, y: size.width + water.size.width/2)
         addChild(water)
         let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
