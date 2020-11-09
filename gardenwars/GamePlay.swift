@@ -48,9 +48,9 @@ class Gameplay: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         if (xDist < 0) {
-            player1.position.x += 5
+            player1.position.x -= 0.1 * xDist
         } else if (xDist > 0) {
-            player1.position.x -= 5
+            player1.position.x -= 0.1 * xDist
         } else {
             faceForward()
         }
@@ -85,11 +85,7 @@ class Gameplay: SKScene {
             let location = touch.location(in: self)
 
             let touchedNode = self.nodes(at: location)
-            for node in touchedNode {
-                if node.name == "jump" {
-                    tapContinues(on: "jump")
-                }
-            }
+          
             if (substrate.frame.contains(location)) {
                 joyStickPoint = location
                 tapContinues(on: "joystick")
@@ -109,7 +105,6 @@ class Gameplay: SKScene {
     }
     
     private func tapBegin(on button: String) {
-           print("Begin press \(button)")
         if (button == "jump") {
             player1.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             player1.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
@@ -117,8 +112,6 @@ class Gameplay: SKScene {
        }
     
     private func tapContinues(on button: String) {
-        print("continuing press \(button)")
-        print(activeTouches)
         if (button == "joystick") {
            let v = CGVector(dx: joyStickPoint.x - substrate.position.x, dy: joyStickPoint.y - substrate.position.y)
            let angle = atan2(v.dy, v.dx)
@@ -134,30 +127,30 @@ class Gameplay: SKScene {
            } else {
                stick.position = CGPoint(x: substrate.position.x - xDist, y: substrate.position.y + yDist)
            }
+            print("IS IT PLAYING?", player1.hasActions())
+            print(player1.physicsBody?.velocity)
             if (xDist < 0) {
-                player1.removeAction(forKey: "WALK_LEFT")
-                if (!actionForKeyIsRunning(key: "WALK_RIGHT")) {
+//                if (!player1.hasActions()) {
                     walkRight()
-                }
+//                }
             } else if (xDist > 0) {
-                player1.removeAction(forKey: "WALK_RIGHT")
-                if (!actionForKeyIsRunning(key: "WALK_LEFT")) {
+//                if (!player1.hasActions()) {
                     walkLeft()
-                }
+//                }
+            } else {
+                faceForward()
             }
        }
 
     }
 
        private func tapEnd(on button:String) {
-           print("End press \(button)")
         if (button == "joystick") {
             xDist = 0
             stickActive = false
             let move:SKAction = SKAction.move(to: substrate.position, duration: 0.2)
                 move.timingMode = .easeOut
                 stick.run(move)
-            faceForward()
         }
        }
     
@@ -196,7 +189,7 @@ class Gameplay: SKScene {
         
         addChild(stick)
         addChild(substrate)
-        stick.position = CGPoint(x: ((ScreenSize.width / 5)), y: ScreenSize.height / 3)
+        stick.position = CGPoint(x: 100, y: 100)
         substrate.position = stick.position
         stick.scale(to: CGSize(width: 150, height: 150))
         
@@ -223,17 +216,14 @@ class Gameplay: SKScene {
         let player1AnimatedAtlas = SKTextureAtlas(named: "parker")
         var leftFrames: [SKTexture] = []
         var rightFrames: [SKTexture] = []
-
-        print(player1AnimatedAtlas)
         
-        for i in 1...4 {
+        for i in 2...4 {
             let player1TextureName = "parker\(i)"
             leftFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
         }
         
-        for i in 6...9 {
+        for i in 6...8 {
             let player1TextureName = "parker\(i)"
-            print(player1TextureName)
             rightFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
         }
         player1StillFrame = player1AnimatedAtlas.textureNamed("parker5")
@@ -254,10 +244,6 @@ class Gameplay: SKScene {
     
     
 
-    func checkCollision() {
-        print(player1.position)
-//        print(thunder.position)
-    }
     
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
@@ -273,25 +259,31 @@ class Gameplay: SKScene {
     }
     
     func walkLeft() {
+        if (player1.action(forKey: "WALK_LEFT") != nil) {
+            return
+        }
         player1.run(SKAction.repeat(
             SKAction.animate(
                  with: player1LeftFrames,
-                 timePerFrame: 0.1,
+                 timePerFrame: 0.05,
                  resize: false,
-                 restore: true
-            ), count: 1
+                 restore: false
+            ), count: 2
         ), withKey: "WALK_LEFT")
     }
     
     
     func walkRight() {
+        if (player1.action(forKey: "WALK_RIGHT") != nil) {
+            return
+        }
         player1.run(SKAction.repeat(
             SKAction.animate(
                  with: player1RightFrames,
-                 timePerFrame: 0.1,
+                 timePerFrame: 0.05,
                  resize: false,
-                 restore: true
-            ), count: 1
+                 restore: false
+            ), count: 2
             ), withKey: "WALK_RIGHT")
     }
     

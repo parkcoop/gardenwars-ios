@@ -12,26 +12,20 @@ class MainMenu: SKScene {
     let logo = SKSpriteNode(imageNamed: "image/logo")
 
 //
-    lazy var playButton: ActionButton = {
-        var button = ActionButton(imageNamed: "image/logo", buttonAction: {
-            print("lol")
-        })
-        button.zPosition = 1
-        return button
-    }()
+
     
     override func didMove(to view: SKView) {
         background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
         background.size = self.frame.size
         background.zPosition = -5
-        playButton.scaleTo(screenWithPercentage: 0.33)
+        logo.scale(to: CGSize(width: 200, height: 125))
         addChild(background)
-        addChild(playButton)
+        addChild(logo)
 
         let welcomeLabel = SKLabelNode(fontNamed: "Chalkduster")
         welcomeLabel.text = "Tap the sceen to begin"
         welcomeLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 - 100)
-        playButton.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
+        logo.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
         welcomeLabel.zPosition = 6
         welcomeLabel.fontSize = 26
         welcomeLabel.fontColor = UIColor.black
@@ -40,9 +34,6 @@ class MainMenu: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let level1 = SKScene(fileNamed: "GameScene")
-//        level1?.scaleMode = .resizeFill
-//        self.view?.presentScene(level1)
         startGamePlay()
     }
     
