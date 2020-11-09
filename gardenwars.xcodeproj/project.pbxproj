@@ -14,12 +14,15 @@
 		4F11D80D255351FC0020B931 /* gardenwarsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D80C255351FC0020B931 /* gardenwarsUITests.swift */; };
 		4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DB02556F97900F59E35 /* MainMenu.swift */; };
 		4F4A7DBE2556FDF800F59E35 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DBD2556FDF800F59E35 /* Extension.swift */; };
-		4F4A7DC32556FFA200F59E35 /* PlayerStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DC22556FFA200F59E35 /* PlayerStats.swift */; };
 		4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DC72556FFE900F59E35 /* GameManager.swift */; };
 		4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DCC2557007200F59E35 /* GamePlay.swift */; };
 		4F4A7DE72557091A00F59E35 /* Tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F4A7DE62557091A00F59E35 /* Tap.wav */; };
 		4F7C89EA25586DD90047169C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7C89E925586DD90047169C /* LaunchScreen.storyboard */; };
 		4FB6B74F2555D81100002B31 /* parker.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4FB6B74E2555D81100002B31 /* parker.atlas */; };
+		4FFDDC202559828C00EB8A28 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC1F2559828C00EB8A28 /* Player.swift */; };
+		4FFDDC3025599A2100EB8A28 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC2F25599A2100EB8A28 /* Level.swift */; };
+		4FFDDC4025599FEC00EB8A28 /* UIControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC3F25599FEC00EB8A28 /* UIControls.swift */; };
+		4FFDDC482559A81C00EB8A28 /* PlayerStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC472559A81C00EB8A28 /* PlayerStats.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,14 +56,15 @@
 		4F11D80E255351FC0020B931 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F4A7DB02556F97900F59E35 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		4F4A7DBD2556FDF800F59E35 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		4F4A7DC22556FFA200F59E35 /* PlayerStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStats.swift; sourceTree = "<group>"; };
 		4F4A7DC72556FFE900F59E35 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		4F4A7DCC2557007200F59E35 /* GamePlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlay.swift; sourceTree = "<group>"; };
-		4F4A7DE1255708C300F59E35 /* awesomeness.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = awesomeness.ogg; sourceTree = "<group>"; };
-		4F4A7DE2255708C300F59E35 /* livelymeadow.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = livelymeadow.ogg; sourceTree = "<group>"; };
 		4F4A7DE62557091A00F59E35 /* Tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Tap.wav; sourceTree = "<group>"; };
 		4F7C89E925586DD90047169C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FB6B74E2555D81100002B31 /* parker.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = parker.atlas; sourceTree = "<group>"; };
+		4FFDDC1F2559828C00EB8A28 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		4FFDDC2F25599A2100EB8A28 /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
+		4FFDDC3F25599FEC00EB8A28 /* UIControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControls.swift; sourceTree = "<group>"; };
+		4FFDDC472559A81C00EB8A28 /* PlayerStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStats.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,15 +120,16 @@
 				4F4A7DC72556FFE900F59E35 /* GameManager.swift */,
 				4F4A7DCC2557007200F59E35 /* GamePlay.swift */,
 				4F4A7DB02556F97900F59E35 /* MainMenu.swift */,
-				4F4A7DC22556FFA200F59E35 /* PlayerStats.swift */,
+				4FFDDC1F2559828C00EB8A28 /* Player.swift */,
 				4F11D7E9255351FB0020B931 /* AppDelegate.swift */,
 				4F11D7F8255351FC0020B931 /* Info.plist */,
-				4F4A7DE1255708C300F59E35 /* awesomeness.ogg */,
-				4F4A7DE2255708C300F59E35 /* livelymeadow.ogg */,
+				4FFDDC2F25599A2100EB8A28 /* Level.swift */,
 				4F4A7DE62557091A00F59E35 /* Tap.wav */,
 				4F11D7F6255351FC0020B931 /* Assets.xcassets */,
 				4FB6B74E2555D81100002B31 /* parker.atlas */,
 				4F7C89E925586DD90047169C /* LaunchScreen.storyboard */,
+				4FFDDC3F25599FEC00EB8A28 /* UIControls.swift */,
+				4FFDDC472559A81C00EB8A28 /* PlayerStats.swift */,
 			);
 			path = gardenwars;
 			sourceTree = "<group>";
@@ -278,11 +283,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F4A7DC32556FFA200F59E35 /* PlayerStats.swift in Sources */,
 				4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */,
 				4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */,
+				4FFDDC3025599A2100EB8A28 /* Level.swift in Sources */,
 				4F4A7DBE2556FDF800F59E35 /* Extension.swift in Sources */,
+				4FFDDC482559A81C00EB8A28 /* PlayerStats.swift in Sources */,
+				4FFDDC202559828C00EB8A28 /* Player.swift in Sources */,
 				4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */,
+				4FFDDC4025599FEC00EB8A28 /* UIControls.swift in Sources */,
 				4F11D7F2255351FB0020B931 /* GameViewController.swift in Sources */,
 				4F11D7EA255351FB0020B931 /* AppDelegate.swift in Sources */,
 			);
