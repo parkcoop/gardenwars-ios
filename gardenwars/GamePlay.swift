@@ -1,29 +1,36 @@
 import SpriteKit
 
 class Gameplay: SKScene {
-    
+    private var activeTouches = [UITouch:String]()
+
     let platformCategory: UInt32 = 0x1 << 0
      
     private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
-    var background = SKSpriteNode(imageNamed: "image/sky")
     
+    var stick = SKSpriteNode(imageNamed: "image/stick")
+    var substrate = SKSpriteNode(imageNamed: "image/substrate")
+    var stickActive: Bool = false
+    var xDist: CGFloat = 0
+    var joyStickPoint: CGPoint = CGPoint(x: 0, y: 0)
+    var jumpButton = SKSpriteNode(imageNamed: "image/jump")
+    
+    var background = SKSpriteNode(imageNamed: "image/sky")
     var platformLeft = SKSpriteNode(imageNamed: "image/platform1")
     var platformRight = SKSpriteNode(imageNamed: "image/platform1")
     var platformMain = SKSpriteNode(imageNamed: "image/platform1")
-
-    let player = SKSpriteNode(imageNamed: "image/me")
     let arrowLeft = SKSpriteNode(imageNamed: "image/arrowleft")
     let arrowRight = SKSpriteNode(imageNamed: "image/arrowright")
     let arrowUp = SKSpriteNode(imageNamed: "image/arrowup")
+    
     var player1LeftFrames: [SKTexture] = []
     var player1RightFrames: [SKTexture] = []
     var player1StillFrame: SKTexture?
     
     var player1 = SKSpriteNode()
 
+    
     override func didMove(to view: SKView) {
-      
+        self.view?.isMultipleTouchEnabled = true
         buildLevel1()
         buildPlayer1()
 
@@ -39,29 +46,120 @@ class Gameplay: SKScene {
         ))
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+    override func update(_ currentTime: TimeInterval) {
+        if (xDist < 0) {
+            player1.position.x += 5
+        } else if (xDist > 0) {
+            player1.position.x -= 5
+        } else {
+            faceForward()
         }
-        for touch in touches {
-          let location = touch.location(in: self)
-          let touchedNode = self.nodes(at: location)
-          for node in touchedNode {
-            if node.name == "left" {
-                walkLeft()
-                player1.position.x -= 25
-            }
-            if node.name == "right" {
-              player1.position.x += 25
-                walkRight()
-            }
-            if node.name == "up" {
-                player1.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                player1.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
-            }
-          }
-      }
     }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            let touchedNode = self.nodes(at: location)
+            for node in touchedNode {
+                if node.name == "jump" {
+                    activeTouches[touch] = "jump"
+                    tapBegin(on: "jump")
+                }
+            }
+            if (substrate.frame.contains(location)) {
+                activeTouches[touch] = "joystick"
+                tapBegin(on: "joystick")
+                stickActive = true
+            } else {
+                stickActive = false
+            }
+            
+           
+        }
+        
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+
+            let touchedNode = self.nodes(at: location)
+            for node in touchedNode {
+                if node.name == "jump" {
+                    tapContinues(on: "jump")
+                }
+            }
+            if (substrate.frame.contains(location)) {
+                joyStickPoint = location
+                tapContinues(on: "joystick")
+            }
+
+                        
+        }
+
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            guard let touchedArea = activeTouches[touch] else { break }
+            activeTouches[touch] = nil
+            tapEnd(on: touchedArea)
+        }
+    }
+    
+    private func tapBegin(on button: String) {
+           print("Begin press \(button)")
+        if (button == "jump") {
+            player1.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            player1.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
+        }
+       }
+    
+    private func tapContinues(on button: String) {
+        print("continuing press \(button)")
+        print(activeTouches)
+        if (button == "joystick") {
+           let v = CGVector(dx: joyStickPoint.x - substrate.position.x, dy: joyStickPoint.y - substrate.position.y)
+           let angle = atan2(v.dy, v.dx)
+           let length: CGFloat = substrate.frame.width / 2
+
+           xDist = sin(angle - 1.57079633) * length
+           let yDist: CGFloat = cos(angle - 1.57079633) * length
+
+           stick.position = CGPoint(x: substrate.position.x - xDist, y: substrate.position.y + yDist)
+
+           if (substrate.frame.contains(joyStickPoint)) {
+               stick.position = joyStickPoint
+           } else {
+               stick.position = CGPoint(x: substrate.position.x - xDist, y: substrate.position.y + yDist)
+           }
+            if (xDist < 0) {
+                player1.removeAction(forKey: "WALK_LEFT")
+                if (!actionForKeyIsRunning(key: "WALK_RIGHT")) {
+                    walkRight()
+                }
+            } else if (xDist > 0) {
+                player1.removeAction(forKey: "WALK_RIGHT")
+                if (!actionForKeyIsRunning(key: "WALK_LEFT")) {
+                    walkLeft()
+                }
+            }
+       }
+
+    }
+
+       private func tapEnd(on button:String) {
+           print("End press \(button)")
+        if (button == "joystick") {
+            xDist = 0
+            stickActive = false
+            let move:SKAction = SKAction.move(to: substrate.position, duration: 0.2)
+                move.timingMode = .easeOut
+                stick.run(move)
+            faceForward()
+        }
+       }
     
     
     func buildLevel1() {
@@ -95,29 +193,29 @@ class Gameplay: SKScene {
         platformMain.physicsBody?.affectedByGravity = false
         platformMain.physicsBody?.pinned = true
         platformMain.physicsBody?.isDynamic = false
-
-        arrowLeft.name = "left"
-        arrowLeft.position = CGPoint(x: ((ScreenSize.width / 3) - 60), y: ScreenSize.height / 3)
-        arrowLeft.size = CGSize(width: 50, height: 20)
-        arrowLeft.zPosition = 10
         
-        arrowRight.name = "right"
-        arrowRight.position = CGPoint(x: ((ScreenSize.width / 3)), y: ScreenSize.height / 3)
-        arrowRight.size = CGSize(width: 50, height: 20)
-        arrowRight.zPosition = 10
+        addChild(stick)
+        addChild(substrate)
+        stick.position = CGPoint(x: ((ScreenSize.width / 5)), y: ScreenSize.height / 3)
+        substrate.position = stick.position
+        stick.scale(to: CGSize(width: 150, height: 150))
+        
+        substrate.scale(to: stick.size)
+        
+        addChild(jumpButton)
+        jumpButton.name = "jump"
+        jumpButton.position = CGPoint(x: ((ScreenSize.width * 0.85)), y: ScreenSize.height * 0.25 )
+        jumpButton.scale(to: CGSize(width: 75, height: 75))
 
-        arrowUp.name = "up"
-        arrowUp.position = CGPoint(x: (ScreenSize.width - (ScreenSize.width / 3)), y: ScreenSize.height / 3)
-        arrowUp.size = CGSize(width: 50, height: 20)
-        arrowUp.zPosition = 10
+
         addChild(background)
         addChild(platformLeft)
         addChild(platformRight)
         addChild(platformMain)
 
-        addChild(arrowLeft)
-        addChild(arrowRight)
-        addChild(arrowUp)
+//        addChild(arrowLeft)
+//        addChild(arrowRight)
+//        addChild(arrowUp)
     }
     
     
@@ -151,15 +249,11 @@ class Gameplay: SKScene {
         player1.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "image/parker"), size: player1.size)
         player1.physicsBody?.allowsRotation = false
         player1.physicsBody?.isDynamic = true;
+//        player1.constraints = SKConstraint.positionX(xRange: SKRange(lowerLimit: 0, upperLimit: ScreenSize.width), y: SKRange(lowerLimit: 0, upperLimit: ScreenSize.height))
     }
     
     
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-        faceForward()
-    }
-    
+
     func checkCollision() {
         print(player1.position)
 //        print(thunder.position)
@@ -174,6 +268,9 @@ class Gameplay: SKScene {
         return random() * (max-min) + min
     }
     
+    func actionForKeyIsRunning(key: String) -> Bool {
+        return self.action(forKey: key) != nil ? true : false
+    }
     
     func walkLeft() {
         player1.run(SKAction.repeat(
@@ -183,7 +280,7 @@ class Gameplay: SKScene {
                  resize: false,
                  restore: true
             ), count: 1
-            ))
+        ), withKey: "WALK_LEFT")
     }
     
     
@@ -195,7 +292,7 @@ class Gameplay: SKScene {
                  resize: false,
                  restore: true
             ), count: 1
-            ))
+            ), withKey: "WALK_RIGHT")
     }
     
     
