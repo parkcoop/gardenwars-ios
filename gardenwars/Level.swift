@@ -12,7 +12,7 @@ class Level: SKNode {
     let thunder = SKSpriteNode(imageNamed: "image/thunder")
     let sun = SKSpriteNode(imageNamed: "image/sun")
     let water = SKSpriteNode(imageNamed: "image/water")
-
+    
     func buildLevel1() {
         background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
         background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
@@ -44,7 +44,7 @@ class Level: SKNode {
         platformMain.physicsBody?.affectedByGravity = false
         platformMain.physicsBody?.pinned = true
         platformMain.physicsBody?.isDynamic = false
-
+        
         addChild(background)
         addChild(platformLeft)
         addChild(platformRight)
@@ -52,6 +52,7 @@ class Level: SKNode {
         addChild(sun)
         addChild(water)
         addChild(thunder)
+
     }
     
     func random() -> CGFloat {

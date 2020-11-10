@@ -1,16 +1,21 @@
 import SpriteKit
 
+
 class Gameplay: SKScene {
     private var activeTouches = [UITouch:String]()
     let controls = UIControls()
     let gameSetting = Level()
     var player1 = Player()
-
-
+    var hpDisplay = HealthPoints()
+    
     override func didMove(to view: SKView) {
         self.view?.isMultipleTouchEnabled = true
         buildLevel1()
+        addChild(hpDisplay)
+        
+
         player1.buildPlayer1()
+        hpDisplay.build()
         addChild(player1)
         run(SKAction.repeatForever(
               SKAction.sequence([
@@ -25,17 +30,28 @@ class Gameplay: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        hpDisplay.healthText.text = String(player1.health)
+        hpDisplay.scoreText.text = String(player1.points)
         if (controls.xDist < 0) {
-            player1.position.x -= 0.1 * controls.xDist
+            player1.position.x -= 0.2 * controls.xDist
         } else if (controls.xDist > 0) {
-            player1.position.x -= 0.1 * controls.xDist
+            player1.position.x -= 0.2 * controls.xDist
         } else {
             player1.faceForward()
         }
         
         if player1.frame.intersects(gameSetting.thunder.frame) {
-            player1.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 50))
+            player1.takeDamage(points: 10)
         }
+        
+        if player1.frame.intersects(gameSetting.water.frame) {
+            player1.holdItem(item: "water")
+            player1.texture = SKTexture(imageNamed: "image/parker_water")
+        }
+        if player1.frame.intersects(gameSetting.sun.frame) {
+            player1.holdItem(item: "sun")
+        }
+        
     }
     
     
@@ -117,7 +133,6 @@ class Gameplay: SKScene {
 
         addChild(gameSetting)
         addChild(controls)
-        let player1 = Player()
         controls.build()
         gameSetting.buildLevel1()
     }

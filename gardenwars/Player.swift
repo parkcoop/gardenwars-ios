@@ -5,9 +5,20 @@ class Player: SKSpriteNode {
     private var player1LeftFrames: [SKTexture] = []
     private var player1RightFrames: [SKTexture] = []
     private var player1StillFrame: SKTexture?
+    
+    private var player1WaterLeftFrames: [SKTexture] = []
+    private var player1WaterRightFrames: [SKTexture] = []
+    private var player1WaterStillFrames: [SKTexture] = []
+
+    private var player1SunLeftFrames: [SKTexture] = []
+    private var player1SunRightFrames: [SKTexture] = []
+    private var player1SunStillFrames: [SKTexture] = []
+
     public var health = 100
     public var points = 0
-    public var currentItem: String = ""
+    private var currentItem: String = ""
+    
+
     
     func takeDamage(points: Int) -> Void {
         self.health -= points
@@ -18,6 +29,8 @@ class Player: SKSpriteNode {
             return
         }
         self.currentItem = item
+//        self.texture = SKTexture(imageNamed: "image/parker_water")
+        
     }
     
     func replenishSoil() {
@@ -39,6 +52,8 @@ class Player: SKSpriteNode {
     convenience init() {
       let texture = SKTexture(imageNamed: "image/me")
       self.init(texture: texture, color: UIColor.clear, size: texture.size())
+        self.health = 100
+        self.points = 0
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,6 +76,12 @@ class Player: SKSpriteNode {
         let player1AnimatedAtlas = SKTextureAtlas(named: "parker")
         var leftFrames: [SKTexture] = []
         var rightFrames: [SKTexture] = []
+        
+//        var leftWaterFrames: [SKTexture] = []
+//        var rightWaterFrames: [SKTexture] = []
+//
+//        var leftSunFrames: [SKTexture] = []
+//        var rightSunFrames: [SKTexture] = []
         
         for i in 2...4 {
             let player1TextureName = "parker\(i)"
@@ -116,7 +137,13 @@ class Player: SKSpriteNode {
     
     
     func faceForward() -> Void {
-        self.texture = player1StillFrame
+        if self.currentItem == "water" {
+            self.texture = SKTexture(imageNamed: "image/parker_water")
+        } else if self.currentItem == "sun" {
+            self.texture = SKTexture(imageNamed: "image/parker_sun")
+        } else {
+            self.texture = player1StillFrame
+        }
     }
     
     
