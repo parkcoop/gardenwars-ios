@@ -12,6 +12,23 @@ class Level: SKNode {
     let thunder = SKSpriteNode(imageNamed: "image/thunder")
     let sun = SKSpriteNode(imageNamed: "image/sun")
     let water = SKSpriteNode(imageNamed: "image/water")
+    let soil = Flower()
+    let soil2 = Flower()
+    let soil3 = Flower()
+    
+    
+    func replenishSoil(flower: SKNode) -> Bool {
+        switch flower.name! {
+        case "soil":
+            return soil.replenishSoil()
+        case "soil2":
+            return soil2.replenishSoil()
+        case "soil3":
+            return soil3.replenishSoil()
+        default:
+            return false
+        }
+    }
     
     func buildLevel1() {
         background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
@@ -44,7 +61,40 @@ class Level: SKNode {
         platformMain.physicsBody?.affectedByGravity = false
         platformMain.physicsBody?.pinned = true
         platformMain.physicsBody?.isDynamic = false
+        soil.physicsBody = SKPhysicsBody(texture: soil.texture!, size: soil.size)
+        soil.name = "soil"
+        soil2.name = "soil2"
+        soil3.name = "soil3"
         
+        soil.position = CGPoint(x: platformLeft.position.x, y: platformLeft.position.y + 78)
+        soil.zPosition = 50
+        soil.physicsBody?.isDynamic = false
+        soil.physicsBody?.pinned = true
+        
+        soil2.physicsBody = SKPhysicsBody(texture: soil2.texture!, size: soil2.size)
+        soil2.position = CGPoint(x: platformMain.position.x + ScreenSize.width / 3, y: platformMain.position.y + 89)
+        soil2.physicsBody?.pinned = true
+        soil2.physicsBody?.allowsRotation = false
+
+        soil3.physicsBody = SKPhysicsBody(texture: soil3.texture!, size: soil3.size)
+        soil3.position = CGPoint(x: platformRight.position.x, y: platformRight.position.y + 78)
+        soil3.physicsBody?.pinned = true
+        soil3.physicsBody?.allowsRotation = false
+        
+        sun.name = "sun"
+        sun.physicsBody = SKPhysicsBody(texture: sun.texture!, size: sun.size)
+        sun.physicsBody?.isDynamic = false;
+
+        
+        water.name = "water"
+        water.physicsBody = SKPhysicsBody(texture: water.texture!, size: water.size)
+        water.physicsBody?.isDynamic = false;
+        
+        thunder.name = "thunder"
+        thunder.physicsBody = SKPhysicsBody(texture: thunder.texture!, size: thunder.size)
+        thunder.physicsBody?.isDynamic = false;
+        
+   
         addChild(background)
         addChild(platformLeft)
         addChild(platformRight)
@@ -52,6 +102,9 @@ class Level: SKNode {
         addChild(sun)
         addChild(water)
         addChild(thunder)
+        addChild(soil)
+        addChild(soil2)
+        addChild(soil3)
 
     }
     

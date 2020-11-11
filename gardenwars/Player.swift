@@ -16,7 +16,7 @@ class Player: SKSpriteNode {
 
     public var health = 100
     public var points = 0
-    private var currentItem: String = ""
+    private (set) var currentItem: String = ""
     
 
     
@@ -24,16 +24,16 @@ class Player: SKSpriteNode {
         self.health -= points
     }
     
-    func holdItem(item: String) -> Void {
+    func holdItem(item: String) -> Bool {
         if (self.currentItem != "") {
-            return
+            return false
         }
         self.currentItem = item
-//        self.texture = SKTexture(imageNamed: "image/parker_water")
+        return true
         
     }
     
-    func replenishSoil() {
+    func garden() {
         if (self.currentItem == "") {
             return
         }
@@ -64,24 +64,13 @@ class Player: SKSpriteNode {
     {
       super.init(texture: texture, color: color, size: size)
     }
-    
-    
-    
-    
-    
-    
+
     
     
     func buildPlayer1() -> Void {
         let player1AnimatedAtlas = SKTextureAtlas(named: "parker")
         var leftFrames: [SKTexture] = []
         var rightFrames: [SKTexture] = []
-        
-//        var leftWaterFrames: [SKTexture] = []
-//        var rightWaterFrames: [SKTexture] = []
-//
-//        var leftSunFrames: [SKTexture] = []
-//        var rightSunFrames: [SKTexture] = []
         
         for i in 2...4 {
             let player1TextureName = "parker\(i)"
@@ -92,6 +81,7 @@ class Player: SKSpriteNode {
             let player1TextureName = "parker\(i)"
             rightFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
         }
+        
         player1StillFrame = player1AnimatedAtlas.textureNamed("parker5")
         player1LeftFrames = leftFrames
         player1RightFrames = rightFrames

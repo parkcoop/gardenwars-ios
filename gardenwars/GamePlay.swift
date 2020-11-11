@@ -1,22 +1,30 @@
 import SpriteKit
+import AudioToolbox
 
 
-class Gameplay: SKScene {
+enum CollisionTypes: UInt32 {
+    case player = 1
+    case soil = 2
+    case thunder = 4
+    case sun = 8
+    case water = 16
+}
+
+class Gameplay: SKScene, SKPhysicsContactDelegate {
     private var activeTouches = [UITouch:String]()
     let controls = UIControls()
     let gameSetting = Level()
     var player1 = Player()
     var hpDisplay = HealthPoints()
+
+    
     
     override func didMove(to view: SKView) {
+        physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
         buildLevel1()
-        addChild(hpDisplay)
         
-
-        player1.buildPlayer1()
-        hpDisplay.build()
-        addChild(player1)
+        
         run(SKAction.repeatForever(
               SKAction.sequence([
                 SKAction.run(gameSetting.addThunder),
@@ -27,6 +35,43 @@ class Gameplay: SKScene {
                 SKAction.wait(forDuration: 1.0)
             ])
         ))
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        if (contact.bodyA.node?.name != nil && contact.bodyB.node?.name != nil) {
+            
+            print(contact.bodyA.node!.name!, contact.bodyB.node!.name!)
+            
+            // Replenish soil (player <-> soil)
+            if (contact.bodyA.node!.name! == "player") || (contact.bodyA.node!.name! == "soil")
+                && (contact.bodyB.node!.name! == "soil") || (contact.bodyB.node!.name! == "player") {
+                if (player1.currentItem == "sun" || player1.currentItem == "water") {
+                    if gameSetting.replenishSoil(flower: contact.bodyA.node!) {
+                        player1.garden()
+                    }
+                }
+            }
+//            // Hold item (player <-> water || sun)
+//            if (((contact.bodyA.node!.name! == "player") || (contact.bodyA.node!.name! == "sun"))
+//                    && ((contact.bodyB.node!.name! == "sun") || (contact.bodyB.node!.name! == "player"))
+//                || ((contact.bodyA.node!.name! == "player") || (contact.bodyA.node!.name! == "water"))
+//                    && ((contact.bodyB.node!.name! == "water") || (contact.bodyB.node!.name! == "player"))) {
+//               //code
+//                print("GRABBBINN")
+//                if player1.holdItem(item: contact.bodyA.node!.name!) {
+//                    if contact.bodyA.node!.name! == "water" {
+//                        gameSetting.water.removeAllActions()
+//                        gameSetting.water.position = CGPoint(x: 0, y: -200)
+//                    } else if contact.bodyA.node!.name! == "sun" {
+//                        gameSetting.sun.removeAllActions()
+//                        gameSetting.sun.position = CGPoint(x: 0, y: -200)
+//                    }
+//                }
+//            }
+         
+            
+            
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -42,14 +87,24 @@ class Gameplay: SKScene {
         
         if player1.frame.intersects(gameSetting.thunder.frame) {
             player1.takeDamage(points: 10)
+            gameSetting.thunder.removeAllActions()
+            gameSetting.thunder.position = CGPoint(x: 0, y: -200)
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
         
         if player1.frame.intersects(gameSetting.water.frame) {
-            player1.holdItem(item: "water")
-            player1.texture = SKTexture(imageNamed: "image/parker_water")
+            if player1.holdItem(item: "water") {
+                gameSetting.water.removeAllActions()
+                gameSetting.water.position = CGPoint(x: 0, y: -200)
+            }
+           
         }
         if player1.frame.intersects(gameSetting.sun.frame) {
-            player1.holdItem(item: "sun")
+            if player1.holdItem(item: "sun") {
+                gameSetting.sun.removeAllActions()
+                gameSetting.sun.position = CGPoint(x: 0, y: -200)
+            }
+          
         }
         
     }
@@ -135,6 +190,25 @@ class Gameplay: SKScene {
         addChild(controls)
         controls.build()
         gameSetting.buildLevel1()
+        addChild(hpDisplay)
+        
+        
+        player1.buildPlayer1()
+        hpDisplay.build()
+        player1.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
+        player1.physicsBody?.contactTestBitMask = CollisionTypes.soil.rawValue
+        player1.name = "player"
+        addChild(player1)
+
+        gameSetting.soil.physicsBody?.categoryBitMask = CollisionTypes.soil.rawValue
+        gameSetting.soil.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
+
+        gameSetting.sun.physicsBody?.categoryBitMask = CollisionTypes.sun.rawValue
+        gameSetting.sun.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
+        
+        gameSetting.water.physicsBody?.categoryBitMask = CollisionTypes.water.rawValue
+        gameSetting.water.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
+        
     }
     
     

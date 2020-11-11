@@ -4,12 +4,17 @@ class Flower: SKSpriteNode {
     
     private var flowerFrames: SKTextureAtlas = SKTextureAtlas(named: "flower")
     
-    var growthPhase = 0
+    var growthPhase = 1
 
     
-    func replenishSoil(item: String) -> Void {
+
+    func replenishSoil() -> Bool {
+        if (growthPhase >= 6) {
+            return false
+        }
         growthPhase += 1
         self.texture = flowerFrames.textureNamed("flower\(growthPhase)")
+        return true
     }
     
     
@@ -21,9 +26,9 @@ class Flower: SKSpriteNode {
     
     
     convenience init() {
-      let texture = SKSpriteNode(imageNamed: "image/soil")
+      let texture = SKTexture(imageNamed: "image/soil")
       self.init(texture: texture, color: UIColor.clear, size: texture.size())
-        self.growthPhase = 0
+        self.growthPhase = 1
     }
 
     required init?(coder aDecoder: NSCoder) {

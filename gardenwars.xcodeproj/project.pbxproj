@@ -14,6 +14,7 @@
 		4F11D80D255351FC0020B931 /* gardenwarsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D80C255351FC0020B931 /* gardenwarsUITests.swift */; };
 		4F30A2122559BC79003981FE /* HealthPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F30A2112559BC79003981FE /* HealthPoints.swift */; };
 		4F30A218255A16A2003981FE /* Flower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F30A217255A16A2003981FE /* Flower.swift */; };
+		4F30A225255A324B003981FE /* flower.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4F30A216255A1645003981FE /* flower.atlas */; };
 		4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DB02556F97900F59E35 /* MainMenu.swift */; };
 		4F4A7DBE2556FDF800F59E35 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DBD2556FDF800F59E35 /* Extension.swift */; };
 		4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DC72556FFE900F59E35 /* GameManager.swift */; };
@@ -265,6 +266,7 @@
 			files = (
 				4F4A7DE72557091A00F59E35 /* Tap.wav in Resources */,
 				4F7C89EA25586DD90047169C /* LaunchScreen.storyboard in Resources */,
+				4F30A225255A324B003981FE /* flower.atlas in Resources */,
 				4F11D7F7255351FC0020B931 /* Assets.xcassets in Resources */,
 				4FB6B74F2555D81100002B31 /* parker.atlas in Resources */,
 			);
