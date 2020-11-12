@@ -1,6 +1,6 @@
 import SpriteKit
 
-class Settings: SKScene {
+class GameOver: SKScene {
   
     
     override func didMove(to view: SKView) {

@@ -19,8 +19,8 @@ class Level: SKNode {
     
     override init() {
         super.init()
-        background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
-        background.zPosition = -5
+
+
     }
     
     
@@ -47,6 +47,8 @@ class Level: SKNode {
     
     
     func buildLevel1() {
+        background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
+        background.zPosition = -5
         background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
         
         platformLeft.position = CGPoint(x: ScreenSize.width * 0.20, y: ScreenSize.height * 0.35)
@@ -62,15 +64,47 @@ class Level: SKNode {
     
     
     func buildLevel2() {
+        replantFlowerBeds()
         background = SKSpriteNode(imageNamed: "image/forest")
-      
+        background.zPosition = -5
+        background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
+        background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
+        
+        platformLeft.texture = SKTexture(imageNamed: "image/platform2")
+        platformRight.texture = SKTexture(imageNamed: "image/platform2")
+        platformMain.texture = SKTexture(imageNamed: "image/platform2")
+        
+        platformLeft.position = CGPoint(x: ScreenSize.width * 0.1, y: ScreenSize.height * 0.7)
+        platformRight.position = CGPoint(x: ScreenSize.width * 0.5, y: ScreenSize.height * 0.35)
+        platformMain.position = CGPoint(x: ScreenSize.width / 2, y: 0)
+
+        soil.position = CGPoint(x: platformLeft.position.x, y: platformLeft.position.y + 78)
+        soil2.position = CGPoint(x: platformMain.position.x + ScreenSize.width / 3, y: platformMain.position.y + 89)
+        soil3.position = CGPoint(x: platformRight.position.x, y: platformRight.position.y + 78)
+
         addNodes()
     }
     
     
     func buildLevel3() {
+        replantFlowerBeds()
         background = SKSpriteNode(imageNamed: "image/sunset")
-   
+        background.zPosition = -5
+        background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
+        background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
+        
+        platformLeft.texture = SKTexture(imageNamed: "image/platform3")
+        platformRight.texture = SKTexture(imageNamed: "image/platform3")
+        platformMain.texture = SKTexture(imageNamed: "image/platform3")
+        
+        platformLeft.position = CGPoint(x: ScreenSize.width * 0.05, y: ScreenSize.height * 0.3)
+        platformRight.position = CGPoint(x: ScreenSize.width * 0.7, y: ScreenSize.height * 0.75)
+        platformMain.position = CGPoint(x: ScreenSize.width / 2, y: 0)
+
+        soil.position = CGPoint(x: platformLeft.position.x + 50, y: platformLeft.position.y + 78)
+        soil2.position = CGPoint(x: platformMain.position.x + ScreenSize.width / 3, y: platformMain.position.y + 89)
+        soil3.position = CGPoint(x: platformRight.position.x, y: platformRight.position.y + 78)
+
         addNodes()
     }
     
@@ -101,6 +135,12 @@ class Level: SKNode {
         duration: TimeInterval(actualDuration))
         item.position = CGPoint(x: actualX, y: ScreenSize.height)
         item.run(actionMove)
+    }
+    
+    func replantFlowerBeds() {
+        soil.reset()
+        soil2.reset()
+        soil3.reset()
     }
     
     

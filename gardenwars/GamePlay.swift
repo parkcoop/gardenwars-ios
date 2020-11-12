@@ -19,7 +19,7 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     var player1 = Player()
     var hpDisplay = HealthPoints()
     var settingsToggle = SKSpriteNode(imageNamed: "image/settings")
-    
+    var currentLevel = 1
         
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -88,6 +88,14 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
                 gameSetting.sun.removeAllActions()
                 gameSetting.sun.position = CGPoint(x: 0, y: -200)
             }
+        }
+        
+        if player1.points >= 100 {
+            player1.points = 0
+            gameSetting.removeAllChildren()
+
+            nextLevel(level: currentLevel + 1)
+            currentLevel += 1
         }
     }
     
@@ -195,12 +203,22 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     }
     
     func openSettingsMenu() -> Void {
-//        self.view?.isPaused = true
-        gameSetting.removeAllChildren()
-        gameSetting.buildLevel2()
-
-//        GameManager.shared.transition(self, toScene: .Settings, transition:
-//            SKTransition.doorsCloseHorizontal(withDuration: 2))
+        GameManager.shared.transition(self, toScene: .MainMenu, transition:
+            SKTransition.doorsCloseHorizontal(withDuration: 2))
+    }
+    
+    func nextLevel(level: Int) -> Void {
+        switch level {
+            case 2:
+                gameSetting.buildLevel2()
+            case 3:
+                gameSetting.buildLevel3()
+            case 4: // Ended game
+                GameManager.shared.transition(self, toScene: .Settings, transition:
+                    SKTransition.crossFade(withDuration: 2))
+            default:
+                return
+        }
     }
 
     

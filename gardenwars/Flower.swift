@@ -31,5 +31,11 @@ class Flower: SKSpriteNode {
         return true
     }
     
+    func reset() {
+        growthPhase = 1
+        self.texture = flowerFrames.textureNamed("flower\(growthPhase)")
+
+    }
+    
     
 }
