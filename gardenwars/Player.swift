@@ -18,83 +18,38 @@ class Player: SKSpriteNode {
     public var points = 0
     private (set) var currentItem: String = ""
     
-
     
-    func takeDamage(points: Int) -> Void {
-        self.health -= points
-    }
-    
-    func holdItem(item: String) -> Bool {
-        if (self.currentItem != "") {
-            return false
-        }
-        self.currentItem = item
-        return true
-        
-    }
-    
-    func garden() {
-        if (self.currentItem == "") {
-            return
-        }
-        self.points += 25
-        self.currentItem = ""
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    convenience init() {
-      let texture = SKTexture(imageNamed: "image/me")
-      self.init(texture: texture, color: UIColor.clear, size: texture.size())
-        self.health = 100
-        self.points = 0
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-      super.init(coder:aDecoder)
-    }
-
-    override init(texture: SKTexture?, color: UIColor, size: CGSize)
-    {
-      super.init(texture: texture, color: color, size: size)
-    }
-
-    
-    
-    func buildPlayer1() -> Void {
+    init() {
         let player1AnimatedAtlas = SKTextureAtlas(named: "parker")
         var leftFrames: [SKTexture] = []
         var rightFrames: [SKTexture] = []
-        
         for i in 2...4 {
             let player1TextureName = "parker\(i)"
             leftFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
         }
-        
         for i in 6...8 {
             let player1TextureName = "parker\(i)"
             rightFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
         }
-        
         player1StillFrame = player1AnimatedAtlas.textureNamed("parker5")
         player1LeftFrames = leftFrames
         player1RightFrames = rightFrames
         
-        let firstFrameTexture = player1StillFrame!
-        self.position = CGPoint(x: frame.midX, y: frame.midY)
+        super.init(texture: player1StillFrame!, color: UIColor.clear, size: player1StillFrame!.size())
+        self.health = 100
+        self.points = 0
         self.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
         self.size = CGSize(width: 44, height: 77)
-        self.physicsBody = SKPhysicsBody(texture: firstFrameTexture, size: self.size)
+        self.physicsBody = SKPhysicsBody(texture: player1StillFrame!, size: self.size)
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.isDynamic = true;
-//        player1.constraints = SKConstraint.positionX(xRange: SKRange(lowerLimit: 0, upperLimit: ScreenSize.width), y: SKRange(lowerLimit: 0, upperLimit: ScreenSize.height))
     }
+
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder:aDecoder)
+    }
+
     
     func walkLeft() -> Void {
         if (self.action(forKey: "WALK_LEFT") != nil) {
@@ -134,6 +89,30 @@ class Player: SKSpriteNode {
         } else {
             self.texture = player1StillFrame
         }
+    }
+    
+    
+    func takeDamage(points: Int) -> Void {
+        self.health -= points
+    }
+    
+    
+    func holdItem(item: String) -> Bool {
+        if (self.currentItem != "") {
+            return false
+        }
+        self.currentItem = item
+        return true
+        
+    }
+    
+    
+    func garden() {
+        if (self.currentItem == "") {
+            return
+        }
+        self.points += 25
+        self.currentItem = ""
     }
     
     

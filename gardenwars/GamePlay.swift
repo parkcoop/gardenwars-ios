@@ -11,36 +11,42 @@ enum CollisionTypes: UInt32 {
 }
 
 class Gameplay: SKScene, SKPhysicsContactDelegate {
+    
+    
     private var activeTouches = [UITouch:String]()
     let controls = UIControls()
     let gameSetting = Level()
     var player1 = Player()
     var hpDisplay = HealthPoints()
-
+    var settingsToggle = SKSpriteNode(imageNamed: "image/settings")
     
-    
+        
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
-        buildLevel1()
+        initializePhysicsBodies()
+        settingsToggle.position = CGPoint(x: ScreenSize.width * 0.9, y: ScreenSize.height * 0.9)
+        settingsToggle.scale(to: CGSize(width: 50, height: 50))
+        settingsToggle.name = "settings"
+        addChild(settingsToggle)
         
         
+        weak var weakSelf = self // ARC
         run(SKAction.repeatForever(
               SKAction.sequence([
-                SKAction.run(gameSetting.addThunder),
+                SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.thunder)}),
                 SKAction.wait(forDuration: 1.0),
-                SKAction.run(gameSetting.addSun),
+                SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.sun)}),
                 SKAction.wait(forDuration: 1.0),
-                SKAction.run(gameSetting.addWater),
+                SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.water)}),
                 SKAction.wait(forDuration: 1.0)
             ])
         ))
     }
     
+    
     func didBegin(_ contact: SKPhysicsContact) {
         if (contact.bodyA.node?.name != nil && contact.bodyB.node?.name != nil) {
-            
-            print(contact.bodyA.node!.name!, contact.bodyB.node!.name!)
             
             // Replenish soil (player <-> soil)
             if (contact.bodyA.node!.name! == "player") || (contact.bodyA.node!.name! == "soil")
@@ -51,28 +57,9 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
                     }
                 }
             }
-//            // Hold item (player <-> water || sun)
-//            if (((contact.bodyA.node!.name! == "player") || (contact.bodyA.node!.name! == "sun"))
-//                    && ((contact.bodyB.node!.name! == "sun") || (contact.bodyB.node!.name! == "player"))
-//                || ((contact.bodyA.node!.name! == "player") || (contact.bodyA.node!.name! == "water"))
-//                    && ((contact.bodyB.node!.name! == "water") || (contact.bodyB.node!.name! == "player"))) {
-//               //code
-//                print("GRABBBINN")
-//                if player1.holdItem(item: contact.bodyA.node!.name!) {
-//                    if contact.bodyA.node!.name! == "water" {
-//                        gameSetting.water.removeAllActions()
-//                        gameSetting.water.position = CGPoint(x: 0, y: -200)
-//                    } else if contact.bodyA.node!.name! == "sun" {
-//                        gameSetting.sun.removeAllActions()
-//                        gameSetting.sun.position = CGPoint(x: 0, y: -200)
-//                    }
-//                }
-//            }
-         
-            
-            
         }
     }
+    
     
     override func update(_ currentTime: TimeInterval) {
         hpDisplay.healthText.text = String(player1.health)
@@ -84,29 +71,24 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         } else {
             player1.faceForward()
         }
-        
         if player1.frame.intersects(gameSetting.thunder.frame) {
             player1.takeDamage(points: 10)
             gameSetting.thunder.removeAllActions()
             gameSetting.thunder.position = CGPoint(x: 0, y: -200)
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
-        
         if player1.frame.intersects(gameSetting.water.frame) {
             if player1.holdItem(item: "water") {
                 gameSetting.water.removeAllActions()
                 gameSetting.water.position = CGPoint(x: 0, y: -200)
             }
-           
         }
         if player1.frame.intersects(gameSetting.sun.frame) {
             if player1.holdItem(item: "sun") {
                 gameSetting.sun.removeAllActions()
                 gameSetting.sun.position = CGPoint(x: 0, y: -200)
             }
-          
         }
-        
     }
     
     
@@ -119,6 +101,9 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
                     activeTouches[touch] = "jump"
                     tapBegin(on: "jump")
                 }
+                if node.name == "settings" {
+                    openSettingsMenu()
+                }
             }
             if (controls.substrate.frame.contains(location)) {
                 activeTouches[touch] = "joystick"
@@ -127,11 +112,9 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
             } else {
                 controls.stickActive = false
             }
-            
-           
         }
-        
     }
+    
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
@@ -143,6 +126,7 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             guard let touchedArea = activeTouches[touch] else { break }
@@ -151,12 +135,14 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    
     private func tapBegin(on button: String) {
         if (button == "jump") {
             player1.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             player1.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
         }
-       }
+    }
+    
     
     private func tapContinues(on button: String) {
         if (button == "joystick") {
@@ -173,7 +159,8 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
 
     }
 
-       private func tapEnd(on button:String) {
+    
+    private func tapEnd(on button:String) {
         if (button == "joystick") {
             controls.xDist = 0
             controls.stickActive = false
@@ -181,20 +168,16 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
                 move.timingMode = .easeOut
             controls.stick.run(move)
         }
-       }
+    }
     
     
-    func buildLevel1() {
+    func initializePhysicsBodies() {
 
         addChild(gameSetting)
         addChild(controls)
-        controls.build()
         gameSetting.buildLevel1()
         addChild(hpDisplay)
         
-        
-        player1.buildPlayer1()
-        hpDisplay.build()
         player1.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
         player1.physicsBody?.contactTestBitMask = CollisionTypes.soil.rawValue
         player1.name = "player"
@@ -211,7 +194,14 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    
+    func openSettingsMenu() -> Void {
+//        self.view?.isPaused = true
+        gameSetting.removeAllChildren()
+        gameSetting.buildLevel2()
+
+//        GameManager.shared.transition(self, toScene: .Settings, transition:
+//            SKTransition.doorsCloseHorizontal(withDuration: 2))
+    }
 
     
 

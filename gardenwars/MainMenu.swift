@@ -1,17 +1,8 @@
-//
-//  MainMenu.swift
-//  gardenwars
-//
-//  Created by Parker Cooper on 11/7/20.
-//
-
 import SpriteKit
 
 class MainMenu: SKScene {
     var background = SKSpriteNode(imageNamed: "image/sky")
     let logo = SKSpriteNode(imageNamed: "image/logo")
-
-//
 
     
     override func didMove(to view: SKView) {
@@ -33,21 +24,26 @@ class MainMenu: SKScene {
         addChild(welcomeLabel)
     }
     
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         startGamePlay()
     }
+    
     
     func setupNodes() {
         
     }
     
+    
     func addNodes() {
         
     }
     
+    
     @objc func startGamePlayNotification(_ info:Notification) {
         startGamePlay()
     }
+    
 
     func startGamePlay() {
         GameManager.shared.transition(self, toScene: .Gameplay, transition:

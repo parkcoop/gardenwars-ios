@@ -1,4 +1,3 @@
-
 import Foundation
 import SpriteKit
 
@@ -9,7 +8,7 @@ let chartboostAppSignature = "97a43ed515d78826130881e8c0eed747185d0d74"
 class GameManager {
   
   enum SceneType {
-    case MainMenu, Gameplay
+    case MainMenu, Gameplay, Settings
   }
   
   private init() {}
@@ -50,6 +49,8 @@ class GameManager {
       return MainMenu(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
     case SceneType.Gameplay:
       return Gameplay(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
+    case SceneType.Settings:
+      return Settings(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
 //    case SceneType.GameOver:
 //      return GameOver(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
     }

@@ -4,8 +4,9 @@ class HealthPoints: SKNode {
     var hpBackground = SKSpriteNode(imageNamed: "image/counter")
     var scoreText = SKLabelNode(fontNamed: "Chalkduster");
     var healthText = SKLabelNode(fontNamed: "Chalkduster")
-
-    func build() {
+    
+    override init() {
+        super.init()
         if (DeviceType.isiPhoneX) {
             hpBackground.position = CGPoint(x: ScreenSize.width * 0.15, y: ScreenSize.height * 0.9)
         } else if (DeviceType.isiPad) {
@@ -23,8 +24,11 @@ class HealthPoints: SKNode {
         healthText.fontSize = CGFloat.universalFont(size: 25)
         addChild(scoreText)
         addChild(healthText)
-        
-
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+      super.init(coder:aDecoder)
+    }
+    
 
 }

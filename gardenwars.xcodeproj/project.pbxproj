@@ -20,6 +20,9 @@
 		4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DC72556FFE900F59E35 /* GameManager.swift */; };
 		4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DCC2557007200F59E35 /* GamePlay.swift */; };
 		4F4A7DE72557091A00F59E35 /* Tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F4A7DE62557091A00F59E35 /* Tap.wav */; };
+		4F726FE1255C521A004376C5 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F726FE0255C521A004376C5 /* Settings.swift */; };
+		4F726FE9255CAC5B004376C5 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F726FE8255CAC5B004376C5 /* Platform.swift */; };
+		4F726FEE255CB4EE004376C5 /* FallingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F726FED255CB4EE004376C5 /* FallingItem.swift */; };
 		4F7C89EA25586DD90047169C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7C89E925586DD90047169C /* LaunchScreen.storyboard */; };
 		4FB6B74F2555D81100002B31 /* parker.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4FB6B74E2555D81100002B31 /* parker.atlas */; };
 		4FFDDC202559828C00EB8A28 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC1F2559828C00EB8A28 /* Player.swift */; };
@@ -65,6 +68,9 @@
 		4F4A7DC72556FFE900F59E35 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		4F4A7DCC2557007200F59E35 /* GamePlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlay.swift; sourceTree = "<group>"; };
 		4F4A7DE62557091A00F59E35 /* Tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Tap.wav; sourceTree = "<group>"; };
+		4F726FE0255C521A004376C5 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		4F726FE8255CAC5B004376C5 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		4F726FED255CB4EE004376C5 /* FallingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallingItem.swift; sourceTree = "<group>"; };
 		4F7C89E925586DD90047169C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FB6B74E2555D81100002B31 /* parker.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = parker.atlas; sourceTree = "<group>"; };
 		4FFDDC1F2559828C00EB8A28 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -126,19 +132,22 @@
 				4F4A7DC72556FFE900F59E35 /* GameManager.swift */,
 				4F4A7DCC2557007200F59E35 /* GamePlay.swift */,
 				4F4A7DB02556F97900F59E35 /* MainMenu.swift */,
+				4F726FE0255C521A004376C5 /* Settings.swift */,
 				4FFDDC1F2559828C00EB8A28 /* Player.swift */,
 				4F30A217255A16A2003981FE /* Flower.swift */,
 				4F11D7E9255351FB0020B931 /* AppDelegate.swift */,
 				4F11D7F8255351FC0020B931 /* Info.plist */,
 				4FFDDC2F25599A2100EB8A28 /* Level.swift */,
 				4F4A7DE62557091A00F59E35 /* Tap.wav */,
-				4F11D7F6255351FC0020B931 /* Assets.xcassets */,
-				4F30A216255A1645003981FE /* flower.atlas */,
-				4FB6B74E2555D81100002B31 /* parker.atlas */,
-				4F7C89E925586DD90047169C /* LaunchScreen.storyboard */,
 				4FFDDC3F25599FEC00EB8A28 /* UIControls.swift */,
 				4FFDDC472559A81C00EB8A28 /* PlayerStats.swift */,
 				4F30A2112559BC79003981FE /* HealthPoints.swift */,
+				4F7C89E925586DD90047169C /* LaunchScreen.storyboard */,
+				4F726FED255CB4EE004376C5 /* FallingItem.swift */,
+				4F726FE8255CAC5B004376C5 /* Platform.swift */,
+				4F11D7F6255351FC0020B931 /* Assets.xcassets */,
+				4F30A216255A1645003981FE /* flower.atlas */,
+				4FB6B74E2555D81100002B31 /* parker.atlas */,
 			);
 			path = gardenwars;
 			sourceTree = "<group>";
@@ -293,11 +302,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F726FE9255CAC5B004376C5 /* Platform.swift in Sources */,
 				4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */,
 				4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */,
+				4F726FE1255C521A004376C5 /* Settings.swift in Sources */,
 				4F30A218255A16A2003981FE /* Flower.swift in Sources */,
 				4FFDDC3025599A2100EB8A28 /* Level.swift in Sources */,
 				4F4A7DBE2556FDF800F59E35 /* Extension.swift in Sources */,
+				4F726FEE255CB4EE004376C5 /* FallingItem.swift in Sources */,
 				4FFDDC482559A81C00EB8A28 /* PlayerStats.swift in Sources */,
 				4FFDDC202559828C00EB8A28 /* Player.swift in Sources */,
 				4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */,

@@ -11,9 +11,8 @@ class UIControls: SKNode {
     var jumpButton = SKSpriteNode(imageNamed: "image/jump")
     
     
-
-    
-    func build() {
+    override init() {
+        super.init()
         addChild(stick)
         addChild(substrate)
         stick.position = CGPoint(x: 100, y: 100)
@@ -26,8 +25,13 @@ class UIControls: SKNode {
         jumpButton.name = "jump"
         jumpButton.position = CGPoint(x: ((ScreenSize.width * 0.85)), y: ScreenSize.height * 0.25 )
         jumpButton.scale(to: CGSize(width: 75, height: 75))
-
     }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder:aDecoder)
+    }
+
     
     func moveJoystick() {
         let v = CGVector(dx: self.joyStickPoint.x - self.substrate.position.x, dy: self.joyStickPoint.y - self.substrate.position.y)
@@ -41,8 +45,8 @@ class UIControls: SKNode {
 
         if (self.substrate.frame.contains(self.joyStickPoint)) {
             self.stick.position = self.joyStickPoint
-       } else {
+        } else {
         self.stick.position = CGPoint(x: self.substrate.position.x - self.xDist, y: self.substrate.position.y + self.yDist)
-       }
+        }
     }
 }

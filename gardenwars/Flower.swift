@@ -3,10 +3,24 @@ import SpriteKit
 class Flower: SKSpriteNode {
     
     private var flowerFrames: SKTextureAtlas = SKTextureAtlas(named: "flower")
-    
     var growthPhase = 1
 
     
+    init(named name: String) {
+        let texture = SKTexture(imageNamed: "image/soil")
+        super.init(texture: texture, color: UIColor.clear, size: texture.size())
+        self.name = name
+        self.growthPhase = 1
+        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: self.size)
+        self.physicsBody?.allowsRotation = false
+        self.physicsBody?.pinned = true
+        self.physicsBody?.isDynamic = false
+    }
+
+    
+    required init?(coder aDecoder: NSCoder) {
+      super.init(coder:aDecoder)
+    }
 
     func replenishSoil() -> Bool {
         if (growthPhase >= 6) {
@@ -15,41 +29,6 @@ class Flower: SKSpriteNode {
         growthPhase += 1
         self.texture = flowerFrames.textureNamed("flower\(growthPhase)")
         return true
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    convenience init() {
-      let texture = SKTexture(imageNamed: "image/soil")
-      self.init(texture: texture, color: UIColor.clear, size: texture.size())
-        self.growthPhase = 1
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-      super.init(coder:aDecoder)
-    }
-
-    override init(texture: SKTexture?, color: UIColor, size: CGSize)
-    {
-      super.init(texture: texture, color: color, size: size)
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    func build() -> Void {
-
-
     }
     
     
