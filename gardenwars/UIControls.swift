@@ -31,22 +31,22 @@ class UIControls: SKNode {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
     }
-
+    
     
     func moveJoystick() {
         let v = CGVector(dx: self.joyStickPoint.x - self.substrate.position.x, dy: self.joyStickPoint.y - self.substrate.position.y)
         let angle = atan2(v.dy, v.dx)
         let length: CGFloat = self.substrate.frame.width / 5
-
+        
         self.xDist = sin(angle - 1.57079633) * length
         self.yDist = cos(angle - 1.57079633) * length
-
+        
         self.stick.position = CGPoint(x: self.substrate.position.x - self.xDist, y: self.substrate.position.y + self.yDist)
-
+        
         if (self.substrate.frame.contains(self.joyStickPoint)) {
             self.stick.position = self.joyStickPoint
         } else {
-        self.stick.position = CGPoint(x: self.substrate.position.x - self.xDist, y: self.substrate.position.y + self.yDist)
+            self.stick.position = CGPoint(x: self.substrate.position.x - self.xDist, y: self.substrate.position.y + self.yDist)
         }
     }
 }

@@ -20,7 +20,7 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     var hpDisplay = HealthPoints()
     var settingsToggle = SKSpriteNode(imageNamed: "image/settings")
     var currentLevel = 1
-        
+    
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
@@ -33,7 +33,7 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         
         weak var weakSelf = self // ARC
         run(SKAction.repeatForever(
-              SKAction.sequence([
+            SKAction.sequence([
                 SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.thunder)}),
                 SKAction.wait(forDuration: 1.0),
                 SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.sun)}),
@@ -93,7 +93,7 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         if player1.points >= 100 {
             player1.points = 0
             gameSetting.removeAllChildren()
-
+            
             nextLevel(level: currentLevel + 1)
             currentLevel += 1
         }
@@ -163,24 +163,24 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
             } else {
                 player1.faceForward()
             }
-       }
-
+        }
+        
     }
-
+    
     
     private func tapEnd(on button:String) {
         if (button == "joystick") {
             controls.xDist = 0
             controls.stickActive = false
             let move:SKAction = SKAction.move(to: controls.substrate.position, duration: 0.2)
-                move.timingMode = .easeOut
+            move.timingMode = .easeOut
             controls.stick.run(move)
         }
     }
     
     
     func initializePhysicsBodies() {
-
+        
         addChild(gameSetting)
         addChild(controls)
         gameSetting.buildLevel1()
@@ -190,39 +190,39 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         player1.physicsBody?.contactTestBitMask = CollisionTypes.soil.rawValue
         player1.name = "player"
         addChild(player1)
-
+        
         gameSetting.soil.physicsBody?.categoryBitMask = CollisionTypes.soil.rawValue
         gameSetting.soil.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
-
-        gameSetting.sun.physicsBody?.categoryBitMask = CollisionTypes.sun.rawValue
-        gameSetting.sun.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
-        
-        gameSetting.water.physicsBody?.categoryBitMask = CollisionTypes.water.rawValue
-        gameSetting.water.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
+        gameSetting.sun.physicsBody?.collisionBitMask = CollisionTypes.player.rawValue 
+//        gameSetting.sun.physicsBody?.categoryBitMask = CollisionTypes.sun.rawValue
+//        gameSetting.sun.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
+//
+//        gameSetting.water.physicsBody?.categoryBitMask = CollisionTypes.water.rawValue
+//        gameSetting.water.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
         
     }
     
     func openSettingsMenu() -> Void {
         GameManager.shared.transition(self, toScene: .MainMenu, transition:
-            SKTransition.doorsCloseHorizontal(withDuration: 2))
+                                        SKTransition.doorsCloseHorizontal(withDuration: 2))
     }
     
     func nextLevel(level: Int) -> Void {
         switch level {
-            case 2:
-                gameSetting.buildLevel2()
-            case 3:
-                gameSetting.buildLevel3()
-            case 4: // Ended game
-                GameManager.shared.transition(self, toScene: .Settings, transition:
-                    SKTransition.crossFade(withDuration: 2))
-            default:
-                return
+        case 2:
+            gameSetting.buildLevel2()
+        case 3:
+            gameSetting.buildLevel3()
+        case 4: // Ended game
+            GameManager.shared.transition(self, toScene: .Settings, transition:
+                                            SKTransition.crossFade(withDuration: 2))
+        default:
+            return
         }
     }
-
     
-
-
-
+    
+    
+    
+    
 }

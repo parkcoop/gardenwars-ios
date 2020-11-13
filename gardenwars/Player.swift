@@ -9,11 +9,11 @@ class Player: SKSpriteNode {
     private var player1WaterLeftFrames: [SKTexture] = []
     private var player1WaterRightFrames: [SKTexture] = []
     private var player1WaterStillFrames: [SKTexture] = []
-
+    
     private var player1SunLeftFrames: [SKTexture] = []
     private var player1SunRightFrames: [SKTexture] = []
     private var player1SunStillFrames: [SKTexture] = []
-
+    
     public var health = 100
     public var points = 0
     private (set) var currentItem: String = ""
@@ -48,12 +48,12 @@ class Player: SKSpriteNode {
         let yRange = SKRange(lowerLimit: 0, upperLimit: ScreenSize.height)
         self.constraints = [SKConstraint.positionX(xRange, y: yRange)]
     }
-
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
     }
-
+    
     
     func walkLeft() -> Void {
         if (self.action(forKey: "WALK_LEFT") != nil) {
@@ -61,10 +61,10 @@ class Player: SKSpriteNode {
         }
         self.run(SKAction.repeat(
             SKAction.animate(
-                 with: player1LeftFrames,
-                 timePerFrame: 0.05,
-                 resize: false,
-                 restore: false
+                with: player1LeftFrames,
+                timePerFrame: 0.05,
+                resize: false,
+                restore: false
             ), count: 2
         ), withKey: "WALK_LEFT")
     }
@@ -76,12 +76,12 @@ class Player: SKSpriteNode {
         }
         self.run(SKAction.repeat(
             SKAction.animate(
-                 with: player1RightFrames,
-                 timePerFrame: 0.05,
-                 resize: false,
-                 restore: false
+                with: player1RightFrames,
+                timePerFrame: 0.05,
+                resize: false,
+                restore: false
             ), count: 2
-            ), withKey: "WALK_RIGHT")
+        ), withKey: "WALK_RIGHT")
     }
     
     
@@ -98,6 +98,11 @@ class Player: SKSpriteNode {
     
     func takeDamage(points: Int) -> Void {
         self.health -= points
+        let pulsedRed = SKAction.sequence([
+            SKAction.colorize(with: .red, colorBlendFactor: 1.0, duration: 0.15),
+            SKAction.wait(forDuration: 0.1),
+            SKAction.colorize(withColorBlendFactor: 0.0, duration: 0.15)])
+        self.run(pulsedRed)
     }
     
     
@@ -111,7 +116,7 @@ class Player: SKSpriteNode {
     }
     
     
-    func garden() {
+    func garden() -> Void {
         if (self.currentItem == "") {
             return
         }

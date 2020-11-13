@@ -4,7 +4,7 @@ import GameplayKit
 import AVFoundation
 
 class GameViewController: UIViewController {
-
+    
     let skView: SKView = {
         let view = SKView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -12,16 +12,16 @@ class GameViewController: UIViewController {
     }()
     
     lazy var backgroundMusic: AVAudioPlayer? = {
-      guard let url = Bundle.main.url(forResource: kBackgroundMusicName, withExtension: kBackgroundMusicExtension) else {
-        return nil
-      }
-      do {
-        let player = try AVAudioPlayer(contentsOf: url)
-        player.numberOfLoops = -1
-        return player
-      } catch {
-        return nil
-      }
+        guard let url = Bundle.main.url(forResource: kBackgroundMusicName, withExtension: kBackgroundMusicExtension) else {
+            return nil
+        }
+        do {
+            let player = try AVAudioPlayer(contentsOf: url)
+            player.numberOfLoops = -1
+            return player
+        } catch {
+            return nil
+        }
     }()
     
     
@@ -35,13 +35,13 @@ class GameViewController: UIViewController {
         skView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         skView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         skView.showsFPS = true
-
+        
         let scene = MainMenu(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
         scene.scaleMode = .aspectFit
         skView.presentScene(scene)
         skView.ignoresSiblingOrder = true
     }
-
-  
-
+    
+    
+    
 }

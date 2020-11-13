@@ -3,7 +3,7 @@ import SpriteKit
 class MainMenu: SKScene {
     var background = SKSpriteNode(imageNamed: "image/sky")
     let logo = SKSpriteNode(imageNamed: "image/logo")
-
+    
     
     override func didMove(to view: SKView) {
         background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
@@ -12,7 +12,7 @@ class MainMenu: SKScene {
         logo.scale(to: CGSize(width: 200, height: 125))
         addChild(background)
         addChild(logo)
-
+        
         let welcomeLabel = SKLabelNode(fontNamed: "Chalkduster")
         welcomeLabel.text = "Tap the sceen to begin"
         welcomeLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 - 100)
@@ -44,7 +44,7 @@ class MainMenu: SKScene {
         startGamePlay()
     }
     
-
+    
     func startGamePlay() {
         GameManager.shared.transition(self, toScene: .Gameplay, transition:
                                         SKTransition.fade(with: UIColor.black, duration: 2))

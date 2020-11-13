@@ -1,7 +1,7 @@
 import SpriteKit
 
 class GameOver: SKScene {
-  
+    
     
     override func didMove(to view: SKView) {
         let settingsLabel: SKLabelNode = SKLabelNode(text: "Well done, gardener")
@@ -24,7 +24,7 @@ class GameOver: SKScene {
     @objc func startGamePlayNotification(_ info:Notification) {
         startGame()
     }
-
+    
     func startGame() {
         GameManager.shared.transition(self, toScene: .Gameplay, transition:
                                         SKTransition.fade(with: UIColor.black, duration: 2))
