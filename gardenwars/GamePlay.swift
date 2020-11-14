@@ -16,7 +16,8 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     private var activeTouches = [UITouch:String]()
     let controls = UIControls()
     let gameSetting = Level()
-    var player1 = Player()
+    var player1 = Player(textureAtlas: "parker")
+    var enemy = Player(textureAtlas: "parker")
     var hpDisplay = HealthPoints()
     var settingsToggle = SKSpriteNode(imageNamed: "image/settings")
     var currentLevel = 1
@@ -31,14 +32,16 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         addChild(settingsToggle)
         
         
-        weak var weakSelf = self // ARC
+        weak var weakSelf = self // ARC?
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.thunder)}),
                 SKAction.wait(forDuration: 1.0),
                 SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.sun)}),
+                SKAction.run({self.moveEnemy(desiredItem: weakSelf!.gameSetting.sun)}),
                 SKAction.wait(forDuration: 1.0),
                 SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.water)}),
+                SKAction.run({self.moveEnemy(desiredItem: weakSelf!.gameSetting.water)}),
                 SKAction.wait(forDuration: 1.0)
             ])
         ))
@@ -57,6 +60,15 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
                     }
                 }
             }
+            // Replenish soil (player <-> soil)
+            if (contact.bodyA.node!.name! == "enemy") || (contact.bodyA.node!.name! == "soil")
+                && (contact.bodyB.node!.name! == "soil") || (contact.bodyB.node!.name! == "enemy") {
+                if (enemy.currentItem == "sun" || enemy.currentItem == "water") {
+                    if gameSetting.replenishSoil(flower: contact.bodyA.node!) {
+                        enemy.garden()
+                    }
+                }
+            }
         }
     }
     
@@ -71,6 +83,9 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         } else {
             player1.faceForward()
         }
+        enemy.faceForward()
+        
+        
         if player1.frame.intersects(gameSetting.thunder.frame) {
             player1.takeDamage(points: 10)
             gameSetting.thunder.removeAllActions()
@@ -90,13 +105,35 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        if player1.points >= 100 {
+        
+        if enemy.frame.intersects(gameSetting.thunder.frame) {
+            enemy.takeDamage(points: 10)
+            gameSetting.thunder.removeAllActions()
+            gameSetting.thunder.position = CGPoint(x: 0, y: -200)
+        }
+        if enemy.frame.intersects(gameSetting.water.frame) {
+            if enemy.holdItem(item: "water") {
+                gameSetting.water.removeAllActions()
+                gameSetting.water.position = CGPoint(x: 0, y: -200)
+            }
+        }
+        if enemy.frame.intersects(gameSetting.sun.frame) {
+            if enemy.holdItem(item: "sun") {
+                gameSetting.sun.removeAllActions()
+                gameSetting.sun.position = CGPoint(x: 0, y: -200)
+            }
+        }
+        
+        
+        if (player1.points >= 100) || (enemy.points >= 100) {
             player1.points = 0
+            enemy.points = 0
             gameSetting.removeAllChildren()
             
             nextLevel(level: currentLevel + 1)
             currentLevel += 1
         }
+        
     }
     
     
@@ -191,6 +228,11 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         player1.name = "player"
         addChild(player1)
         
+        enemy.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
+        enemy.physicsBody?.contactTestBitMask = CollisionTypes.soil.rawValue
+        enemy.name = "enemy"
+        addChild(enemy)
+        
         gameSetting.soil.physicsBody?.categoryBitMask = CollisionTypes.soil.rawValue
         gameSetting.soil.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
         gameSetting.sun.physicsBody?.collisionBitMask = CollisionTypes.player.rawValue 
@@ -201,6 +243,32 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
 //        gameSetting.water.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
         
     }
+    
+    
+    func moveEnemy(desiredItem: SKSpriteNode) {
+        enemy.run(SKAction.moveTo(x: desiredItem.position.x, duration: 2))
+        if enemy.currentItem != "" {
+            if (gameSetting.soil.growthPhase < 6) {
+                enemy.run(SKAction.moveTo(x: gameSetting.soil.position.x, duration: 2))
+                if gameSetting.soil.replenishSoil() {
+                    return enemy.garden()
+                }            }
+            if (gameSetting.soil2.growthPhase < 6) {
+                enemy.run(SKAction.moveTo(x: gameSetting.soil2.position.x, duration: 2))
+                if gameSetting.soil2.replenishSoil() {
+                    return enemy.garden()
+                }
+            }
+            if (gameSetting.soil3.growthPhase < 6) {
+                enemy.run(SKAction.moveTo(x: gameSetting.soil3.position.x, duration: 2))
+                if gameSetting.soil3.replenishSoil() {
+                    return enemy.garden()
+                }            }
+        }
+//        enemy.faceForward()
+
+    }
+    
     
     func openSettingsMenu() -> Void {
         GameManager.shared.transition(self, toScene: .MainMenu, transition:

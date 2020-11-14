@@ -17,8 +17,8 @@ class FallingItem: SKSpriteNode {
         }
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         self.name = type
-        self.physicsBody = SKPhysicsBody(texture: texture, size: texture.size())
-        self.physicsBody?.isDynamic = false;
+//        self.physicsBody = SKPhysicsBody(texture: texture, size: texture.size())
+//        self.physicsBody?.isDynamic = false;
         self.size = CGSize(width: 50, height: 50)
     }
     

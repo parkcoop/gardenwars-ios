@@ -19,19 +19,19 @@ class Player: SKSpriteNode {
     private (set) var currentItem: String = ""
     
     
-    init() {
-        let player1AnimatedAtlas = SKTextureAtlas(named: "parker")
+    init(textureAtlas: String) {
+        let player1AnimatedAtlas = SKTextureAtlas(named: textureAtlas)
         var leftFrames: [SKTexture] = []
         var rightFrames: [SKTexture] = []
         for i in 2...4 {
-            let player1TextureName = "parker\(i)"
+            let player1TextureName = "\(textureAtlas)\(i)"
             leftFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
         }
         for i in 6...8 {
-            let player1TextureName = "parker\(i)"
+            let player1TextureName = "\(textureAtlas)\(i)"
             rightFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
         }
-        player1StillFrame = player1AnimatedAtlas.textureNamed("parker5")
+        player1StillFrame = player1AnimatedAtlas.textureNamed("\(textureAtlas)5")
         player1LeftFrames = leftFrames
         player1RightFrames = rightFrames
         
