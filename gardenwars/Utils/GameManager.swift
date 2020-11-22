@@ -25,8 +25,8 @@ class GameManager {
         if !UserDefaults.standard.bool(forKey: "isFirstLaunch") {
             
             print("This is our first launch")
-            PlayerStats.shared.setSounds(true)
-            PlayerStats.shared.saveMusicVolume(0.7)
+//            PlayerStats.shared.setSounds(true)
+//            PlayerStats.shared.saveMusicVolume(0.7)
             
             UserDefaults.standard.set(true, forKey: "isFirstLaunch")
             UserDefaults.standard.synchronize()
@@ -60,9 +60,7 @@ class GameManager {
     }
     
     func run(_ fileName: String, onNode: SKNode) {
-        if PlayerStats.shared.getSound() {
             onNode.run(SKAction.playSoundFileNamed(fileName, waitForCompletion: false))
-        }
     }
     
     func showAlert(on scene: SKScene, title: String, message: String, preferredStyle: UIAlertController.Style = .alert, actions: [UIAlertAction], animated: Bool = true, delay: Double = 0.0, completion: (() -> Swift.Void)? = nil) {

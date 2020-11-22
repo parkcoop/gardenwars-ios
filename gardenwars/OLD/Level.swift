@@ -1,4 +1,6 @@
 import SpriteKit
+import GameplayKit
+
 
 class Level: SKNode {
     var tree = SKSpriteNode(imageNamed: "image/tree1")
@@ -8,14 +10,30 @@ class Level: SKNode {
     var platformRight = Platform(size: "medium")
     var platformMain = Platform(size: "large")
     
-    let thunder = FallingItem(type: "thunder")
+    let thunder = FallingItem(type: "thunder") 
     let sun = FallingItem(type: "sun")
     let water = FallingItem(type: "water")
     
     let soil = Flower(named: "soil")
     let soil2 = Flower(named: "soil2")
     let soil3 = Flower(named: "soil3")
+    var platforms: [Platform] = [Platform]()
+//    let obstacles = obstacles(fromNodePhysicsBodies: platfor)
+    var obs: [GKPolygonObstacle] = [GKPolygonObstacle]()
+    let graph: GKObstacleGraph = GKObstacleGraph()
     
+    override init() {
+        super.init()
+        platforms.append(platformLeft)
+        platforms.append(platformRight)
+        platforms.append(platformMain)
+        
+
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder:aDecoder)
+    }
     
     func skyFall(item: SKSpriteNode) -> Void {
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
@@ -32,8 +50,16 @@ class Level: SKNode {
         soil2.reset()
         soil3.reset()
     }
+
+    static func initGK(nodeArray: [SKSpriteNode]) {
+        
+    }
     
-    
+    static func generateGraph() {
+       
+
+    }
+
     func replenishSoil(flower: SKNode) -> Bool {
         guard let name = flower.name else {
             return false
@@ -59,13 +85,13 @@ class Level: SKNode {
         platformLeft.position = CGPoint(x: ScreenSize.width * 0.20, y: ScreenSize.height * 0.35)
         platformRight.position = CGPoint(x: ScreenSize.width * 0.75, y: ScreenSize.height * 0.7)
         platformMain.position = CGPoint(x: ScreenSize.width / 2, y: 0)
-        
         soil.position = CGPoint(x: platformLeft.position.x, y: platformLeft.position.y + 78)
         soil2.position = CGPoint(x: platformMain.position.x + ScreenSize.width / 3, y: platformMain.position.y + 89)
         soil3.position = CGPoint(x: platformRight.position.x, y: platformRight.position.y + 78)
         
         addNodes()
     }
+    
     
     
     func buildLevel2() {
