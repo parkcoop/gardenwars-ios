@@ -31,22 +31,14 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     
     let humanGardener = Gardener(imageName: "image/parker5", team: .team1)
     let aiGardener = Gardener(imageName: "image/parker5", team: .team2)
-    let platform1 = Platform(size: "large")
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
         addChild(controls)
         addChild(hpDisplay)
-        platform1.position = CGPoint(x: ScreenSize.width / 2, y: 10)
-
-        addChild(platform1)
-//        settingsToggle.position = CGPoint(x: ScreenSize.width * 0.9, y: ScreenSize.height * 0.9)
-//        settingsToggle.scale(to: CGSize(width: 50, height: 50))
-//        settingsToggle.name = "settings"
-//        addChild(settingsToggle)
-        
-        // Add background
+        gameSetting.buildLevel1()
+        addChild(gameSetting)
         let background = SKSpriteNode(imageNamed: "image/sky")
         background.position = CGPoint(x: size.width/2, y: size.height/2)
         background.zPosition = -1
@@ -112,11 +104,18 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("LOL")
         for touch in touches {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
             for node in touchedNode {
-             
+            if node.name == "jump" {
+                activeTouches[touch] = "jump"
+                tapBegin(on: "jump")
+            }
+            if node.name == "settings" {
+                openSettingsMenu()
+            }
             }
             if (controls.substrate.frame.contains(location)) {
                 activeTouches[touch] = "joystick"
@@ -153,6 +152,10 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         if (button == "jump") {
 //            player1.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
 //            player1.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
+            if let component = humanGardener.component(ofType: MovementComponent.self) {
+//                component.jump()
+                component.jump()
+            }
         }
     }
     
@@ -161,16 +164,12 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         if (button == "joystick") {
             controls.moveJoystick()
             if let component = humanGardener.component(ofType: MovementComponent.self) {
-                // Do stuff with the component here...
                 if (controls.xDist < 0) {
-                    // Do stuff with the component here...
                     component.move(direction: "right")
                 } else if (controls.xDist > 0) {
-    //                player1.walkLeft()
                     component.move(direction: "left")
-
                 } else {
-    //                player1.faceForward()
+                    component.faceForward()
                 }
             }
            

@@ -21,6 +21,7 @@ class FallingItem: GKEntity {
         
         let spriteComponent = SpriteComponent(texture: texture)
         addComponent(spriteComponent)
+//        addComponent(PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: spriteComponent.node.size)))
 
     }
 

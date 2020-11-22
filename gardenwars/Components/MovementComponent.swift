@@ -48,8 +48,11 @@ class MovementComponent: GKComponent {
 
     func move(direction: String) {
         if (direction == "left") {
+            node.run(SKAction.moveBy(x: -15, y: 0, duration: 1))
             walkLeft()
         } else if direction == "right" {
+            node.run(SKAction.moveBy(x: 15, y: 0, duration: 1))
+
             walkRight()
         }
     }
@@ -82,16 +85,21 @@ class MovementComponent: GKComponent {
         ), withKey: "WALK_RIGHT")
     }
     
+    func jump() {
+        if let component = entity?.component(ofType: SpriteComponent.self) {
+            component.node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 5))
+        }
+    }
     
-//    func faceForward() -> Void {
+    func faceForward() -> Void {
 //        if node.currentItem == "water" {
-//            self.texture = SKTexture(imageNamed: "image/parker_water")
-//        } else if self.currentItem == "sun" {
-//            self.texture = SKTexture(imageNamed: "image/parker_sun")
+//            node.texture = SKTexture(imageNamed: "image/parker_water")
+//        } else if node.currentItem == "sun" {
+//            node.texture = SKTexture(imageNamed: "image/parker_sun")
 //        } else {
-//            self.texture = player1StillFrame
+            node.texture = player1StillFrame
 //        }
-//    }
+    }
     
 
     required init?(coder aDecoder: NSCoder) {

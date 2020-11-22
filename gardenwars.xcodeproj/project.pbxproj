@@ -13,10 +13,6 @@
 		4F05117E256AC5EC00900ACE /* GardenerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F05117D256AC5EC00900ACE /* GardenerComponent.swift */; };
 		4F051183256AC64600900ACE /* TeamComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F051182256AC64600900ACE /* TeamComponent.swift */; };
 		4F051193256AC9A400900ACE /* FallingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F051192256AC9A400900ACE /* FallingItem.swift */; };
-		4F05119B256ACA6900900ACE /* PlayerControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F05119A256ACA6900900ACE /* PlayerControlComponent.swift */; };
-		4F0511B0256ACFE600900ACE /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0511AF256ACFE600900ACE /* PhysicsComponent.swift */; };
-		4F0511B5256AD20900900ACE /* PositionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0511B4256AD20900900ACE /* PositionComponent.swift */; };
-		4F0511BA256AD23E00900ACE /* NodeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0511B9256AD23E00900ACE /* NodeComponent.swift */; };
 		4F0511D7256AD55400900ACE /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0511D6256AD55400900ACE /* MovementComponent.swift */; };
 		4F11D7EA255351FB0020B931 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D7E9255351FB0020B931 /* AppDelegate.swift */; };
 		4F11D7F2255351FB0020B931 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D7F1255351FB0020B931 /* GameViewController.swift */; };
@@ -65,10 +61,6 @@
 		4F05117D256AC5EC00900ACE /* GardenerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenerComponent.swift; sourceTree = "<group>"; };
 		4F051182256AC64600900ACE /* TeamComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamComponent.swift; sourceTree = "<group>"; };
 		4F051192256AC9A400900ACE /* FallingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallingItem.swift; sourceTree = "<group>"; };
-		4F05119A256ACA6900900ACE /* PlayerControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlComponent.swift; sourceTree = "<group>"; };
-		4F0511AF256ACFE600900ACE /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
-		4F0511B4256AD20900900ACE /* PositionComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionComponent.swift; sourceTree = "<group>"; };
-		4F0511B9256AD23E00900ACE /* NodeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeComponent.swift; sourceTree = "<group>"; };
 		4F0511D6256AD55400900ACE /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
 		4F11D7E6255351FB0020B931 /* gardenwars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gardenwars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F11D7E9255351FB0020B931 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -152,10 +144,6 @@
 				4F05117D256AC5EC00900ACE /* GardenerComponent.swift */,
 				4F05116E256AC1DE00900ACE /* SpriteComponent.swift */,
 				4F051182256AC64600900ACE /* TeamComponent.swift */,
-				4F05119A256ACA6900900ACE /* PlayerControlComponent.swift */,
-				4F0511AF256ACFE600900ACE /* PhysicsComponent.swift */,
-				4F0511B4256AD20900900ACE /* PositionComponent.swift */,
-				4F0511B9256AD23E00900ACE /* NodeComponent.swift */,
 				4F0511D6256AD55400900ACE /* MovementComponent.swift */,
 			);
 			path = Components;
@@ -379,7 +367,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F0511BA256AD23E00900ACE /* NodeComponent.swift in Sources */,
 				4F051183256AC64600900ACE /* TeamComponent.swift in Sources */,
 				4F726FE9255CAC5B004376C5 /* Platform.swift in Sources */,
 				4F05117E256AC5EC00900ACE /* GardenerComponent.swift in Sources */,
@@ -387,7 +374,6 @@
 				4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */,
 				4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */,
 				4F726FE1255C521A004376C5 /* Settings.swift in Sources */,
-				4F0511B0256ACFE600900ACE /* PhysicsComponent.swift in Sources */,
 				4F30A218255A16A2003981FE /* Flower.swift in Sources */,
 				4FFDDC3025599A2100EB8A28 /* Level.swift in Sources */,
 				4F051179256AC23A00900ACE /* EntityManager.swift in Sources */,
@@ -398,9 +384,7 @@
 				4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */,
 				4F051193256AC9A400900ACE /* FallingItem.swift in Sources */,
 				4F30A2122559BC79003981FE /* HealthPoints.swift in Sources */,
-				4F0511B5256AD20900900ACE /* PositionComponent.swift in Sources */,
 				4FFDDC4025599FEC00EB8A28 /* UIControls.swift in Sources */,
-				4F05119B256ACA6900900ACE /* PlayerControlComponent.swift in Sources */,
 				4F0511D7256AD55400900ACE /* MovementComponent.swift in Sources */,
 				4F11D7F2255351FB0020B931 /* GameViewController.swift in Sources */,
 				4F11D7EA255351FB0020B931 /* AppDelegate.swift in Sources */,
