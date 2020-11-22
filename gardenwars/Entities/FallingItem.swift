@@ -1,9 +1,12 @@
 import SpriteKit
+import GameplayKit
 
-class FallingItem: SKSpriteNode {
-    
-    
+
+class FallingItem: GKEntity {
+
+
     init(type: String) {
+        super.init()
         var texture: SKTexture
         switch type {
         case "sun":
@@ -15,14 +18,13 @@ class FallingItem: SKSpriteNode {
         default:
             texture = SKTexture(imageNamed: "image/thunder")
         }
-        super.init(texture: texture, color: UIColor.clear, size: texture.size())
-        self.name = type
-//        self.physicsBody = SKPhysicsBody(texture: texture, size: texture.size())
-//        self.physicsBody?.isDynamic = false;
-        self.size = CGSize(width: 50, height: 50)
+        
+        let spriteComponent = SpriteComponent(texture: texture)
+        addComponent(spriteComponent)
+
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder:aDecoder)
+      fatalError("init(coder:) has not been implemented")
     }
 }

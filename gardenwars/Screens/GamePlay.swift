@@ -11,57 +11,74 @@ enum CollisionTypes: UInt32 {
 }
 
 class Gameplay: SKScene, SKPhysicsContactDelegate {
-//    static var gkScene: GKScene?
-//
-//    override class var supportsSecureCoding: Bool {
-//        true
-//    }
-//
-//    class func newGameScene() -> SKScene {
-//
-//        guard let gkscene = GKScene(fileNamed: "MyScene") else {
-//            abort()
-//        }
-//
-//        guard let scene = gkscene.rootNode as? Gameplay else {
-//            print("Failed to load GameScene.sks")
-//            return SKScene()
-//        }
-//
-//        gkScene = gkscene
-//        scene.scaleMode = .aspectFill
-//        scene.physicsWorld.contactDelegate = scene
-//        return scene
-//    }
+
     
     private var activeTouches = [UITouch:String]()
     let controls = UIControls()
     let gameSetting = Level()
-//    var player1 = Player(textureAtlas: "parker")
-//    var enemy = Player(textureAtlas: "parker")
+
     var hpDisplay = HealthPoints()
     var settingsToggle = SKSpriteNode(imageNamed: "image/settings")
-    var currentLevel = 1
+    
+    
+    var entityManager: EntityManager!
+    
+    
+    var lastUpdateTimeInterval: TimeInterval = 0
+    
+    let coin1Label = SKLabelNode(fontNamed: "Courier-Bold")
+    let coin2Label = SKLabelNode(fontNamed: "Courier-Bold")
+    
+    let humanGardener = Gardener(imageName: "image/parker5", team: .team1)
+    let aiGardener = Gardener(imageName: "image/parker5", team: .team2)
+    let platform1 = Platform(size: "large")
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
-        initializePhysicsBodies()
-        settingsToggle.position = CGPoint(x: ScreenSize.width * 0.9, y: ScreenSize.height * 0.9)
-        settingsToggle.scale(to: CGSize(width: 50, height: 50))
-        settingsToggle.name = "settings"
-        addChild(settingsToggle)
+        addChild(controls)
+        addChild(hpDisplay)
+        platform1.position = CGPoint(x: ScreenSize.width / 2, y: 10)
+
+        addChild(platform1)
+//        settingsToggle.position = CGPoint(x: ScreenSize.width * 0.9, y: ScreenSize.height * 0.9)
+//        settingsToggle.scale(to: CGSize(width: 50, height: 50))
+//        settingsToggle.name = "settings"
+//        addChild(settingsToggle)
         
-        weak var weakSelf = self // ARC?
+        // Add background
+        let background = SKSpriteNode(imageNamed: "image/sky")
+        background.position = CGPoint(x: size.width/2, y: size.height/2)
+        background.zPosition = -1
+        background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
+        addChild(background)
+        
+        coin1Label.position = CGPoint(x: 100, y: ScreenSize.height - 50)
+        self.addChild(coin1Label)
+        
+        coin2Label.position = CGPoint(x: ScreenSize.width - 100, y: ScreenSize.height - 50)
+        self.addChild(coin2Label)
+        // 1
+        entityManager = EntityManager(scene: self)
+
+        // 2
+        if let spriteComponent = humanGardener.component(ofType: SpriteComponent.self) {
+          spriteComponent.node.position = CGPoint(x: spriteComponent.node.size.width, y: size.height/2)
+        }
+        entityManager.add(humanGardener)
+
+        // 3
+        if let spriteComponent = aiGardener.component(ofType: SpriteComponent.self) {
+          spriteComponent.node.position = CGPoint(x: size.width - spriteComponent.node.size.width, y: size.height/2)
+        }
+        entityManager.add(aiGardener)
+        
+        
+        
         run(SKAction.repeatForever(
             SKAction.sequence([
-                SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.thunder)}),
                 SKAction.wait(forDuration: 1.0),
-                SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.sun)}),
-                SKAction.run({self.moveEnemy(desiredItem: weakSelf!.gameSetting.sun)}),
                 SKAction.wait(forDuration: 1.0),
-                SKAction.run({weakSelf!.gameSetting.skyFall(item: weakSelf!.gameSetting.water)}),
-                SKAction.run({self.moveEnemy(desiredItem: weakSelf!.gameSetting.water)}),
                 SKAction.wait(forDuration: 1.0)
             ])
         ))
@@ -70,34 +87,26 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         if (contact.bodyA.node?.name != nil && contact.bodyB.node?.name != nil) {
-//
-//            // Replenish soil (player <-> soil)
-//            if (contact.bodyA.node!.name! == "player") || (contact.bodyA.node!.name! == "soil")
-//                && (contact.bodyB.node!.name! == "soil") || (contact.bodyB.node!.name! == "player") {
-//                if (player1.currentItem == "sun" || player1.currentItem == "water") {
-//                    if gameSetting.replenishSoil(flower: contact.bodyA.node!) {
-//                        player1.garden()
-//                    }
-//                }
-//            }
-//            // Replenish soil (player <-> soil)
-////            if (contact.bodyA.node!.name! == "enemy") || (contact.bodyA.node!.name! == "soil")
-////                && (contact.bodyB.node!.name! == "soil") || (contact.bodyB.node!.name! == "enemy") {
-////                if (enemy.currentItem == "sun" || enemy.currentItem == "water") {
-////                    if gameSetting.replenishSoil(flower: contact.bodyA.node!) {
-////                        enemy.garden()
-////                    }
-////                }
-////            }
+
         }
     }
     
     
     override func update(_ currentTime: TimeInterval) {
-      
         
-      
-      
+        let deltaTime = currentTime - lastUpdateTimeInterval
+        lastUpdateTimeInterval = currentTime
+
+        entityManager.update(deltaTime)
+
+        if let human = entityManager.gardener(for: .team1),
+          let humanGardener = human.component(ofType: GardenerComponent.self) {
+          coin1Label.text = "\(humanGardener.coins)"
+        }
+        if let ai = entityManager.gardener(for: .team2),
+          let aiGardener = ai.component(ofType: GardenerComponent.self) {
+          coin2Label.text = "\(aiGardener.coins)"
+        }
         
     }
     
@@ -151,14 +160,20 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     private func tapContinues(on button: String) {
         if (button == "joystick") {
             controls.moveJoystick()
-            
-            if (controls.xDist < 0) {
-//                player1.walkRight()
-            } else if (controls.xDist > 0) {
-//                player1.walkLeft()
-            } else {
-//                player1.faceForward()
+            if let component = humanGardener.component(ofType: MovementComponent.self) {
+                // Do stuff with the component here...
+                if (controls.xDist < 0) {
+                    // Do stuff with the component here...
+                    component.move(direction: "right")
+                } else if (controls.xDist > 0) {
+    //                player1.walkLeft()
+                    component.move(direction: "left")
+
+                } else {
+    //                player1.faceForward()
+                }
             }
+           
         }
         
     }
@@ -172,60 +187,6 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
             move.timingMode = .easeOut
             controls.stick.run(move)
         }
-    }
-    
-    
-    func initializePhysicsBodies() {
-        
-//        addChild(gameSetting)
-        addChild(controls)
-//        gameSetting.buildLevel1()
-        addChild(hpDisplay)
-//
-//        player1.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
-//        player1.physicsBody?.contactTestBitMask = CollisionTypes.soil.rawValue
-//        player1.name = "player"
-//        addChild(player1)
-//
-//        enemy.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
-//        enemy.physicsBody?.contactTestBitMask = CollisionTypes.soil.rawValue
-//        enemy.name = "enemy"
-//        addChild(enemy)
-//
-//        gameSetting.soil.physicsBody?.categoryBitMask = CollisionTypes.soil.rawValue
-//        gameSetting.soil.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
-//        gameSetting.sun.physicsBody?.collisionBitMask = CollisionTypes.player.rawValue
-//        gameSetting.sun.physicsBody?.categoryBitMask = CollisionTypes.sun.rawValue
-//        gameSetting.sun.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
-//
-//        gameSetting.water.physicsBody?.categoryBitMask = CollisionTypes.water.rawValue
-//        gameSetting.water.physicsBody?.contactTestBitMask = CollisionTypes.player.rawValue
-    }
-    
-    
-    
-    func moveEnemy(desiredItem: SKSpriteNode) {
-//        enemy.run(SKAction.moveTo(x: desiredItem.position.x, duration: 2))
-//        if enemy.currentItem != "" {
-//            if (gameSetting.soil.growthPhase < 6) {
-//                enemy.run(SKAction.moveTo(x: gameSetting.soil.position.x, duration: 2))
-//                if gameSetting.soil.replenishSoil() {
-//                    return enemy.garden()
-//                }            }
-//            if (gameSetting.soil2.growthPhase < 6) {
-//                enemy.run(SKAction.moveTo(x: gameSetting.soil2.position.x, duration: 2))
-//                if gameSetting.soil2.replenishSoil() {
-//                    return enemy.garden()
-//                }
-//            }
-//            if (gameSetting.soil3.growthPhase < 6) {
-//                enemy.run(SKAction.moveTo(x: gameSetting.soil3.position.x, duration: 2))
-//                if gameSetting.soil3.replenishSoil() {
-//                    return enemy.garden()
-//                }            }
-//        }
-//        enemy.faceForward()
-
     }
     
     

@@ -145,9 +145,7 @@ class Level: SKNode {
         addChild(platformLeft)
         addChild(platformRight)
         addChild(platformMain)
-        addChild(sun)
-        addChild(water)
-        addChild(thunder)
+
         addChild(soil)
         addChild(soil2)
         addChild(soil3)
