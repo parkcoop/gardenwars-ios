@@ -7,7 +7,7 @@
 import SpriteKit
 import GameplayKit
 
-class MovementComponent: GKComponent {
+class MovementComponent: GKComponent, GKAgentDelegate {
     private var player1LeftFrames: [SKTexture] = []
     private var player1RightFrames: [SKTexture] = []
     private var player1StillFrame: SKTexture?
@@ -20,7 +20,8 @@ class MovementComponent: GKComponent {
     private var player1SunRightFrames: [SKTexture] = []
     private var player1SunStillFrames: [SKTexture] = []
     
-    
+    var playerAgent: GKAgent2D? = GKAgent2D()
+
     private var node: SKSpriteNode {
         guard let node = entity?.component(ofType: SpriteComponent.self)?.node else {
             fatalError("This entity don't have node")
@@ -41,6 +42,10 @@ class MovementComponent: GKComponent {
             let player1TextureName = "\("parker")\(i)"
             rightFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
         }
+        playerAgent?.delegate = self
+
+        let behavior = GKBehavior()
+        playerAgent?.behavior = behavior
         player1StillFrame = player1AnimatedAtlas.textureNamed("\("parker")5")
         player1LeftFrames = leftFrames
         player1RightFrames = rightFrames
@@ -48,10 +53,10 @@ class MovementComponent: GKComponent {
 
     func move(direction: String) {
         if (direction == "left") {
-            node.run(SKAction.moveBy(x: -15, y: 0, duration: 1))
+//            node.run(SKAction.moveBy(x: -15, y: 0, duration: 1))
             walkLeft()
         } else if direction == "right" {
-            node.run(SKAction.moveBy(x: 15, y: 0, duration: 1))
+//            node.run(SKAction.moveBy(x: 15, y: 0, duration: 1))
 
             walkRight()
         }
@@ -87,7 +92,7 @@ class MovementComponent: GKComponent {
     
     func jump() {
         if let component = entity?.component(ofType: SpriteComponent.self) {
-            component.node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 5))
+            component.node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 55))
         }
     }
     
@@ -101,7 +106,17 @@ class MovementComponent: GKComponent {
 //        }
     }
     
-
+    func agentWillUpdate(_ agent: GKAgent) {
+          if let agent2d = agent as? GKAgent2D {
+              agent2d.position = float2(Float((node.position.x)), Float((node.position.y)))
+          }
+      }
+      
+      func agentDidUpdate(_ agent: GKAgent) {
+          if let agent2d = agent as? GKAgent2D {
+              node.position = CGPoint(x: CGFloat(agent2d.position.x), y: CGFloat(agent2d.position.y))
+          }
+      }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

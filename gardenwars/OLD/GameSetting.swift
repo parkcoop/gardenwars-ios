@@ -2,7 +2,7 @@ import SpriteKit
 import GameplayKit
 
 
-class Level: SKNode {
+class GameSetting: SKNode {
     var tree = SKSpriteNode(imageNamed: "image/tree1")
     var background = SKSpriteNode(imageNamed: "image/sky")
     
@@ -10,7 +10,7 @@ class Level: SKNode {
     var platformRight = Platform(size: "medium")
     var platformMain = Platform(size: "large")
     
-    let thunder = FallingItem(type: "thunder") 
+    let thunder = Thunder()
     let sun = FallingItem(type: "sun")
     let water = FallingItem(type: "water")
     

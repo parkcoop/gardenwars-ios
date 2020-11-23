@@ -13,15 +13,12 @@ class FallingItem: GKEntity {
             texture = SKTexture(imageNamed: "image/sun")
         case "water":
             texture = SKTexture(imageNamed: "image/water")
-        case "thunder":
-            texture = SKTexture(imageNamed: "image/thunder")
         default:
             texture = SKTexture(imageNamed: "image/thunder")
         }
         
         let spriteComponent = SpriteComponent(texture: texture)
         addComponent(spriteComponent)
-//        addComponent(PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: spriteComponent.node.size)))
 
     }
 

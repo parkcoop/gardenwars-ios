@@ -14,8 +14,8 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
 
     
     private var activeTouches = [UITouch:String]()
-    let controls = UIControls()
-    let gameSetting = Level()
+    let uiControls = UIControls()
+    let gameSetting = GameSetting()
 
     var hpDisplay = HealthPoints()
     var settingsToggle = SKSpriteNode(imageNamed: "image/settings")
@@ -23,7 +23,8 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     
     var entityManager: EntityManager!
     
-    
+    let agentSystem = GKComponentSystem(componentClass: GKAgent2D.self)
+
     var lastUpdateTimeInterval: TimeInterval = 0
     
     let coin1Label = SKLabelNode(fontNamed: "Courier-Bold")
@@ -35,7 +36,7 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
-        addChild(controls)
+        addChild(uiControls)
         addChild(hpDisplay)
         gameSetting.buildLevel1()
         addChild(gameSetting)
@@ -44,7 +45,25 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         background.zPosition = -1
         background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
         addChild(background)
+        var playerControlComponent: MovementComponent? {
+            return humanGardener.component(ofType: MovementComponent.self)
+        }
+        let playerAgent = playerControlComponent?.playerAgent
+        self.agentSystem.addComponent(playerAgent!)
         
+        let seekGoal = GKGoal(toSeekAgent: playerControlComponent?.playerAgent ?? GKAgent2D())
+        
+//        let followGoal = GKGoal(toFleeAgent: playerControlComponent?.playerAgent ?? GKAgent2D())
+        let wanderGoal = GKGoal(toWander: 1)
+//        let gardenGoal = GKGoal(toSeekAgent: <#T##GKAgent#>)
+        var aiControlComponent: EnemyAgentComponent? {
+            return aiGardener.component(ofType: EnemyAgentComponent.self)
+        }
+        let agent = aiControlComponent?.setUpAgent(with: [seekGoal])
+        self.agentSystem.addComponent(agent!)
+        
+
+
         coin1Label.position = CGPoint(x: 100, y: ScreenSize.height - 50)
         self.addChild(coin1Label)
         
@@ -64,7 +83,6 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
           spriteComponent.node.position = CGPoint(x: size.width - spriteComponent.node.size.width, y: size.height/2)
         }
         entityManager.add(aiGardener)
-        
         
         
         run(SKAction.repeatForever(
@@ -90,15 +108,35 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         lastUpdateTimeInterval = currentTime
 
         entityManager.update(deltaTime)
+        
+        agentSystem.update(deltaTime: deltaTime)
 
         if let human = entityManager.gardener(for: .team1),
           let humanGardener = human.component(ofType: GardenerComponent.self) {
-          coin1Label.text = "\(humanGardener.coins)"
+            hpDisplay.healthText.text = String(humanGardener.health)
+            hpDisplay.scoreText.text = String(humanGardener.points)
+            
         }
         if let ai = entityManager.gardener(for: .team2),
           let aiGardener = ai.component(ofType: GardenerComponent.self) {
-          coin2Label.text = "\(aiGardener.coins)"
+            hpDisplay.healthText.text = String(aiGardener.health)
+            hpDisplay.scoreText.text = String(aiGardener.points)
+            
         }
+//
+//        hpDisplay.healthText.text = String(humanGardener.health)
+//        hpDisplay.scoreText.text = String(humanGardener.points)
+        if let component = humanGardener.component(ofType: SpriteComponent.self) {
+            if (uiControls.xDist < 0) {
+                component.node.position.x -= 0.2 * uiControls.xDist
+            } else if (uiControls.xDist > 0) {
+                component.node.position.x -= 0.2 * uiControls.xDist
+            } else {
+//                component.faceForward()
+            }
+        
+        }
+       
         
     }
     
@@ -117,12 +155,12 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
                 openSettingsMenu()
             }
             }
-            if (controls.substrate.frame.contains(location)) {
+            if (uiControls.substrate.frame.contains(location)) {
                 activeTouches[touch] = "joystick"
                 tapBegin(on: "joystick")
-                controls.stickActive = true
+                uiControls.stickActive = true
             } else {
-                controls.stickActive = false
+                uiControls.stickActive = false
             }
         }
     }
@@ -131,8 +169,8 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            if (controls.substrate.frame.contains(location)) {
-                controls.joyStickPoint = location
+            if (uiControls.substrate.frame.contains(location)) {
+                uiControls.joyStickPoint = location
                 tapContinues(on: "joystick")
             }
         }
@@ -162,11 +200,11 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     
     private func tapContinues(on button: String) {
         if (button == "joystick") {
-            controls.moveJoystick()
+            uiControls.moveJoystick()
             if let component = humanGardener.component(ofType: MovementComponent.self) {
-                if (controls.xDist < 0) {
+                if (uiControls.xDist < 0) {
                     component.move(direction: "right")
-                } else if (controls.xDist > 0) {
+                } else if (uiControls.xDist > 0) {
                     component.move(direction: "left")
                 } else {
                     component.faceForward()
@@ -180,11 +218,11 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     
     private func tapEnd(on button:String) {
         if (button == "joystick") {
-            controls.xDist = 0
-            controls.stickActive = false
-            let move:SKAction = SKAction.move(to: controls.substrate.position, duration: 0.2)
+            uiControls.xDist = 0
+            uiControls.stickActive = false
+            let move:SKAction = SKAction.move(to: uiControls.substrate.position, duration: 0.2)
             move.timingMode = .easeOut
-            controls.stick.run(move)
+            uiControls.stick.run(move)
         }
     }
     

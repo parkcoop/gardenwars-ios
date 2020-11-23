@@ -44,9 +44,9 @@ class Player: SKSpriteNode {
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.isDynamic = true;
         
-        let xRange = SKRange(lowerLimit: self.size.width * 0.5, upperLimit: ScreenSize.width - self.size.width * 0.5)
-        let yRange = SKRange(lowerLimit: 0, upperLimit: ScreenSize.height)
-        self.constraints = [SKConstraint.positionX(xRange, y: yRange)]
+//        let xRange = SKRange(lowerLimit: self.size.width * 0.5, upperLimit: ScreenSize.width - self.size.width * 0.5)
+//        let yRange = SKRange(lowerLimit: 0, upperLimit: ScreenSize.height)
+//        self.constraints = [SKConstraint.positionX(xRange, y: yRange)]
     }
     
     

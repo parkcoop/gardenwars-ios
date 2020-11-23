@@ -3,6 +3,8 @@ import GameplayKit
 
 class Gardener: GKEntity {
 
+//    var health = 100
+//    var points = 0
     init(imageName: String, team: Team) {
         super.init()
 
@@ -15,6 +17,7 @@ class Gardener: GKEntity {
         addComponent(GardenerComponent())
 //        addComponent(PhysicsComponent(physicsBody: SKPhysicsBody(rectangleOf: spriteComponent.node.size)))
         addComponent(MovementComponent())
+        addComponent(EnemyAgentComponent())
     }
   
   required init?(coder aDecoder: NSCoder) {
