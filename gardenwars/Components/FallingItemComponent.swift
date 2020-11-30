@@ -10,12 +10,15 @@ import SpriteKit
 import GameplayKit
 
 class FallingItemComponent: GKComponent, GKAgentDelegate {
-//    private var node: SKSpriteNode {
-//        guard let node = entity?.component(ofType: SpriteComponent.self)?.node else {
-//            fatalError("This entity don't have node")
-//        }
-//        return node
-//    }
+    private var node: SKSpriteNode {
+        guard let node = entity?.component(ofType: SpriteComponent.self)?.node else {
+            fatalError("This entity don't have node")
+        }
+        return node
+    }
+    
+    var fallingItemAgent: GKAgent2D? = GKAgent2D()
+    
 //    override func update(deltaTime seconds: TimeInterval) {
 //        <#code#>
 //    }
@@ -24,8 +27,12 @@ class FallingItemComponent: GKComponent, GKAgentDelegate {
 //        <#code#>
 //    }
 //    
-//    func agentWillUpdate(_ agent: GKAgent) {
-//        print("OH FIUC")
-//    }
+    func agentWillUpdate(_ agent: GKAgent) {
+        print("OH FIUC")
+    }
+    
+    func skyFall() {
+        
+    }
     
 }

@@ -1,5 +1,6 @@
 import Foundation
 import SpriteKit
+import GameplayKit
 
 let AppId = "123456"
 let chartboostAppID = "5a3cfaf8e6d7050d5c5c6dce"
@@ -38,9 +39,12 @@ class GameManager {
         
         if let transition = transition {
             scene.scaleMode = .resizeFill
+            scene.anchorPoint = CGPoint(x: 0, y: 0)
             fromScene.view?.presentScene(scene, transition: transition)
         } else {
             scene.scaleMode = .resizeFill
+            scene.anchorPoint = CGPoint(x: 0, y: 0)
+
             fromScene.view?.presentScene(scene)
         }
         
@@ -51,7 +55,7 @@ class GameManager {
         case SceneType.MainMenu:
             return MainMenu(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
         case SceneType.Gameplay:
-            return Gameplay(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
+            return GamePlay(fileNamed: "GamePlay")
         case SceneType.Settings:
             return Settings(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
         case SceneType.GameOver:

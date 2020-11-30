@@ -10,7 +10,7 @@ enum CollisionTypes: UInt32 {
     case water = 16
 }
 
-class Gameplay: SKScene, SKPhysicsContactDelegate {
+class GamePlay: SKScene, SKPhysicsContactDelegate {
 
     
     private var activeTouches = [UITouch:String]()
@@ -33,37 +33,109 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
     let humanGardener = Gardener(imageName: "image/parker5", team: .team1)
     let aiGardener = Gardener(imageName: "image/parker5", team: .team2)
     
+    var navigationGraph: GKGraph!
+
+    
+    let spawnPoints = [
+            CGPoint(x: 245, y: 3900),
+            CGPoint(x: 700, y: 3500),
+            CGPoint(x: 1250, y: 1500),
+            CGPoint(x: 1200, y: 1950),
+            CGPoint(x: 1200, y: 2450),
+            CGPoint(x: 1200, y: 2950),
+            CGPoint(x: 1200, y: 3400),
+            CGPoint(x: 2550, y: 2350),
+            CGPoint(x: 2500, y: 3100),
+            CGPoint(x: 3000, y: 2400),
+            CGPoint(x: 2048, y: 2400),
+            CGPoint(x: 2200, y: 2200)
+        ]
+    var graph: GKObstacleGraph<GKGraphNode2D>!
+    
+    
+    
     override func didMove(to view: SKView) {
+//        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+//        navigationGraph = self.graph
+
+        print("THE GRAPH", self.graph)
+        
+        
+        
+        let sceneFile = "GamePlay"
+         if let gkScene = GKScene( fileNamed: sceneFile ) {
+            navigationGraph = gkScene.graphs["enemypath"]!
+            
+            print( "graphs = \(gkScene.graphs["enemypath"])" )
+         } else {
+             print( "failed to create gkScene from file \(sceneFile)" )
+         }
+        
+        print("WHAT ABOUT NOW?", navigationGraph!)
+        
+       
+        
+//        let obstacles = SKNode.obstacles(fromNodePhysicsBodies: gameSetting.children)
+//        graph = GKObstacleGraph(obstacles: obstacles, bufferRadius: 100)
+//        print("OBBSTACLES", graph)
+      
+        let newGraph = GKGraph()
+        for drawnNode in navigationGraph.nodes! {
+            let coordinatePoint = SKSpriteNode(color: .blue, size: CGSize(width: 5, height: 5))
+//            coordinatePoint.position = drawnNode[0]
+//            self.addChild(position)
+            print(drawnNode)
+            newGraph.add([drawnNode])
+        }
+        
+        print("new", newGraph)
+    
+        
+        let enemyPath = GKPath.init(graphNodes: getEnemyPath(), radius: 1)
+        
+        print("DO WE?", enemyPath)
+        
+//        enemypa
+        
+        let enemyFollowGoal = GKGoal(toStayOn: enemyPath, maxPredictionTime: 1)
+        let speedGoal = GKGoal(toReachTargetSpeed: 500)
+        
+        
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
+
         addChild(uiControls)
         addChild(hpDisplay)
-        gameSetting.buildLevel1()
-        addChild(gameSetting)
+
         let background = SKSpriteNode(imageNamed: "image/sky")
         background.position = CGPoint(x: size.width/2, y: size.height/2)
         background.zPosition = -1
         background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
         addChild(background)
-        var playerControlComponent: MovementComponent? {
-            return humanGardener.component(ofType: MovementComponent.self)
+        
+//        var playerControlComponent: MovementComponent? {
+//            return humanGardener.component(ofType: MovementComponent.self)
+//        }
+        
+        guard let playerControlComponent = humanGardener.component(ofType: MovementComponent.self) else {
+            fatalError("Human controlled gardener must have movement animation component")
         }
-        let playerAgent = playerControlComponent?.playerAgent
+        
+        let playerAgent = playerControlComponent.playerAgent
         self.agentSystem.addComponent(playerAgent!)
+        let seekGoal = GKGoal(toSeekAgent: playerControlComponent.playerAgent ?? GKAgent2D())
         
-        let seekGoal = GKGoal(toSeekAgent: playerControlComponent?.playerAgent ?? GKAgent2D())
+        let wanderGoal = GKGoal(toAvoid: [playerControlComponent.playerAgent ?? GKAgent2D()], maxPredictionTime: 1)
         
-//        let followGoal = GKGoal(toFleeAgent: playerControlComponent?.playerAgent ?? GKAgent2D())
-        let wanderGoal = GKGoal(toWander: 1)
-//        let gardenGoal = GKGoal(toSeekAgent: <#T##GKAgent#>)
+        
         var aiControlComponent: EnemyAgentComponent? {
             return aiGardener.component(ofType: EnemyAgentComponent.self)
         }
-        let agent = aiControlComponent?.setUpAgent(with: [seekGoal])
-        self.agentSystem.addComponent(agent!)
         
-
-
+        
+        let agent = aiControlComponent?.setUpAgent(with: [enemyFollowGoal, speedGoal, seekGoal])
+        self.agentSystem.addComponent(agent!) // DO
+                
         coin1Label.position = CGPoint(x: 100, y: ScreenSize.height - 50)
         self.addChild(coin1Label)
         
@@ -123,9 +195,7 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
             hpDisplay.scoreText.text = String(aiGardener.points)
             
         }
-//
-//        hpDisplay.healthText.text = String(humanGardener.health)
-//        hpDisplay.scoreText.text = String(humanGardener.points)
+
         if let component = humanGardener.component(ofType: SpriteComponent.self) {
             if (uiControls.xDist < 0) {
                 component.node.position.x -= 0.2 * uiControls.xDist
@@ -140,9 +210,16 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    func getEnemyPath() -> [GKGraphNode] {
+
+        return navigationGraph.findPath(from: navigationGraph.nodes![7], to: navigationGraph.nodes![8])
+        
+    }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("LOL")
+//        getEnemyPath(to: )
         for touch in touches {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
@@ -223,8 +300,13 @@ class Gameplay: SKScene, SKPhysicsContactDelegate {
             let move:SKAction = SKAction.move(to: uiControls.substrate.position, duration: 0.2)
             move.timingMode = .easeOut
             uiControls.stick.run(move)
+            if let component = humanGardener.component(ofType: MovementComponent.self) {
+                    component.faceForward()
+            }
         }
     }
+    
+    
     
     
     func openSettingsMenu() -> Void {

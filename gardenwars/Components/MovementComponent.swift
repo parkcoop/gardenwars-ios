@@ -53,40 +53,37 @@ class MovementComponent: GKComponent, GKAgentDelegate {
 
     func move(direction: String) {
         if (direction == "left") {
-//            node.run(SKAction.moveBy(x: -15, y: 0, duration: 1))
             walkLeft()
         } else if direction == "right" {
-//            node.run(SKAction.moveBy(x: 15, y: 0, duration: 1))
-
             walkRight()
         }
     }
     
     private func walkLeft() -> Void {
-        if (node.action(forKey: "WALK_LEFT") != nil) {
-            return
-        }
-        node.run(SKAction.repeat(
+        node.removeAllActions()
+//        if (node.action(forKey: "WALK_LEFT") != nil) {
+//            return
+//        }
+        node.run(SKAction.repeatForever(
             SKAction.animate(
                 with: player1LeftFrames,
                 timePerFrame: 0.05,
                 resize: false,
                 restore: false
-            ), count: 2
+            )
         ), withKey: "WALK_LEFT")
     }
     
     private func walkRight() -> Void {
-        if (node.action(forKey: "WALK_RIGHT") != nil) {
-            return
-        }
-        node.run(SKAction.repeat(
+        node.removeAllActions()
+
+        node.run(SKAction.repeatForever(
             SKAction.animate(
                 with: player1RightFrames,
                 timePerFrame: 0.05,
                 resize: false,
                 restore: false
-            ), count: 2
+            )
         ), withKey: "WALK_RIGHT")
     }
     
@@ -97,18 +94,21 @@ class MovementComponent: GKComponent, GKAgentDelegate {
     }
     
     func faceForward() -> Void {
+        print("WTF")
 //        if node.currentItem == "water" {
 //            node.texture = SKTexture(imageNamed: "image/parker_water")
 //        } else if node.currentItem == "sun" {
 //            node.texture = SKTexture(imageNamed: "image/parker_sun")
 //        } else {
-            node.texture = player1StillFrame
+        node.texture = player1StillFrame
+
+        node.removeAllActions()
 //        }
     }
     
     func agentWillUpdate(_ agent: GKAgent) {
           if let agent2d = agent as? GKAgent2D {
-              agent2d.position = float2(Float((node.position.x)), Float((node.position.y)))
+              agent2d.position = SIMD2<Float>(Float((node.position.x)), Float((node.position.y)))
           }
       }
       

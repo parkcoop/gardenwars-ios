@@ -22,7 +22,7 @@ class GameViewController: UIViewController {
         skView.showsFPS = true
 
         let scene = MainMenu(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
-        scene.scaleMode = .aspectFit
+        scene.scaleMode = .resizeFill
         skView.presentScene(scene)
         skView.ignoresSiblingOrder = true
     }

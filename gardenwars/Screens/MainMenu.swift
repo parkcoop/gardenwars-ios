@@ -14,7 +14,7 @@ class MainMenu: SKScene {
         addChild(logo)
         
         let welcomeLabel = SKLabelNode(fontNamed: "Chalkduster")
-        welcomeLabel.text = "Tap the sceen to begin"
+        welcomeLabel.text = "Tap the screen to begin"
         welcomeLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 - 100)
         logo.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
         welcomeLabel.zPosition = 6
