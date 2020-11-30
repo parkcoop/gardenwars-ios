@@ -9,33 +9,25 @@ class EnemyGardener: GKEntity, GKAgentDelegate {
         
         let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName))
         spriteComponent.node.size = CGSize(width: 60, height: 100)
+        let xRange = SKRange(lowerLimit: spriteComponent.node.size.width * 0.5, upperLimit: ScreenSize.width - spriteComponent.node.size.width * 0.5)
+        let yRange = SKRange(lowerLimit: 0, upperLimit: ScreenSize.height)
+        spriteComponent.node.constraints = [SKConstraint.positionX(xRange, y: yRange)]
         
         addComponent(spriteComponent)
+        let physicsComponent = PhysicsComponent()
+        addComponent(physicsComponent)
+        
+        spriteComponent.node.physicsBody = physicsComponent.physicsBody
+        
         addComponent(TeamComponent(team: team))
         addComponent(GardenerComponent())
-        addComponent(MovementComponent())
         addComponent(EnemyAgentComponent())
-        addComponent(GKAgent2D())
+//        addComponent(GKAgent2D())
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    enum EnemyGardenerMandate {
-        // Hunt another agent (either a `PlayerBot` or a "good" `TaskBot`).
-//        case huntAgent(GKAgent2D)
-
-        // Follow the `TaskBot`'s "good" patrol path.
-        case followGoodPatrolPath
-
-        // Follow the `TaskBot`'s "bad" patrol path.
-        case followBadPatrolPath
-
-        // Return to a given position on a patrol path.
-        case returnToPositionOnPath(SIMD2<Float>)
-    }
-    
     
     
     

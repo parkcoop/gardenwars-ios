@@ -50,12 +50,13 @@ class EnemyAgentComponent: GKComponent, GKAgentDelegate {
     }
     
     func setUpAgent(with goals: [GKGoal]) -> GKAgent2D {
-        let behavior = GKBehavior(goals: goals, andWeights: [5, 5, 11])
+        let behavior = GKBehavior(goals: goals, andWeights: [15, 10, 5, 1])
         agent.behavior = behavior
         let position = node.position
-        agent.maxSpeed = 400
-        agent.maxAcceleration = 400
-        agent.radius = 40
+        agent.maxSpeed = 2500
+        agent.maxAcceleration = 2500
+        
+        agent.radius = 100
         agent.position = vector_float2(Float(position.x), Float(position.y))
         agent.delegate = self
         return agent

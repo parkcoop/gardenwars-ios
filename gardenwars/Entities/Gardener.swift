@@ -8,13 +8,19 @@ class Gardener: GKEntity {
         super.init()
 
         let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName))
-        spriteComponent.node.size = CGSize(width: 60, height: 100)
-        
+//        spriteComponent.node.size = CGSize(width: 60, height: 100)
+        let xRange = SKRange(lowerLimit: spriteComponent.node.size.width * 0.5, upperLimit: ScreenSize.width - spriteComponent.node.size.width * 0.5)
+        let yRange = SKRange(lowerLimit: 0, upperLimit: ScreenSize.height)
+        spriteComponent.node.constraints = [SKConstraint.positionX(xRange, y: yRange)]
         addComponent(spriteComponent)
+        
+        let physicsComponent = PhysicsComponent()
+        addComponent(physicsComponent)
         addComponent(TeamComponent(team: team))
         addComponent(GardenerComponent())
         addComponent(MovementComponent())
-        addComponent(EnemyAgentComponent())
+        
+        spriteComponent.node.physicsBody = physicsComponent.physicsBody
     }
   
   required init?(coder aDecoder: NSCoder) {

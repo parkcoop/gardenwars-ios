@@ -5,7 +5,9 @@ import GameplayKit
 class EntityManager {
     lazy var componentSystems: [GKComponentSystem] = {
         let gardenerSystem = GKComponentSystem(componentClass: GardenerComponent.self)
-        return [gardenerSystem]
+        let enemySystem = GKComponentSystem(componentClass: EnemyAgentComponent.self)
+        let fallingSystem = GKComponentSystem(componentClass: FallingItemComponent.self)
+        return [gardenerSystem, enemySystem, fallingSystem]
     }()
     // 1
     var entities = Set<GKEntity>()

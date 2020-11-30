@@ -14,13 +14,14 @@
 		4F051183256AC64600900ACE /* TeamComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F051182256AC64600900ACE /* TeamComponent.swift */; };
 		4F051193256AC9A400900ACE /* FallingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F051192256AC9A400900ACE /* FallingItem.swift */; };
 		4F0511D7256AD55400900ACE /* MovementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0511D6256AD55400900ACE /* MovementComponent.swift */; };
-		4F0D1AE1256F74840029A3E1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D1AE0256F74840029A3E1 /* GameScene.swift */; };
-		4F0D1AE6256F748F0029A3E1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F0D1AE5256F748F0029A3E1 /* GameScene.sks */; };
 		4F11D7EA255351FB0020B931 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D7E9255351FB0020B931 /* AppDelegate.swift */; };
 		4F11D7F2255351FB0020B931 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D7F1255351FB0020B931 /* GameViewController.swift */; };
 		4F11D7F7255351FC0020B931 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F11D7F6255351FC0020B931 /* Assets.xcassets */; };
 		4F11D802255351FC0020B931 /* gardenwarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D801255351FC0020B931 /* gardenwarsTests.swift */; };
 		4F11D80D255351FC0020B931 /* gardenwarsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11D80C255351FC0020B931 /* gardenwarsUITests.swift */; };
+		4F2BCE7825758EA100347D52 /* ssss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCE7725758EA100347D52 /* ssss.swift */; };
+		4F2BCE7D2575924D00347D52 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCE7C2575924D00347D52 /* PhysicsComponent.swift */; };
+		4F2BCE822575B47500347D52 /* GardeningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCE812575B47500347D52 /* GardeningState.swift */; };
 		4F30A2122559BC79003981FE /* HealthPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F30A2112559BC79003981FE /* HealthPoints.swift */; };
 		4F30A218255A16A2003981FE /* Flower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F30A217255A16A2003981FE /* Flower.swift */; };
 		4F30A225255A324B003981FE /* flower.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4F30A216255A1645003981FE /* flower.atlas */; };
@@ -32,7 +33,6 @@
 		4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DCC2557007200F59E35 /* GamePlay.swift */; };
 		4F5126EE256C8AA00024262D /* NormalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5126ED256C8AA00024262D /* NormalState.swift */; };
 		4F5126F6256C8B960024262D /* HoldingItemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5126F5256C8B960024262D /* HoldingItemState.swift */; };
-		4F5126FB256C9E8A0024262D /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5126FA256C9E8A0024262D /* File.swift */; };
 		4F512700256E8BCD0024262D /* GamePlay.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F5126FF256E8BCD0024262D /* GamePlay.sks */; };
 		4F5F63882565562000103BB7 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F63872565562000103BB7 /* Enemy.swift */; };
 		4F726FE1255C521A004376C5 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F726FE0255C521A004376C5 /* Settings.swift */; };
@@ -41,7 +41,6 @@
 		4F7C89EA25586DD90047169C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7C89E925586DD90047169C /* LaunchScreen.storyboard */; };
 		4F99B4FE256B003600AFB29A /* Thunder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F99B4FD256B003600AFB29A /* Thunder.swift */; };
 		4FB6B74F2555D81100002B31 /* parker.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4FB6B74E2555D81100002B31 /* parker.atlas */; };
-		4FD1611C25715B0F00179989 /* EnemyGardenBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1611B25715B0F00179989 /* EnemyGardenBehavior.swift */; };
 		4FD1612125715C7800179989 /* EnemyGardener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1612025715C7800179989 /* EnemyGardener.swift */; };
 		4FFDDC202559828C00EB8A28 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC1F2559828C00EB8A28 /* Player.swift */; };
 		4FFDDC3025599A2100EB8A28 /* GameSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC2F25599A2100EB8A28 /* GameSetting.swift */; };
@@ -73,8 +72,6 @@
 		4F051182256AC64600900ACE /* TeamComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamComponent.swift; sourceTree = "<group>"; };
 		4F051192256AC9A400900ACE /* FallingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallingItem.swift; sourceTree = "<group>"; };
 		4F0511D6256AD55400900ACE /* MovementComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementComponent.swift; sourceTree = "<group>"; };
-		4F0D1AE0256F74840029A3E1 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		4F0D1AE5256F748F0029A3E1 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		4F11D7E6255351FB0020B931 /* Garden Wars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Garden Wars.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F11D7E9255351FB0020B931 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F11D7F1255351FB0020B931 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +83,9 @@
 		4F11D808255351FC0020B931 /* gardenwarsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gardenwarsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F11D80C255351FC0020B931 /* gardenwarsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gardenwarsUITests.swift; sourceTree = "<group>"; };
 		4F11D80E255351FC0020B931 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F2BCE7725758EA100347D52 /* ssss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ssss.swift; sourceTree = "<group>"; };
+		4F2BCE7C2575924D00347D52 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
+		4F2BCE812575B47500347D52 /* GardeningState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardeningState.swift; sourceTree = "<group>"; };
 		4F30A2112559BC79003981FE /* HealthPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthPoints.swift; sourceTree = "<group>"; };
 		4F30A216255A1645003981FE /* flower.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = flower.atlas; sourceTree = "<group>"; };
 		4F30A217255A16A2003981FE /* Flower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flower.swift; sourceTree = "<group>"; };
@@ -97,7 +97,6 @@
 		4F4A7DCC2557007200F59E35 /* GamePlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlay.swift; sourceTree = "<group>"; };
 		4F5126ED256C8AA00024262D /* NormalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalState.swift; sourceTree = "<group>"; };
 		4F5126F5256C8B960024262D /* HoldingItemState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingItemState.swift; sourceTree = "<group>"; };
-		4F5126FA256C9E8A0024262D /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		4F5126FF256E8BCD0024262D /* GamePlay.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GamePlay.sks; sourceTree = "<group>"; };
 		4F5F63872565562000103BB7 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		4F726FE0255C521A004376C5 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -106,7 +105,6 @@
 		4F7C89E925586DD90047169C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F99B4FD256B003600AFB29A /* Thunder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thunder.swift; sourceTree = "<group>"; };
 		4FB6B74E2555D81100002B31 /* parker.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = parker.atlas; sourceTree = "<group>"; };
-		4FD1611B25715B0F00179989 /* EnemyGardenBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyGardenBehavior.swift; sourceTree = "<group>"; };
 		4FD1612025715C7800179989 /* EnemyGardener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyGardener.swift; sourceTree = "<group>"; };
 		4FFDDC1F2559828C00EB8A28 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		4FFDDC2F25599A2100EB8A28 /* GameSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSetting.swift; sourceTree = "<group>"; };
@@ -144,8 +142,6 @@
 				4F7C89E925586DD90047169C /* LaunchScreen.storyboard */,
 				4F4A7DCC2557007200F59E35 /* GamePlay.swift */,
 				4F5126FF256E8BCD0024262D /* GamePlay.sks */,
-				4F0D1AE0256F74840029A3E1 /* GameScene.swift */,
-				4F0D1AE5256F748F0029A3E1 /* GameScene.sks */,
 				4F726FF8255CD16E004376C5 /* GameOver.swift */,
 				4F4A7DB02556F97900F59E35 /* MainMenu.swift */,
 				4F726FE0255C521A004376C5 /* Settings.swift */,
@@ -158,9 +154,9 @@
 			children = (
 				4F051178256AC23A00900ACE /* EntityManager.swift */,
 				4F051173256AC1FD00900ACE /* Gardener.swift */,
+				4FD1612025715C7800179989 /* EnemyGardener.swift */,
 				4F051192256AC9A400900ACE /* FallingItem.swift */,
 				4F99B4FD256B003600AFB29A /* Thunder.swift */,
-				4FD1612025715C7800179989 /* EnemyGardener.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -174,6 +170,7 @@
 				4F0511D6256AD55400900ACE /* MovementComponent.swift */,
 				4F41F6E9256B382100F29D54 /* EnemyAgentComponent.swift */,
 				4F41F6EF256B5BF000F29D54 /* FallingItemComponent.swift */,
+				4F2BCE7C2575924D00347D52 /* PhysicsComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -211,7 +208,7 @@
 		4F11D7DD255351FB0020B931 = {
 			isa = PBXGroup;
 			children = (
-				4F5126FA256C9E8A0024262D /* File.swift */,
+				4F2BCE7725758EA100347D52 /* ssss.swift */,
 				4F11D7E8255351FB0020B931 /* gardenwars */,
 				4F11D800255351FC0020B931 /* gardenwarsTests */,
 				4F11D80B255351FC0020B931 /* gardenwarsUITests */,
@@ -232,7 +229,7 @@
 		4F11D7E8255351FB0020B931 /* gardenwars */ = {
 			isa = PBXGroup;
 			children = (
-				4F5126EC256C8A840024262D /* StateMachines */,
+				4F5126EC256C8A840024262D /* States */,
 				4F051163256ABFEC00900ACE /* OLD */,
 				4F05115C256ABEF900900ACE /* UI */,
 				4FD1611A25715AEB00179989 /* Behaviors */,
@@ -268,19 +265,19 @@
 			path = gardenwarsUITests;
 			sourceTree = "<group>";
 		};
-		4F5126EC256C8A840024262D /* StateMachines */ = {
+		4F5126EC256C8A840024262D /* States */ = {
 			isa = PBXGroup;
 			children = (
 				4F5126ED256C8AA00024262D /* NormalState.swift */,
 				4F5126F5256C8B960024262D /* HoldingItemState.swift */,
+				4F2BCE812575B47500347D52 /* GardeningState.swift */,
 			);
-			path = StateMachines;
+			path = States;
 			sourceTree = "<group>";
 		};
 		4FD1611A25715AEB00179989 /* Behaviors */ = {
 			isa = PBXGroup;
 			children = (
-				4FD1611B25715B0F00179989 /* EnemyGardenBehavior.swift */,
 			);
 			path = Behaviors;
 			sourceTree = "<group>";
@@ -392,7 +389,6 @@
 				4F7C89EA25586DD90047169C /* LaunchScreen.storyboard in Resources */,
 				4F30A225255A324B003981FE /* flower.atlas in Resources */,
 				4F11D7F7255351FC0020B931 /* Assets.xcassets in Resources */,
-				4F0D1AE6256F748F0029A3E1 /* GameScene.sks in Resources */,
 				4FB6B74F2555D81100002B31 /* parker.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,21 +414,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F0D1AE1256F74840029A3E1 /* GameScene.swift in Sources */,
 				4F051183256AC64600900ACE /* TeamComponent.swift in Sources */,
 				4F41F6F0256B5BF000F29D54 /* FallingItemComponent.swift in Sources */,
 				4F726FE9255CAC5B004376C5 /* Platform.swift in Sources */,
 				4F05117E256AC5EC00900ACE /* GardenerComponent.swift in Sources */,
 				4F051174256AC1FD00900ACE /* Gardener.swift in Sources */,
-				4F5126FB256C9E8A0024262D /* File.swift in Sources */,
 				4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */,
 				4F5126F6256C8B960024262D /* HoldingItemState.swift in Sources */,
+				4F2BCE7D2575924D00347D52 /* PhysicsComponent.swift in Sources */,
 				4F41F6EA256B382100F29D54 /* EnemyAgentComponent.swift in Sources */,
 				4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */,
-				4FD1611C25715B0F00179989 /* EnemyGardenBehavior.swift in Sources */,
 				4F726FE1255C521A004376C5 /* Settings.swift in Sources */,
 				4F30A218255A16A2003981FE /* Flower.swift in Sources */,
 				4F99B4FE256B003600AFB29A /* Thunder.swift in Sources */,
+				4F2BCE7825758EA100347D52 /* ssss.swift in Sources */,
 				4FFDDC3025599A2100EB8A28 /* GameSetting.swift in Sources */,
 				4F051179256AC23A00900ACE /* EntityManager.swift in Sources */,
 				4F4A7DBE2556FDF800F59E35 /* Extension.swift in Sources */,
@@ -445,6 +440,7 @@
 				4F051193256AC9A400900ACE /* FallingItem.swift in Sources */,
 				4F30A2122559BC79003981FE /* HealthPoints.swift in Sources */,
 				4FFDDC4025599FEC00EB8A28 /* UIControls.swift in Sources */,
+				4F2BCE822575B47500347D52 /* GardeningState.swift in Sources */,
 				4F0511D7256AD55400900ACE /* MovementComponent.swift in Sources */,
 				4F11D7F2255351FB0020B931 /* GameViewController.swift in Sources */,
 				4F11D7EA255351FB0020B931 /* AppDelegate.swift in Sources */,
