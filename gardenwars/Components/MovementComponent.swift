@@ -61,9 +61,6 @@ class MovementComponent: GKComponent, GKAgentDelegate {
     
     private func walkLeft() -> Void {
         node.removeAllActions()
-//        if (node.action(forKey: "WALK_LEFT") != nil) {
-//            return
-//        }
         node.run(SKAction.repeatForever(
             SKAction.animate(
                 with: player1LeftFrames,
@@ -76,7 +73,6 @@ class MovementComponent: GKComponent, GKAgentDelegate {
     
     private func walkRight() -> Void {
         node.removeAllActions()
-
         node.run(SKAction.repeatForever(
             SKAction.animate(
                 with: player1RightFrames,
@@ -87,24 +83,18 @@ class MovementComponent: GKComponent, GKAgentDelegate {
         ), withKey: "WALK_RIGHT")
     }
     
+    func faceForward() -> Void {
+        node.texture = player1StillFrame
+        node.removeAllActions()
+    }
+    
     func jump() {
         if let component = entity?.component(ofType: SpriteComponent.self) {
             component.node.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 55))
         }
     }
     
-    func faceForward() -> Void {
-        print("WTF")
-//        if node.currentItem == "water" {
-//            node.texture = SKTexture(imageNamed: "image/parker_water")
-//        } else if node.currentItem == "sun" {
-//            node.texture = SKTexture(imageNamed: "image/parker_sun")
-//        } else {
-        node.texture = player1StillFrame
 
-        node.removeAllActions()
-//        }
-    }
     
     func agentWillUpdate(_ agent: GKAgent) {
           if let agent2d = agent as? GKAgent2D {

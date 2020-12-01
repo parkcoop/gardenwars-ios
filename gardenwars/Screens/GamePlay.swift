@@ -32,7 +32,10 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     let coin2Label = SKLabelNode(fontNamed: "Courier-Bold")
     
     let humanGardener = Gardener(imageName: "image/parker5", team: .team1)
+//    let humanGardenerAgent: GKAgent2D?
+    
     let aiGardener = EnemyGardener(imageName: "image/parker5", team: .team2)
+//    let aiGardenerAgent: GKAgent2D?
     
     
     //    let thunder = Thunder()
@@ -60,23 +63,19 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
-        sun.name = "sun"
-        addChild(sun)
-        water.name = "water"
-        addChild(water)
-        thunder.name = "thunder"
-        addChild(thunder)
-        print("CHILDS", self.children)
+        view.showsDrawCount = true
+        view.showsPhysics = true
+        
+
+        
         let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
             self.childNode(withName: "platformLeft")!,
             self.childNode(withName: "platformRight")!
         ])
         graph = GKObstacleGraph(obstacles: [], bufferRadius: 100)
         graph.addObstacles(obstacles)
-        print("OBBSTACLES", graph!)
-        
-        addChild(uiControls)
-        addChild(hpDisplay)
+
+  
         
         let sceneFile = "GamePlay"
         if let gkScene = GKScene( fileNamed: sceneFile ) {
@@ -84,30 +83,19 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         } else {
             print( "failed to create gkScene from file \(sceneFile)" )
         }
-        
-        //        let newGraph = GKGraph()
-        //        for drawnNode in navigationGraph.nodes! {
-        //            print(drawnNode)
-        //            newGraph.add([drawnNode])
-        //        }
-        //
-        //        print("new", newGraph)
-        //        let enemyPath = GKPath.init(graphNodes: getEnemyPath(), radius: 1)
-        
-        //        print("DO WE?", enemyPath)
-        
-        //        let enemyFollowGoal = GKGoal(toStayOn: enemyPath, maxPredictionTime: 1)
-        //        let speedGoal = GKGoal(toReachTargetSpeed: 500)
-        let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: 5)
-        //        let thunderAgent = thunder.setUpAgent()
-        
-        //        self.agentSystem.addComponent(thunderAgent)
+    
         guard let humanAgent = humanGardener.component(ofType: MovementComponent.self)?.playerAgent else {
             fatalError()
         }
         self.agentSystem.addComponent(humanAgent)
         
         
+        sun.name = "sun"
+        addChild(sun)
+        water.name = "water"
+        addChild(water)
+        thunder.name = "thunder"
+        addChild(thunder)
         
         let soil1 = self.childNode(withName: "soil1")
         soil1Agent.position = SIMD2<Float>(Float((soil1!.position.x)), Float((soil1!.position.y)))
@@ -117,40 +105,28 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         soil3Agent.position = SIMD2<Float>(Float((soil3!.position.x)), Float((soil3!.position.y)))
         
         
+        enemyStateMachine = GKStateMachine(states: [
+            NormalState(game: self),
+            HoldingItemState(game: self)
+        ])
         
+        enemyStateMachine.enter(NormalState.self)
         
-        
-        
-        let obtainSunGoal = GKGoal(toInterceptAgent: sunAgent, maxPredictionTime: 5)
-        let obtainWaterGoal = GKGoal(toInterceptAgent: waterAgent, maxPredictionTime: 5)
-        let avoidShockGoal = GKGoal(toAvoid: [thunderAgent], maxPredictionTime: 50)
-        
-        let getReplenishmentGoalset = [obtainSunGoal, obtainWaterGoal]
-        let gardenActionGoalset = [avoidObstaclesGoal]
-        
-        
-        let background = SKSpriteNode(imageNamed: "image/sky")
-        background.position = CGPoint(x: size.width/2, y: size.height/2)
-        background.zPosition = -1
-        background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
-        addChild(background)
-        
+//        let obtainSunGoal = GKGoal(toSeekAgent: sunAgent)
+//        let obtainWaterGoal = GKGoal(toSeekAgent: waterAgent)
+//        let avoidShockGoal = GKGoal(toAvoid: [thunderAgent], maxPredictionTime: 5)
+//        let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: 5)
+//
+//        let getReplenishmentGoalset = [obtainSunGoal, avoidObstaclesGoal]
+//        let gardenActionGoalset = [avoidObstaclesGoal]
         var aiControlComponent: EnemyAgentComponent? {
             return aiGardener.component(ofType: EnemyAgentComponent.self)
         }
         
         
         
-        let agent = aiControlComponent?.setUpAgent(with: [obtainSunGoal, obtainWaterGoal])
+        let agent = aiControlComponent?.setUpAgent(with: [])
         self.agentSystem.addComponent(agent!)
-        
-        coin1Label.position = CGPoint(x: 100, y: ScreenSize.height - 50)
-        self.addChild(coin1Label)
-        
-        coin2Label.position = CGPoint(x: ScreenSize.width - 100, y: ScreenSize.height - 50)
-        self.addChild(coin2Label)
-        
-        
         
         entityManager = EntityManager(scene: self)
         
@@ -164,28 +140,77 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         }
         entityManager.add(aiGardener)
         
-        //        if let thunder = thunder.component(ofType: SpriteComponent.self) {
-        //            thunder.node.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
-        //        }
-        //        entityManager.add(thunder)
         
-        //        guard let thunderFall = thunder.component(ofType: FallingItemComponent.self) else {
-        //            fatalError("Thunder cant fall without falling item component")
-        //        }
         
+        
+        let background = SKSpriteNode(imageNamed: "image/sky")
+        background.position = CGPoint(x: size.width/2, y: size.height/2)
+        background.zPosition = -1
+        background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
+        addChild(background)
+        
+        coin1Label.position = CGPoint(x: 100, y: ScreenSize.height - 50)
+        addChild(coin1Label)
+        
+        coin2Label.position = CGPoint(x: ScreenSize.width - 100, y: ScreenSize.height - 50)
+        addChild(coin2Label)
+        
+        addChild(uiControls)
+        addChild(hpDisplay)
+        
+        weak var weakSelf = self // ARC?
+
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.run(addThunder),
                 SKAction.wait(forDuration: 3.0),
                 SKAction.run(addWater),
+                SKAction.run({weakSelf!.changeCurrentItemGoal(item: "water")}),
+                SKAction.run(addThunder),
                 SKAction.wait(forDuration: 3.0),
                 SKAction.run(addSun),
+                SKAction.run({weakSelf!.changeCurrentItemGoal(item: "sun")}),
+
+                SKAction.run(addThunder),
+
                 SKAction.wait(forDuration: 3.0),
                 
                 //                SKAction.wait(forDuration: 1.0),
                 //                SKAction.wait(forDuration: 1.0)
             ])
         ))
+    }
+    
+    func changeCurrentItemGoal(item: String) {
+        
+        let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
+            self.childNode(withName: "platformLeft")!,
+            self.childNode(withName: "platformRight")!
+        ])
+        
+        
+        let obtainSunGoal = GKGoal(toSeekAgent: sunAgent)
+        let obtainWaterGoal = GKGoal(toSeekAgent: waterAgent)
+//        let avoidShockGoal = GKGoal(toAvoid: [thunderAgent], maxPredictionTime: 5)
+        let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: 5)
+
+        var goals: [GKGoal] = []
+        
+        switch item {
+        case "sun":
+            goals = [obtainSunGoal, avoidObstaclesGoal]
+        case "water":
+            goals = [obtainWaterGoal, avoidObstaclesGoal]
+        default:
+            print("Need to specify item")
+        }
+ 
+        var aiControlComponent: EnemyAgentComponent? {
+            return aiGardener.component(ofType: EnemyAgentComponent.self)
+        }
+
+        let agent = aiControlComponent?.setUpAgent(with: goals)
+//        self.agentSystem.addComponent(agent!)
     }
     
     func adjustGoalsBasedOnState(state: AnyClass) -> [GKGoal] {
@@ -205,15 +230,17 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         if childNode(withName: "thunder") === nil {
             print("nice")
             self.addChild(thunder)
+            agentSystem.addComponent(thunderAgent)
         }
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
-        let actualDuration = CGFloat.random(in: CGFloat(2.0)...CGFloat(4.0))
+        let actualDuration = CGFloat.random(in: CGFloat(1.0)...CGFloat(3.0))
         //        let thunder = SKSpriteNode(imageNamed: "image/thunder")
         thunder.size = CGSize(width: 50, height: 50)
         thunder.position = CGPoint(x: actualX, y: ScreenSize.height)
         thunder.zPosition = 50000
         thunder.name = "thunder"
-
+//        thunder.physicsBody = SKPhysicsBody(rectangleOf: thunder.size)
+        thunder.position = CGPoint(x: actualX, y: 555 + thunder.size.width/2)
         // Speed
         
         // Move
@@ -225,41 +252,40 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         if childNode(withName: "sun") === nil {
             print("nice")
             self.addChild(sun)
+            agentSystem.addComponent(sunAgent)
+
         }
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
-        let actualDuration = CGFloat.random(in: CGFloat(2.0)...CGFloat(4.0))
+        let actualDuration = CGFloat.random(in: CGFloat(3.0)...CGFloat(5.0))
         sun.size = CGSize(width: 50, height: 50)
         sun.name = "sun"
-
+        sun.physicsBody = SKPhysicsBody(rectangleOf: sun.size)
         sun.position = CGPoint(x: actualX, y: 555 + sun.size.width/2)
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -50),
                                        duration: TimeInterval(actualDuration))
         sun.zPosition = 50000
-        sun.run(actionMove)
+//        sun.run(actionMove)
     }
     func addWater() -> Void {
         if childNode(withName: "water") === nil {
             print("nice")
             self.addChild(water)
+            agentSystem.addComponent(waterAgent)
+
         }
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
-        let actualDuration = CGFloat.random(in: CGFloat(2.0)...CGFloat(4.0))
+        let actualDuration = CGFloat.random(in: CGFloat(3.0)...CGFloat(5.0))
         water.name = "water"
         water.size = CGSize(width: 50, height: 50)
+        water.position = CGPoint(x: actualX, y: 555 + water.size.width/2)
+        water.physicsBody = SKPhysicsBody(rectangleOf: water.size)
         water.position = CGPoint(x: actualX, y: 555 + water.size.width/2)
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -50),
                                        duration: TimeInterval(actualDuration))
         water.zPosition = 50000
-        water.run(actionMove)
+//        water.run(actionMove)
     }
-    //    func addSkyObjects() {
-    //        entityManager.add(thunder)
-    //    }
-    //
-    //    func cleanup() {
-    //        entityManager.remove(thunder)
-    //    }
-    
+
     func didBegin(_ contact: SKPhysicsContact) {
         if (contact.bodyA.node?.name != nil && contact.bodyB.node?.name != nil) {
             
@@ -268,19 +294,18 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     
     
     override func update(_ currentTime: TimeInterval) {
-        
         let deltaTime = currentTime - lastUpdateTimeInterval
         lastUpdateTimeInterval = currentTime
         
         entityManager.update(deltaTime)
         
         agentSystem.update(deltaTime: deltaTime)
-        
+        enemyStateMachine.update(deltaTime: deltaTime)
         
         sunAgent.position = SIMD2<Float>(Float((sun.position.x)), Float((sun.position.y)))
         thunderAgent.position = SIMD2<Float>(Float((thunder.position.x)), Float((thunder.position.y)))
         waterAgent.position = SIMD2<Float>(Float((water.position.x)), Float((water.position.y)))
-        
+//        print(sun.position, sunAgent.position)
         
         
         if let human = entityManager.gardener(for: .team1),
@@ -317,20 +342,23 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             thunder.removeAllActions()
 //            thunder.position = CGPoint(x: 0, y: -200)
             thunder.removeFromParent()
+            agentSystem.removeComponent(thunderAgent)
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
         if humanSprite.node.frame.intersects(water.frame) {
 //            if humanSprite.node.holdItem(item: "water") {
                 water.removeAllActions()
             water.removeFromParent()
-                water.position = CGPoint(x: 0, y: -200)
+            agentSystem.removeComponent(waterAgent)
+
 //            }
         }
         if humanSprite.node.frame.intersects(sun.frame) {
 //            if player1.holdItem(item: "sun") {
                 sun.removeAllActions()
             sun.removeFromParent()
-                sun.position = CGPoint(x: 0, y: -200)
+            agentSystem.removeComponent(sunAgent)
+
 //            }
         }
 //
@@ -342,19 +370,27 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         if enemySprite.node.frame.intersects(thunder.frame) {
 //            player1.takeDamage(points: 10)
             thunder.removeAllActions()
-            thunder.position = CGPoint(x: 0, y: -200)
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            thunder.removeFromParent()
+            agentSystem.removeComponent(thunderAgent)
+
         }
         if enemySprite.node.frame.intersects(water.frame) {
 //            if enemySprite.node.holdItem(item: "water") {
+            enemyStateMachine.enter(HoldingItemState.self)
+            water.removeFromParent()
+            agentSystem.removeComponent(waterAgent)
+
                 water.removeAllActions()
-                water.position = CGPoint(x: 0, y: -200)
 //            }
         }
         if enemySprite.node.frame.intersects(sun.frame) {
 //            if player1.holdItem(item: "sun") {
+            enemyStateMachine.enter(HoldingItemState.self)
+            
+            sun.removeFromParent()
+            agentSystem.removeComponent(sunAgent)
+
                 sun.removeAllActions()
-                sun.position = CGPoint(x: 0, y: -200)
 //            }
         }
         

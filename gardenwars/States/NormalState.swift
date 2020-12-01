@@ -13,8 +13,8 @@ class NormalState: GardeningState {
     
     // MARK: Initialization
     
-    required init(game: GamePlay) {
-        super.init(game: game, associatedNodeName: "FullState")
+    override init(game: GamePlay) {
+        super.init(game: game)
     }
     
     // MARK: GKState overrides

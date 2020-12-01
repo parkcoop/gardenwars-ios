@@ -13,20 +13,21 @@ class HoldingItemState: GardeningState {
     
     // MARK: Initialization
     
-    required init(game: GamePlay) {
-        super.init(game: game, associatedNodeName: "FullState")
+    override init(game: GamePlay) {
+        super.init(game: game)
     }
     
     // MARK: GKState overrides
     
     override func didEnter(from previousState: GKState?) {
         super.didEnter(from: previousState)
-//        game.adjustGoalsBasedOnState(state: GKState)
 
     }
     
     override func willExit(to nextState: GKState) {
         super.willExit(to: nextState)
+        print(nextState)
+        //        game.adjustGoalsBasedOnState(state: previousState.self)
 
     }
     

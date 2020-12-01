@@ -22,6 +22,7 @@ class EnemyGardener: GKEntity, GKAgentDelegate {
         addComponent(TeamComponent(team: team))
         addComponent(GardenerComponent())
         addComponent(EnemyAgentComponent())
+        addComponent(MovementComponent())
 //        addComponent(GKAgent2D())
     }
     
