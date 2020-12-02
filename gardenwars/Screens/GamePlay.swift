@@ -27,19 +27,11 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     let agentSystem = GKComponentSystem(componentClass: GKAgent2D.self)
     
     var lastUpdateTimeInterval: TimeInterval = 0
-    
-    let coin1Label = SKLabelNode(fontNamed: "Courier-Bold")
-    let coin2Label = SKLabelNode(fontNamed: "Courier-Bold")
+
     
     let humanGardener = Gardener(imageName: "image/parker5", team: .team1)
-//    let humanGardenerAgent: GKAgent2D?
-    
     let aiGardener = EnemyGardener(imageName: "image/parker5", team: .team2)
-//    let aiGardenerAgent: GKAgent2D?
-    
-    
-    //    let thunder = Thunder()
-    
+
     let thunder = SKSpriteNode(imageNamed: "image/thunder")
     let sun = SKSpriteNode(imageNamed: "image/sun")
     let water = SKSpriteNode(imageNamed: "image/water")
@@ -51,15 +43,6 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     let soil2Agent = GKAgent2D()
     let soil3Agent = GKAgent2D()
     
-    
-    
-    var navigationGraph: GKGraph!
-    
-    
-    var graph: GKObstacleGraph<GKGraphNode2D>!
-    
-    
-    
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
@@ -67,23 +50,6 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         view.showsPhysics = true
         
 
-        
-        let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
-            self.childNode(withName: "platformLeft")!,
-            self.childNode(withName: "platformRight")!
-        ])
-        graph = GKObstacleGraph(obstacles: [], bufferRadius: 100)
-        graph.addObstacles(obstacles)
-
-  
-        
-        let sceneFile = "GamePlay"
-        if let gkScene = GKScene( fileNamed: sceneFile ) {
-            navigationGraph = gkScene.graphs["enemypath"]!
-        } else {
-            print( "failed to create gkScene from file \(sceneFile)" )
-        }
-    
         guard let humanAgent = humanGardener.component(ofType: MovementComponent.self)?.playerAgent else {
             fatalError()
         }
@@ -111,14 +77,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         ])
         
         enemyStateMachine.enter(NormalState.self)
-        
-//        let obtainSunGoal = GKGoal(toSeekAgent: sunAgent)
-//        let obtainWaterGoal = GKGoal(toSeekAgent: waterAgent)
-//        let avoidShockGoal = GKGoal(toAvoid: [thunderAgent], maxPredictionTime: 5)
-//        let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: 5)
-//
-//        let getReplenishmentGoalset = [obtainSunGoal, avoidObstaclesGoal]
-//        let gardenActionGoalset = [avoidObstaclesGoal]
+
         var aiControlComponent: EnemyAgentComponent? {
             return aiGardener.component(ofType: EnemyAgentComponent.self)
         }
@@ -148,35 +107,32 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         background.zPosition = -1
         background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
         addChild(background)
-        
-        coin1Label.position = CGPoint(x: 100, y: ScreenSize.height - 50)
-        addChild(coin1Label)
-        
-        coin2Label.position = CGPoint(x: ScreenSize.width - 100, y: ScreenSize.height - 50)
-        addChild(coin2Label)
+
         
         addChild(uiControls)
         addChild(hpDisplay)
         
-        weak var weakSelf = self // ARC?
-
+        if let humanGardener = humanGardener.component(ofType: GardenerComponent.self) {
+            humanGardener.initGame(game: self)
+            
+        }
+           
+        if let aiGardener = aiGardener.component(ofType: GardenerComponent.self) {
+            aiGardener.initGame(game: self)
+            
+        }
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.run(addThunder),
                 SKAction.wait(forDuration: 3.0),
                 SKAction.run(addWater),
-                SKAction.run({weakSelf!.changeCurrentItemGoal(item: "water")}),
+                SKAction.run({self.changeCurrentItemGoal(item: "water")}),
                 SKAction.run(addThunder),
                 SKAction.wait(forDuration: 3.0),
                 SKAction.run(addSun),
-                SKAction.run({weakSelf!.changeCurrentItemGoal(item: "sun")}),
-
+                SKAction.run({self.changeCurrentItemGoal(item: "sun")}),
                 SKAction.run(addThunder),
-
                 SKAction.wait(forDuration: 3.0),
-                
-                //                SKAction.wait(forDuration: 1.0),
-                //                SKAction.wait(forDuration: 1.0)
             ])
         ))
     }
@@ -209,7 +165,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             return aiGardener.component(ofType: EnemyAgentComponent.self)
         }
 
-        let agent = aiControlComponent?.setUpAgent(with: goals)
+        aiControlComponent?.setUpAgent(with: goals)
 //        self.agentSystem.addComponent(agent!)
     }
     
@@ -234,16 +190,11 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         }
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
         let actualDuration = CGFloat.random(in: CGFloat(1.0)...CGFloat(3.0))
-        //        let thunder = SKSpriteNode(imageNamed: "image/thunder")
         thunder.size = CGSize(width: 50, height: 50)
         thunder.position = CGPoint(x: actualX, y: ScreenSize.height)
         thunder.zPosition = 50000
         thunder.name = "thunder"
-//        thunder.physicsBody = SKPhysicsBody(rectangleOf: thunder.size)
         thunder.position = CGPoint(x: actualX, y: 555 + thunder.size.width/2)
-        // Speed
-        
-        // Move
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -50),
                                        duration: TimeInterval(actualDuration))
         thunder.run(actionMove)
@@ -256,15 +207,11 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
 
         }
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
-        let actualDuration = CGFloat.random(in: CGFloat(3.0)...CGFloat(5.0))
         sun.size = CGSize(width: 50, height: 50)
         sun.name = "sun"
         sun.physicsBody = SKPhysicsBody(rectangleOf: sun.size)
         sun.position = CGPoint(x: actualX, y: 555 + sun.size.width/2)
-        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -50),
-                                       duration: TimeInterval(actualDuration))
         sun.zPosition = 50000
-//        sun.run(actionMove)
     }
     func addWater() -> Void {
         if childNode(withName: "water") === nil {
@@ -274,25 +221,21 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
 
         }
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
-        let actualDuration = CGFloat.random(in: CGFloat(3.0)...CGFloat(5.0))
         water.name = "water"
         water.size = CGSize(width: 50, height: 50)
         water.position = CGPoint(x: actualX, y: 555 + water.size.width/2)
         water.physicsBody = SKPhysicsBody(rectangleOf: water.size)
         water.position = CGPoint(x: actualX, y: 555 + water.size.width/2)
-        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -50),
-                                       duration: TimeInterval(actualDuration))
         water.zPosition = 50000
-//        water.run(actionMove)
     }
 
-    func didBegin(_ contact: SKPhysicsContact) {
-        if (contact.bodyA.node?.name != nil && contact.bodyB.node?.name != nil) {
-            
-        }
-    }
+//    func didBegin(_ contact: SKPhysicsContact) {
+//        if (contact.bodyA.node?.name != nil && contact.bodyB.node?.name != nil) {
+//
+//        }
+//    }
     
-    
+    // MARK: Update loop function
     override func update(_ currentTime: TimeInterval) {
         let deltaTime = currentTime - lastUpdateTimeInterval
         lastUpdateTimeInterval = currentTime
@@ -314,96 +257,30 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             hpDisplay.scoreText.text = String(humanGardener.points)
             
         }
-        if let ai = entityManager.gardener(for: .team2),
-           let aiGardener = ai.component(ofType: GardenerComponent.self) {
-            hpDisplay.healthText.text = String(aiGardener.health)
-            hpDisplay.scoreText.text = String(aiGardener.points)
-            
-        }
+//////////////////        HP BAR UPDATE...
+//        if let ai = entityManager.gardener(for: .team2),
+//           let aiGardener = ai.component(ofType: GardenerComponent.self) {
+////            hpDisplay.healthText.text = String(aiGardener.health)
+////            hpDisplay.scoreText.text = String(aiGardener.points)
+//
+//        }
         
+        // MARK: Joystick controls for player
         if let component = humanGardener.component(ofType: SpriteComponent.self) {
             if (uiControls.xDist < 0) {
                 component.node.position.x -= 0.2 * uiControls.xDist
             } else if (uiControls.xDist > 0) {
                 component.node.position.x -= 0.2 * uiControls.xDist
-            } else {
-                //                component.faceForward()
             }
             
         }
         
-        
-        guard let humanSprite = humanGardener.component(ofType: SpriteComponent.self) else {
-            fatalError()
-        }
-        
-        if humanSprite.node.frame.intersects(thunder.frame) {
-//            player1.takeDamage(points: 10)
-            thunder.removeAllActions()
-//            thunder.position = CGPoint(x: 0, y: -200)
-            thunder.removeFromParent()
-            agentSystem.removeComponent(thunderAgent)
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-        }
-        if humanSprite.node.frame.intersects(water.frame) {
-//            if humanSprite.node.holdItem(item: "water") {
-                water.removeAllActions()
-            water.removeFromParent()
-            agentSystem.removeComponent(waterAgent)
 
-//            }
-        }
-        if humanSprite.node.frame.intersects(sun.frame) {
-//            if player1.holdItem(item: "sun") {
-                sun.removeAllActions()
-            sun.removeFromParent()
-            agentSystem.removeComponent(sunAgent)
-
-//            }
-        }
-//
-//
-        guard let enemySprite = aiGardener.component(ofType: SpriteComponent.self) else {
-            fatalError()
-        }
-//
-        if enemySprite.node.frame.intersects(thunder.frame) {
-//            player1.takeDamage(points: 10)
-            thunder.removeAllActions()
-            thunder.removeFromParent()
-            agentSystem.removeComponent(thunderAgent)
-
-        }
-        if enemySprite.node.frame.intersects(water.frame) {
-//            if enemySprite.node.holdItem(item: "water") {
-            enemyStateMachine.enter(HoldingItemState.self)
-            water.removeFromParent()
-            agentSystem.removeComponent(waterAgent)
-
-                water.removeAllActions()
-//            }
-        }
-        if enemySprite.node.frame.intersects(sun.frame) {
-//            if player1.holdItem(item: "sun") {
-            enemyStateMachine.enter(HoldingItemState.self)
-            
-            sun.removeFromParent()
-            agentSystem.removeComponent(sunAgent)
-
-                sun.removeAllActions()
-//            }
-        }
         
         
     }
-    
-    //    func getEnemyPath() -> [GKGraphNode] {
-    //
-    //        return navigationGraph.findPath(from: navigationGraph.nodes![7], to: navigationGraph.nodes![8])
-    //
-    //    }
-    
-    
+
+    // MARK: Touch controls: Joystick, jump button, settings screen
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("LOL")
         //        getEnemyPath(to: )
@@ -451,14 +328,12 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     
     
     private func tapBegin(on button: String) {
-        if (button == "jump") {
-            //            player1.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            //            player1.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 100))
-            if let component = humanGardener.component(ofType: MovementComponent.self) {
-                //                component.jump()
-                component.jump()
+        if (button == "jump"),
+           let component = humanGardener.component(ofType: PhysicsComponent.self) {
+                component.physicsBody.velocity = CGVector(dx: 0, dy: 0)
+                component.physicsBody.applyImpulse(CGVector(dx: 0, dy: 100))
             }
-        }
+        
     }
     
     
