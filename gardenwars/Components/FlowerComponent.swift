@@ -13,23 +13,28 @@ class FlowerComponent: GKComponent {
     
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder:aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
-    
     
     func replenishSoil() -> Bool {
         if (growthPhase >= 6) {
             return false
         }
         growthPhase += 1
-        self.texture = flowerFrames.textureNamed("flower\(growthPhase)")
+        guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
+            fatalError()
+        }
+        spriteComponent.node.texture = flowerFrames.textureNamed("flower\(growthPhase)")
         return true
     }
     
     
     func reset() {
         growthPhase = 1
-        self.texture = flowerFrames.textureNamed("flower\(growthPhase)")
+        guard let spriteComponent = entity?.component(ofType: SpriteComponent.self) else {
+            fatalError()
+        }
+        spriteComponent.node.texture = flowerFrames.textureNamed("flower\(growthPhase)")
         
     }
     

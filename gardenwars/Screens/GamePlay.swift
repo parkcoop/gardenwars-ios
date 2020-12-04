@@ -15,7 +15,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     
     private var activeTouches = [UITouch:String]()
     let uiControls = UIControls()
-    let gameSetting = GameSetting()
+//    let gameSetting = GameSetting()
     
     var hpDisplay = HealthPoints()
     var settingsToggle = SKSpriteNode(imageNamed: "image/settings")
@@ -39,9 +39,14 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     let sunAgent = GKAgent2D()
     let thunderAgent = GKAgent2D()
     
+    let soil1 = Flower(named: "soil1")
+    let soil2 = Flower(named: "soil2")
+    let soil3 = Flower(named: "soil3")
+    
     let soil1Agent = GKAgent2D()
     let soil2Agent = GKAgent2D()
     let soil3Agent = GKAgent2D()
+    
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -62,13 +67,25 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         addChild(water)
         thunder.name = "thunder"
         addChild(thunder)
+        let platformLeft = self.childNode(withName: "platformLeft")
+        let platformRight = self.childNode(withName: "platformRight")
+        let platform = self.childNode(withName: "platform")
+
+        soil1.position = platformLeft!.position
+        addChild(soil1)
         
-        let soil1 = self.childNode(withName: "soil1")
-        soil1Agent.position = SIMD2<Float>(Float((soil1!.position.x)), Float((soil1!.position.y)))
-        let soil2 = self.childNode(withName: "soil2")
-        soil2Agent.position = SIMD2<Float>(Float((soil2!.position.x)), Float((soil2!.position.y)))
-        let soil3 = self.childNode(withName: "soil3")
-        soil3Agent.position = SIMD2<Float>(Float((soil3!.position.x)), Float((soil3!.position.y)))
+        soil2.position = platformRight!.position
+        addChild(soil2)
+        
+        soil3.position = platform!.position
+        addChild(soil3)
+//        let soil1 = self.childNode(withName: "soil1")
+        soil1Agent.position = SIMD2<Float>(Float((soil1.position.x)), Float((soil1.position.y)))
+//        soil1Agent.accessibilityFrame = CGRect.init(x: Double(soil1Agent.position.x), y: Double(soil1Agent.position.y), width: 50, height: 50)
+//        let soil2 = self.childNode(withName: "soil2")
+        soil2Agent.position = SIMD2<Float>(Float((soil2.position.x)), Float((soil2.position.y)))
+//        let soil3 = self.childNode(withName: "soil3")
+        soil3Agent.position = SIMD2<Float>(Float((soil3.position.x)), Float((soil3.position.y)))
         
         
         enemyStateMachine = GKStateMachine(states: [
@@ -137,6 +154,13 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         ))
     }
     
+    
+//    func garden(flower: Flower) {
+////        if let flowerComponent = flower.entity!.component(ofType: FlowerComponent.self) {
+////            flowerComponent.replenishSoil()
+////        }
+//    }
+    
     func changeCurrentItemGoal(item: String) {
         
         let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
@@ -148,7 +172,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         let obtainSunGoal = GKGoal(toSeekAgent: sunAgent)
         let obtainWaterGoal = GKGoal(toSeekAgent: waterAgent)
 //        let avoidShockGoal = GKGoal(toAvoid: [thunderAgent], maxPredictionTime: 5)
-        let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: 5)
+        let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: 1)
 
         var goals: [GKGoal] = []
         
@@ -375,21 +399,21 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         GameManager.shared.transition(self, toScene: .MainMenu, transition:
                                         SKTransition.doorsCloseHorizontal(withDuration: 2))
     }
-    
-    func nextLevel(level: Int) -> Void {
-        switch level {
-        case 2:
-            gameSetting.buildLevel2()
-        case 3:
-            gameSetting.buildLevel3()
-        case 4: // Ended game
-            GameManager.shared.transition(self, toScene: .Settings, transition:
-                                            SKTransition.crossFade(withDuration: 2))
-        default:
-            return
-        }
-    }
-    
+//
+//    func nextLevel(level: Int) -> Void {
+//        switch level {
+//        case 2:
+//            gameSetting.buildLevel2()
+//        case 3:
+//            gameSetting.buildLevel3()
+//        case 4: // Ended game
+//            GameManager.shared.transition(self, toScene: .Settings, transition:
+//                                            SKTransition.crossFade(withDuration: 2))
+//        default:
+//            return
+//        }
+//    }
+//
     
     
     

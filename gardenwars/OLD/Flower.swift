@@ -11,10 +11,10 @@ class Flower: SKSpriteNode {
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
         self.name = name
         self.growthPhase = 1
-        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: self.size)
-        self.physicsBody?.allowsRotation = false
-        self.physicsBody?.pinned = true
-        self.physicsBody?.isDynamic = false
+//        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: self.size)
+//        self.physicsBody?.allowsRotation = false
+//        self.physicsBody?.pinned = true
+//        self.physicsBody?.isDynamic = false
     }
     
     

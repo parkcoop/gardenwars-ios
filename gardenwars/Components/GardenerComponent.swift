@@ -35,6 +35,11 @@ class GardenerComponent: GKComponent {
                     self.grabItem(item: "sun")
                     self.scorePoints(points: 50)
                     game.sun.removeFromParent()
+                    if (entity?.component(ofType: EnemyAgentComponent.self) != nil) {
+                        game.enemyStateMachine.enter(HoldingItemState.self)
+                    }
+                    
+                    
                 }
                 
                 if (spriteComponent.node.frame.intersects(game.water.frame)),
@@ -42,6 +47,36 @@ class GardenerComponent: GKComponent {
                     self.grabItem(item: "water")
                     self.scorePoints(points: 50)
                     game.water.removeFromParent()
+                }
+                
+                if (spriteComponent.node.frame.intersects(game.soil1.frame)) {
+                    if self.currentItem != nil {
+                        self.currentItem = nil
+                        print("WTRFFF")
+                        if game.soil1.replenishSoil() {
+                            self.scorePoints(points: 25)
+                        }
+                    }
+                }
+                
+                if (spriteComponent.node.frame.intersects(game.soil2.frame)) {
+                    if self.currentItem != nil {
+                        self.currentItem = nil
+                        print("WTRFFF")
+                        if game.soil2.replenishSoil() {
+                            self.scorePoints(points: 25)
+                        }
+                    }
+                }
+                
+                if (spriteComponent.node.frame.intersects(game.soil3.frame)) {
+                    if self.currentItem != nil {
+                        self.currentItem = nil
+                        print("WTRFFF")
+                        if game.soil3.replenishSoil() {
+                            self.scorePoints(points: 25)
+                        }
+                    }
                 }
             }
            

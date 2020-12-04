@@ -58,7 +58,7 @@ class EnemyAgentComponent: GKComponent, GKAgentDelegate {
         guard let animation = entity?.component(ofType: MovementComponent.self) else {
             fatalError("Enemy needs animation/movement component")
         }
-        print(node.physicsBody!.velocity.dx, aiEnemyBody.physicsBody.velocity.dx)
+//        print(node.physicsBody!.velocity.dx, aiEnemyBody.physicsBody.velocity.dx)
         if node.physicsBody!.velocity.dx > 0 {
             animation.move(direction: "left")
         } else if node.physicsBody!.velocity.dx < 0 {
