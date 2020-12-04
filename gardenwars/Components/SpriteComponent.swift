@@ -7,6 +7,7 @@ class SpriteComponent: GKComponent {
     
     init(texture: SKTexture) {
         node = SKSpriteNode(texture: texture, color: .white, size: CGSize(width: 50, height: 100))
+        node.zPosition = 5
 //        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 100))
 //        node.physicsBody?.allowsRotation = false
         

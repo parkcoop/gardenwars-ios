@@ -71,13 +71,18 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         let platformRight = self.childNode(withName: "platformRight")
         let platform = self.childNode(withName: "platform")
 
-        soil1.position = platformLeft!.position
+        soil1.position = CGPoint(x: platformLeft!.position.x, y: platformLeft!.position.y + 83)
+        soil1.zPosition = 500
         addChild(soil1)
         
         soil2.position = platformRight!.position
+        soil2.position = CGPoint(x: platformRight!.position.x, y: platformRight!.position.y + 83)
+        soil2.zPosition = 500
         addChild(soil2)
         
         soil3.position = platform!.position
+        soil3.position = CGPoint(x: platform!.position.x, y: platform!.position.y + 83)
+        soil3.zPosition = 500
         addChild(soil3)
 //        let soil1 = self.childNode(withName: "soil1")
         soil1Agent.position = SIMD2<Float>(Float((soil1.position.x)), Float((soil1.position.y)))
@@ -208,7 +213,6 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     
     func addThunder() -> Void {
         if childNode(withName: "thunder") === nil {
-            print("nice")
             self.addChild(thunder)
             agentSystem.addComponent(thunderAgent)
         }
@@ -225,7 +229,6 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     }
     func addSun() -> Void {
         if childNode(withName: "sun") === nil {
-            print("nice")
             self.addChild(sun)
             agentSystem.addComponent(sunAgent)
 
@@ -234,12 +237,14 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         sun.size = CGSize(width: 50, height: 50)
         sun.name = "sun"
         sun.physicsBody = SKPhysicsBody(rectangleOf: sun.size)
+        sun.physicsBody!.categoryBitMask = UInt32(1)
+        sun.physicsBody!.collisionBitMask = UInt32(2)
+        sun.physicsBody!.contactTestBitMask = UInt32(3)
         sun.position = CGPoint(x: actualX, y: 555 + sun.size.width/2)
         sun.zPosition = 50000
     }
     func addWater() -> Void {
         if childNode(withName: "water") === nil {
-            print("nice")
             self.addChild(water)
             agentSystem.addComponent(waterAgent)
 
@@ -249,15 +254,13 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         water.size = CGSize(width: 50, height: 50)
         water.position = CGPoint(x: actualX, y: 555 + water.size.width/2)
         water.physicsBody = SKPhysicsBody(rectangleOf: water.size)
+        water.physicsBody!.categoryBitMask = UInt32(1)
+        water.physicsBody!.collisionBitMask = UInt32(2)
+        water.physicsBody!.contactTestBitMask = UInt32(3)
         water.position = CGPoint(x: actualX, y: 555 + water.size.width/2)
         water.zPosition = 50000
     }
 
-//    func didBegin(_ contact: SKPhysicsContact) {
-//        if (contact.bodyA.node?.name != nil && contact.bodyB.node?.name != nil) {
-//
-//        }
-//    }
     
     // MARK: Update loop function
     override func update(_ currentTime: TimeInterval) {
@@ -306,8 +309,6 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
 
     // MARK: Touch controls: Joystick, jump button, settings screen
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("LOL")
-        //        getEnemyPath(to: )
         for touch in touches {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)

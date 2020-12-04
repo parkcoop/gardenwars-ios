@@ -18,7 +18,8 @@ class Gardener: GKEntity {
         addComponent(physicsComponent)
         addComponent(TeamComponent(team: team))
         addComponent(GardenerComponent())
-        addComponent(MovementComponent())
+        let movementComponent = MovementComponent(texture: "parker")
+        addComponent(movementComponent)
         
         spriteComponent.node.physicsBody = physicsComponent.physicsBody
     }

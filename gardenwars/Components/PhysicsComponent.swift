@@ -9,8 +9,8 @@ class PhysicsComponent: GKComponent {
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 100))
         physicsBody.allowsRotation = false
         physicsBody.categoryBitMask = UInt32(1)
-        physicsBody.collisionBitMask = UInt32(1)
-        physicsBody.contactTestBitMask = UInt32(1)
+        physicsBody.collisionBitMask = UInt32(2)
+        physicsBody.contactTestBitMask = UInt32(3)
         super.init()
     }
     

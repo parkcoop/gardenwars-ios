@@ -8,7 +8,7 @@ class EnemyGardener: GKEntity, GKAgentDelegate {
         super.init()
         
         let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName))
-        spriteComponent.node.size = CGSize(width: 60, height: 100)
+//        spriteComponent.node.size = CGSize(width: 60, height: 100)
         let xRange = SKRange(lowerLimit: spriteComponent.node.size.width * 0.5, upperLimit: ScreenSize.width - spriteComponent.node.size.width * 0.5)
         let yRange = SKRange(lowerLimit: 0, upperLimit: ScreenSize.height)
         spriteComponent.node.constraints = [SKConstraint.positionX(xRange, y: yRange)]
@@ -22,8 +22,8 @@ class EnemyGardener: GKEntity, GKAgentDelegate {
         addComponent(TeamComponent(team: team))
         addComponent(GardenerComponent())
         addComponent(EnemyAgentComponent())
-        addComponent(MovementComponent())
-//        addComponent(GKAgent2D())
+        let movementComponent = MovementComponent(texture: "enemy")
+        addComponent(movementComponent)
     }
     
     required init?(coder aDecoder: NSCoder) {
