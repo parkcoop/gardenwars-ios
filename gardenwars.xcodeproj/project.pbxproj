@@ -39,19 +39,14 @@
 		4F5126EE256C8AA00024262D /* NormalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5126ED256C8AA00024262D /* NormalState.swift */; };
 		4F5126F6256C8B960024262D /* HoldingItemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5126F5256C8B960024262D /* HoldingItemState.swift */; };
 		4F512700256E8BCD0024262D /* Level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F5126FF256E8BCD0024262D /* Level1.sks */; };
-		4F5F63882565562000103BB7 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F63872565562000103BB7 /* Enemy.swift */; };
 		4F6EDB38257A773A0000AA48 /* enemy.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4F6EDB37257A773A0000AA48 /* enemy.atlas */; };
 		4F726FE1255C521A004376C5 /* PauseScreenOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F726FE0255C521A004376C5 /* PauseScreenOverlay.swift */; };
-		4F726FE9255CAC5B004376C5 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F726FE8255CAC5B004376C5 /* Platform.swift */; };
 		4F726FF9255CD16E004376C5 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F726FF8255CD16E004376C5 /* GameOver.swift */; };
 		4F7C89EA25586DD90047169C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F7C89E925586DD90047169C /* LaunchScreen.storyboard */; };
-		4F99B4FE256B003600AFB29A /* Thunder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F99B4FD256B003600AFB29A /* Thunder.swift */; };
 		4FB6B74F2555D81100002B31 /* parker.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4FB6B74E2555D81100002B31 /* parker.atlas */; };
 		4FD1612125715C7800179989 /* EnemyGardener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1612025715C7800179989 /* EnemyGardener.swift */; };
 		4FF3E244257710D500C33FF7 /* HPSpriteBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3E243257710D500C33FF7 /* HPSpriteBar.swift */; };
 		4FF3E2492577289200C33FF7 /* FlowerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3E2482577289200C33FF7 /* FlowerComponent.swift */; };
-		4FFDDC202559828C00EB8A28 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC1F2559828C00EB8A28 /* Player.swift */; };
-		4FFDDC3025599A2100EB8A28 /* GameSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC2F25599A2100EB8A28 /* GameSetting.swift */; };
 		4FFDDC4025599FEC00EB8A28 /* UIControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC3F25599FEC00EB8A28 /* UIControls.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,19 +106,14 @@
 		4F5126ED256C8AA00024262D /* NormalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalState.swift; sourceTree = "<group>"; };
 		4F5126F5256C8B960024262D /* HoldingItemState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingItemState.swift; sourceTree = "<group>"; };
 		4F5126FF256E8BCD0024262D /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level1.sks; sourceTree = "<group>"; };
-		4F5F63872565562000103BB7 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		4F6EDB37257A773A0000AA48 /* enemy.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = enemy.atlas; sourceTree = "<group>"; };
 		4F726FE0255C521A004376C5 /* PauseScreenOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseScreenOverlay.swift; sourceTree = "<group>"; };
-		4F726FE8255CAC5B004376C5 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		4F726FF8255CD16E004376C5 /* GameOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
 		4F7C89E925586DD90047169C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		4F99B4FD256B003600AFB29A /* Thunder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thunder.swift; sourceTree = "<group>"; };
 		4FB6B74E2555D81100002B31 /* parker.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = parker.atlas; sourceTree = "<group>"; };
 		4FD1612025715C7800179989 /* EnemyGardener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyGardener.swift; sourceTree = "<group>"; };
 		4FF3E243257710D500C33FF7 /* HPSpriteBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPSpriteBar.swift; sourceTree = "<group>"; };
 		4FF3E2482577289200C33FF7 /* FlowerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowerComponent.swift; sourceTree = "<group>"; };
-		4FFDDC1F2559828C00EB8A28 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		4FFDDC2F25599A2100EB8A28 /* GameSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSetting.swift; sourceTree = "<group>"; };
 		4FFDDC3F25599FEC00EB8A28 /* UIControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControls.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,7 +163,7 @@
 				4F051173256AC1FD00900ACE /* Gardener.swift */,
 				4FD1612025715C7800179989 /* EnemyGardener.swift */,
 				4F051192256AC9A400900ACE /* FallingItem.swift */,
-				4F99B4FD256B003600AFB29A /* Thunder.swift */,
+				4F30A217255A16A2003981FE /* Flower.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -214,18 +204,6 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
-		4F051163256ABFEC00900ACE /* OLD */ = {
-			isa = PBXGroup;
-			children = (
-				4F30A217255A16A2003981FE /* Flower.swift */,
-				4FFDDC1F2559828C00EB8A28 /* Player.swift */,
-				4F5F63872565562000103BB7 /* Enemy.swift */,
-				4FFDDC2F25599A2100EB8A28 /* GameSetting.swift */,
-				4F726FE8255CAC5B004376C5 /* Platform.swift */,
-			);
-			path = OLD;
-			sourceTree = "<group>";
-		};
 		4F11D7DD255351FB0020B931 = {
 			isa = PBXGroup;
 			children = (
@@ -252,7 +230,6 @@
 			children = (
 				4F78960A257CF14900B9709B /* Assets */,
 				4F5126EC256C8A840024262D /* States */,
-				4F051163256ABFEC00900ACE /* OLD */,
 				4F05115C256ABEF900900ACE /* UI */,
 				4F05115B256ABEF000900ACE /* Utils */,
 				4F05115A256ABED700900ACE /* Components */,
@@ -454,7 +431,6 @@
 				4F051183256AC64600900ACE /* TeamComponent.swift in Sources */,
 				4FF3E2492577289200C33FF7 /* FlowerComponent.swift in Sources */,
 				4F41F6F0256B5BF000F29D54 /* FallingItemComponent.swift in Sources */,
-				4F726FE9255CAC5B004376C5 /* Platform.swift in Sources */,
 				4F05117E256AC5EC00900ACE /* GardenerComponent.swift in Sources */,
 				4F051174256AC1FD00900ACE /* Gardener.swift in Sources */,
 				4F4A7DC82556FFE900F59E35 /* GameManager.swift in Sources */,
@@ -464,18 +440,14 @@
 				4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */,
 				4F726FE1255C521A004376C5 /* PauseScreenOverlay.swift in Sources */,
 				4F30A218255A16A2003981FE /* Flower.swift in Sources */,
-				4F99B4FE256B003600AFB29A /* Thunder.swift in Sources */,
 				4F2BCE7825758EA100347D52 /* ssss.swift in Sources */,
-				4FFDDC3025599A2100EB8A28 /* GameSetting.swift in Sources */,
 				4F051179256AC23A00900ACE /* EntityManager.swift in Sources */,
 				4FF3E244257710D500C33FF7 /* HPSpriteBar.swift in Sources */,
 				4F3BB686257D744200122F25 /* EnemyCoinDisplayComponent.swift in Sources */,
 				4F4A7DBE2556FDF800F59E35 /* Extension.swift in Sources */,
 				4F5126EE256C8AA00024262D /* NormalState.swift in Sources */,
-				4F5F63882565562000103BB7 /* Enemy.swift in Sources */,
 				4FD1612125715C7800179989 /* EnemyGardener.swift in Sources */,
 				4F05116F256AC1DE00900ACE /* SpriteComponent.swift in Sources */,
-				4FFDDC202559828C00EB8A28 /* Player.swift in Sources */,
 				4F4A7DCD2557007200F59E35 /* GamePlay.swift in Sources */,
 				4F051193256AC9A400900ACE /* FallingItem.swift in Sources */,
 				4F30A2122559BC79003981FE /* HealthPoints.swift in Sources */,

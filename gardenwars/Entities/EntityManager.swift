@@ -9,12 +9,10 @@ class EntityManager {
         let fallingSystem = GKComponentSystem(componentClass: FallingItemComponent.self)
         return [gardenerSystem, enemySystem, fallingSystem]
     }()
-    // 1
     var entities = Set<GKEntity>()
     let scene: SKScene
     var toRemove = Set<GKEntity>()
     
-    // 2
     init(scene: SKScene) {
         self.scene = scene
     }
@@ -30,9 +28,6 @@ class EntityManager {
         }
     }
     
-    
-    
-    // 3
     func add(_ entity: GKEntity) {
         entities.insert(entity)
         

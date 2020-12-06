@@ -58,10 +58,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
                     
                     addChild(hpBar.container)
                     addChild(coinBar.container)
-                    
-                    //                hpBar.container.position = CGPoint(x: 100, y: 200)
-                    
-                    // Constrain the shadow node's position to the render node.
+                    // Constrain the overlay node positions to the sprite node.
                     let xRange = SKRange(constantValue: hpBar.container.position.x)
                     let lowerYRange = SKRange(constantValue: hpBar.container.position.y + 50)
                     let upperYRange = SKRange(constantValue: coinBar.container.position.y + 60)
@@ -108,12 +105,8 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         soil3.position = CGPoint(x: platform!.position.x, y: platform!.position.y + platform!.frame.size.width / 2)
         soil3.zPosition = 500
         addChild(soil3)
-        //        let soil1 = self.childNode(withName: "soil1")
         soil1Agent.position = SIMD2<Float>(Float((soil1.position.x)), Float((soil1.position.y)))
-        //        soil1Agent.accessibilityFrame = CGRect.init(x: Double(soil1Agent.position.x), y: Double(soil1Agent.position.y), width: 50, height: 50)
-        //        let soil2 = self.childNode(withName: "soil2")
         soil2Agent.position = SIMD2<Float>(Float((soil2.position.x)), Float((soil2.position.y)))
-        //        let soil3 = self.childNode(withName: "soil3")
         soil3Agent.position = SIMD2<Float>(Float((soil3.position.x)), Float((soil3.position.y)))
         
         
@@ -356,11 +349,6 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         aiGardener.update(deltaTime: deltaTime)
         if let ai = entityManager.gardener(for: .team2),
            let aiGardener = ai.component(ofType: GardenerComponent.self) {
-            
-            //            if let enemyHpBar = ai.component(ofType: HPSpriteBar.self) {
-            //                enemyHpBar.setProgress(CGFloat(aiGardener.health))
-            //            }
-            
             if (aiGardener.points >= 100) {
                 currentLevel += 1
                 player2Wins += 1
@@ -368,14 +356,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             }
             
         }
-        //////////////////        HP BAR UPDATE...
-        //        if let ai = entityManager.gardener(for: .team2),
-        //           let aiGardener = ai.component(ofType: GardenerComponent.self) {
-        ////            hpDisplay.healthText.text = String(aiGardener.health)
-        ////            hpDisplay.scoreText.text = String(aiGardener.points)
-        //
-        //        }
-        
+
         // MARK: Joystick controls for player
         if let component = humanGardener.component(ofType: SpriteComponent.self) {
             if (uiControls.xDist < 0) {
