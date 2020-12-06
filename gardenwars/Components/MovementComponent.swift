@@ -12,14 +12,6 @@ class MovementComponent: GKComponent, GKAgentDelegate {
     private var player1RightFrames: [SKTexture] = []
     private var player1StillFrame: SKTexture?
     
-    private var player1WaterLeftFrames: [SKTexture] = []
-    private var player1WaterRightFrames: [SKTexture] = []
-    private var player1WaterStillFrames: [SKTexture] = []
-    
-    private var player1SunLeftFrames: [SKTexture] = []
-    private var player1SunRightFrames: [SKTexture] = []
-    private var player1SunStillFrames: [SKTexture] = []
-    
     var playerAgent: GKAgent2D? = GKAgent2D()
     var playerTexture: String
 

@@ -19,6 +19,7 @@ class FallingItem: GKEntity {
         
         let spriteComponent = SpriteComponent(texture: texture, size: texture.size())
         addComponent(spriteComponent)
+//        spriteComponent.node.position = CGPoint(x: 0, y: 5000)
 
     }
 

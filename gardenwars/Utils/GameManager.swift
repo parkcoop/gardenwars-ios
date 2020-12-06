@@ -2,9 +2,11 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-var playerSpriteSize = CGSize(width: 35, height: 75)
+var playerSpriteSize = CGSize(width: 40, height: 75)
 var chosenCharacter = "parker"
 var enemyCharacter = "enemy"
+var enemyPredictionTime = 1
+var systemFont = "8-bit-pusab"
 
 class GameManager {
 
@@ -13,7 +15,6 @@ class GameManager {
              Gameplay,
              Level2,
              Level3,
-             Settings,
              GameOver
     }
     
@@ -63,8 +64,6 @@ class GameManager {
             return GamePlay(fileNamed: "Level2")
         case SceneType.Level3:
             return GamePlay(fileNamed: "Level3")
-        case SceneType.Settings:
-            return Settings(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
         case SceneType.GameOver:
             return GameOver(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
         }

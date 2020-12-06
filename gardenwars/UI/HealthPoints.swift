@@ -2,8 +2,8 @@ import SpriteKit
 
 class HealthPoints: SKNode {
     var hpBackground = SKSpriteNode(imageNamed: "image/counter")
-    var scoreText = SKLabelNode(fontNamed: "Chalkduster");
-    var healthText = SKLabelNode(fontNamed: "Chalkduster")
+    var scoreText = SKLabelNode(fontNamed: systemFont);
+    var healthText = SKLabelNode(fontNamed: systemFont)
     
     override init() {
         super.init()

@@ -21,6 +21,7 @@ class HoldingItemState: GardeningState {
     
     override func didEnter(from previousState: GKState?) {
         super.didEnter(from: previousState)
+        game.determineSoilPatchForAgent()
 
     }
     
