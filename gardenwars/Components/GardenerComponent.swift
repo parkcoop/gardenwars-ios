@@ -61,6 +61,9 @@ class GardenerComponent: GKComponent {
                         if game.soil1.replenishSoil() {
                             self.scorePoints(points: 25)
                             self.currentItem = nil
+                            if (entity?.component(ofType: EnemyAgentComponent.self) != nil) {
+                                game.enemyStateMachine.enter(NormalState.self)
+                            }
                         }
                     }
                 }
@@ -70,6 +73,9 @@ class GardenerComponent: GKComponent {
                         if game.soil2.replenishSoil() {
                             self.currentItem = nil
                             self.scorePoints(points: 25)
+                            if (entity?.component(ofType: EnemyAgentComponent.self) != nil) {
+                                game.enemyStateMachine.enter(NormalState.self)
+                            }
                         }
                     }
                 }

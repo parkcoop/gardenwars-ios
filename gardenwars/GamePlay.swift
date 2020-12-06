@@ -161,7 +161,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
                 SKAction.run({self.changeCurrentItemGoal(item: "sun")}),
                 SKAction.run(addThunder),
                 SKAction.wait(forDuration: 3.0),
-                SKAction.run({self.checkStall()})
+                SKAction.run({self.determineSoilPatchForAgent()})
             ])
         ))
     }
@@ -187,10 +187,10 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
 //    }
     
     func changeCurrentItemGoal(item: String) {
-        if enemyStateMachine.currentState is HoldingItemState {
-            determineSoilPatchForAgent()
-            return
-        }
+//        if enemyStateMachine.currentState is HoldingItemState {
+//            determineSoilPatchForAgent()
+//            return
+//        }
         let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
             self.childNode(withName: "platformLeft")!,
             self.childNode(withName: "platformRight")!

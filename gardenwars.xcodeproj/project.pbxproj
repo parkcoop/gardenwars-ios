@@ -152,12 +152,11 @@
 			isa = PBXGroup;
 			children = (
 				4F7C89E925586DD90047169C /* LaunchScreen.storyboard */,
-				4F4A7DCC2557007200F59E35 /* GamePlay.swift */,
 				4F5126FF256E8BCD0024262D /* Level1.sks */,
 				4F12D1B3257C448C005D3B7F /* Level2.sks */,
 				4F12D1BB257C4961005D3B7F /* Level3.sks */,
-				4F726FF8255CD16E004376C5 /* GameOver.swift */,
 				4F4A7DB02556F97900F59E35 /* MainMenu.swift */,
+				4F726FF8255CD16E004376C5 /* GameOver.swift */,
 				4F726FE0255C521A004376C5 /* Settings.swift */,
 			);
 			path = Screens;
@@ -253,6 +252,7 @@
 				4F051159256ABECB00900ACE /* Entities */,
 				4F051152256ABE7100900ACE /* Screens */,
 				4F11D7E9255351FB0020B931 /* AppDelegate.swift */,
+				4F4A7DCC2557007200F59E35 /* GamePlay.swift */,
 				4F11D7F1255351FB0020B931 /* GameViewController.swift */,
 				4F11D7F8255351FC0020B931 /* Info.plist */,
 				4F11D7F6255351FC0020B931 /* Assets.xcassets */,
