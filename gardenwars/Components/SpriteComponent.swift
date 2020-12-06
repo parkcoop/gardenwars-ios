@@ -5,8 +5,10 @@ class SpriteComponent: GKComponent {
     
     let node: SKSpriteNode
     
-    init(texture: SKTexture) {
-        node = SKSpriteNode(texture: texture, color: .white, size: CGSize(width: 50, height: 100))
+    init(texture: SKTexture, size: CGSize) {
+        print(texture.size(), texture)
+        node = SKSpriteNode(texture: texture, color: .white, size: size)
+//        node.size = node.scale(to: CGSize(width: 50, height: 50))
         node.zPosition = 5
 //        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 100))
 //        node.physicsBody?.allowsRotation = false

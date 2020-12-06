@@ -29,8 +29,8 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     var lastUpdateTimeInterval: TimeInterval = 0
 
     
-    let humanGardener = Gardener(imageName: "image/parker5", team: .team1)
-    let aiGardener = EnemyGardener(imageName: "image/parker5", team: .team2)
+    let humanGardener = Gardener(imageName: "image/\(chosenCharacter)5", team: .team1)
+    let aiGardener = EnemyGardener(imageName: "image/\(enemyCharacter)5", team: .team2)
 
     let thunder = SKSpriteNode(imageNamed: "image/thunder")
     let sun = SKSpriteNode(imageNamed: "image/sun")
@@ -71,17 +71,17 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         let platformRight = self.childNode(withName: "platformRight")
         let platform = self.childNode(withName: "platform")
 
-        soil1.position = CGPoint(x: platformLeft!.position.x, y: platformLeft!.position.y + 83)
+        soil1.position = CGPoint(x: platformLeft!.position.x, y: platformLeft!.position.y  + platformLeft!.frame.size.width / 2)
         soil1.zPosition = 500
         addChild(soil1)
         
         soil2.position = platformRight!.position
-        soil2.position = CGPoint(x: platformRight!.position.x, y: platformRight!.position.y + 83)
+        soil2.position = CGPoint(x: platformRight!.position.x, y: platformRight!.position.y  + platformRight!.frame.size.width / 2)
         soil2.zPosition = 500
         addChild(soil2)
         
         soil3.position = platform!.position
-        soil3.position = CGPoint(x: platform!.position.x, y: platform!.position.y + 83)
+        soil3.position = CGPoint(x: platform!.position.x, y: platform!.position.y + platform!.frame.size.width / 2)
         soil3.zPosition = 500
         addChild(soil3)
 //        let soil1 = self.childNode(withName: "soil1")
@@ -122,9 +122,15 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         entityManager.add(aiGardener)
         
         
-        
-        
-        let background = SKSpriteNode(imageNamed: "image/sky")
+        let background: SKSpriteNode
+        if currentLevel == 1 {
+            background = SKSpriteNode(imageNamed: "image/sky")
+        } else if currentLevel == 2 {
+            background = SKSpriteNode(imageNamed: "image/forest")
+        } else {
+            background = SKSpriteNode(imageNamed: "image/sunset")
+        }
+
         background.position = CGPoint(x: size.width/2, y: size.height/2)
         background.zPosition = -1
         background.size = CGSize(width: ScreenSize.width, height: ScreenSize.height)
@@ -155,10 +161,24 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
                 SKAction.run({self.changeCurrentItemGoal(item: "sun")}),
                 SKAction.run(addThunder),
                 SKAction.wait(forDuration: 3.0),
+                SKAction.run({self.checkStall()})
             ])
         ))
     }
-    
+    var lastSequencePosition = CGPoint(x: 0, y: 0)
+    func checkStall() {
+        guard let enemySprite = aiGardener.component(ofType: SpriteComponent.self) else {
+            fatalError("Enemy needs a sprite")
+        }
+        
+        if (lastSequencePosition.x > enemySprite.node.position.x - 25),
+           (lastSequencePosition.x < enemySprite.node.position.x + 25) {
+            changeCurrentItemGoal(item: "sun")
+        } else {
+            lastSequencePosition = enemySprite.node.position
+        }
+        
+    }
     
 //    func garden(flower: Flower) {
 ////        if let flowerComponent = flower.entity!.component(ofType: FlowerComponent.self) {
@@ -167,7 +187,10 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
 //    }
     
     func changeCurrentItemGoal(item: String) {
-        
+        if enemyStateMachine.currentState is HoldingItemState {
+            determineSoilPatchForAgent()
+            return
+        }
         let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
             self.childNode(withName: "platformLeft")!,
             self.childNode(withName: "platformRight")!
@@ -198,16 +221,31 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
 //        self.agentSystem.addComponent(agent!)
     }
     
-    func adjustGoalsBasedOnState(state: AnyClass) -> [GKGoal] {
-        switch state {
-        case is NormalState.Type:
-            print("GET SOME")
-        case is HoldingItemState.Type:
-            print("WE ALRDY GOT SOME")
-        default:
-            print("?")
+    func determineSoilPatchForAgent() {
+        
+        let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
+            self.childNode(withName: "platformLeft")!,
+            self.childNode(withName: "platformRight")!
+        ])
+        
+        let gardeningGoal: GKGoal
+        
+        if (soil1.growthPhase > 6) {
+            gardeningGoal = GKGoal(toSeekAgent: soil1Agent)
+        } else if (soil2.growthPhase > 6) {
+            gardeningGoal = GKGoal(toSeekAgent: soil2Agent)
+        } else {
+            gardeningGoal = GKGoal(toSeekAgent: soil3Agent)
         }
-        return []
+
+        let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: 1)
+
+        var goals: [GKGoal] = [gardeningGoal, avoidObstaclesGoal]
+        var aiControlComponent: EnemyAgentComponent? {
+            return aiGardener.component(ofType: EnemyAgentComponent.self)
+        }
+
+        aiControlComponent?.setUpAgent(with: goals)
     }
     
     
@@ -271,7 +309,8 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         
         agentSystem.update(deltaTime: deltaTime)
         enemyStateMachine.update(deltaTime: deltaTime)
-        
+//        adjustGoalsBasedOnState()
+
         sunAgent.position = SIMD2<Float>(Float((sun.position.x)), Float((sun.position.y)))
         thunderAgent.position = SIMD2<Float>(Float((thunder.position.x)), Float((thunder.position.y)))
         waterAgent.position = SIMD2<Float>(Float((water.position.x)), Float((water.position.y)))
@@ -282,6 +321,20 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
            let humanGardener = human.component(ofType: GardenerComponent.self) {
             hpDisplay.healthText.text = String(humanGardener.health)
             hpDisplay.scoreText.text = String(humanGardener.points)
+            if (humanGardener.points >= 100) {
+                currentLevel += 1
+                player1Wins += 1
+                nextLevel(nextLevel: currentLevel)
+            }
+            
+        }
+        if let ai = entityManager.gardener(for: .team2),
+           let aiGardener = ai.component(ofType: GardenerComponent.self) {
+            if (aiGardener.points >= 100) {
+                currentLevel += 1
+                player2Wins += 1
+                nextLevel(nextLevel: currentLevel)
+            }
             
         }
 //////////////////        HP BAR UPDATE...
@@ -299,11 +352,21 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             } else if (uiControls.xDist > 0) {
                 component.node.position.x -= 0.2 * uiControls.xDist
             }
-            
         }
-        
-
-        
+    }
+    
+    func nextLevel(nextLevel: Int) {
+        switch nextLevel {
+        case 2:
+            GameManager.shared.transition(self, toScene: .Level2, transition:
+                                            SKTransition.fade(with: UIColor.black, duration: 2))
+        case 3:
+            GameManager.shared.transition(self, toScene: .Level3, transition:
+                                            SKTransition.fade(with: UIColor.black, duration: 2))
+        default:
+            GameManager.shared.transition(self, toScene: .GameOver, transition:
+                                            SKTransition.fade(with: UIColor.black, duration: 2))
+        }
         
     }
 
@@ -356,7 +419,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         if (button == "jump"),
            let component = humanGardener.component(ofType: PhysicsComponent.self) {
                 component.physicsBody.velocity = CGVector(dx: 0, dy: 0)
-                component.physicsBody.applyImpulse(CGVector(dx: 0, dy: 100))
+            component.physicsBody.applyImpulse(CGVector(dx: 0, dy: 25))
             }
         
     }

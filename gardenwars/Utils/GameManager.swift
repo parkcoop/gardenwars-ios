@@ -2,15 +2,17 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-let AppId = "123456"
-let chartboostAppID = "5a3cfaf8e6d7050d5c5c6dce"
-let chartboostAppSignature = "97a43ed515d78826130881e8c0eed747185d0d74"
+var playerSpriteSize = CGSize(width: 35, height: 75)
+var chosenCharacter = "parker"
+var enemyCharacter = "enemy"
 
 class GameManager {
-    
+
     enum SceneType {
         case MainMenu,
              Gameplay,
+             Level2,
+             Level3,
              Settings,
              GameOver
     }
@@ -21,6 +23,7 @@ class GameManager {
     public func launch() {
         firstLaunch()
     }
+    
     
     private func firstLaunch() {
         if !UserDefaults.standard.bool(forKey: "isFirstLaunch") {
@@ -55,7 +58,11 @@ class GameManager {
         case SceneType.MainMenu:
             return MainMenu(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
         case SceneType.Gameplay:
-            return GamePlay(fileNamed: "GamePlay")
+            return GamePlay(fileNamed: "Level1")
+        case SceneType.Level2:
+            return GamePlay(fileNamed: "Level2")
+        case SceneType.Level3:
+            return GamePlay(fileNamed: "Level3")
         case SceneType.Settings:
             return Settings(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
         case SceneType.GameOver:
@@ -63,39 +70,39 @@ class GameManager {
         }
     }
     
-    func run(_ fileName: String, onNode: SKNode) {
-            onNode.run(SKAction.playSoundFileNamed(fileName, waitForCompletion: false))
-    }
+//    func run(_ fileName: String, onNode: SKNode) {
+//            onNode.run(SKAction.playSoundFileNamed(fileName, waitForCompletion: false))
+//    }
     
-    func showAlert(on scene: SKScene, title: String, message: String, preferredStyle: UIAlertController.Style = .alert, actions: [UIAlertAction], animated: Bool = true, delay: Double = 0.0, completion: (() -> Swift.Void)? = nil) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
-        
-        for action in actions {
-            alert.addAction(action)
-        }
-        
-        let wait = DispatchTime.now() + delay
-        DispatchQueue.main.asyncAfter(deadline: wait) {
-            scene.view?.window?.rootViewController?.present(alert, animated: animated, completion: completion)
-        }
-        
-    }
+//    func showAlert(on scene: SKScene, title: String, message: String, preferredStyle: UIAlertController.Style = .alert, actions: [UIAlertAction], animated: Bool = true, delay: Double = 0.0, completion: (() -> Swift.Void)? = nil) {
+//        let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
+//
+//        for action in actions {
+//            alert.addAction(action)
+//        }
+//
+//        let wait = DispatchTime.now() + delay
+//        DispatchQueue.main.asyncAfter(deadline: wait) {
+//            scene.view?.window?.rootViewController?.present(alert, animated: animated, completion: completion)
+//        }
+//
+//    }
     
-    func share(on scene: SKScene, text: String, image: UIImage?, exculdeActivityTypes: [UIAlertController.Type] ) {
-        // text to share
-        //let text = "This is some text that I want to share."
-        guard let image = image else {return}
-        // set up activity view controller
-        let shareItems = [ text, image ] as [Any]
-        let activityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = scene.view // so that iPads won't crash
-        
-        // exclude some activity types from the list (optional)
-        //    activityViewController.excludedActivityTypes = exculdeActivityTypes
-        
-        // present the view controller
-        scene.view?.window?.rootViewController?.present(activityViewController, animated: true, completion: nil)
-    }
+//    func share(on scene: SKScene, text: String, image: UIImage?, exculdeActivityTypes: [UIAlertController.Type] ) {
+//        // text to share
+//        //let text = "This is some text that I want to share."
+//        guard let image = image else {return}
+//        // set up activity view controller
+//        let shareItems = [ text, image ] as [Any]
+//        let activityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+//        activityViewController.popoverPresentationController?.sourceView = scene.view // so that iPads won't crash
+//
+//        // exclude some activity types from the list (optional)
+//        //    activityViewController.excludedActivityTypes = exculdeActivityTypes
+//
+//        // present the view controller
+//        scene.view?.window?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+//    }
     
 }
 

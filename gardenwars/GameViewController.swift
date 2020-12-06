@@ -3,6 +3,10 @@ import SpriteKit
 import GameplayKit
 import AVFoundation
 
+var currentLevel = 1
+var player1Wins = 0
+var player2Wins = 0
+
 class GameViewController: UIViewController {
     
     let skView: SKView = {

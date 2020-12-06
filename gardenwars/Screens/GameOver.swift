@@ -4,7 +4,8 @@ class GameOver: SKScene {
     
     
     override func didMove(to view: SKView) {
-        let settingsLabel: SKLabelNode = SKLabelNode(text: "Well done, gardener")
+        let displayText = player1Wins > player2Wins ? "Well done, gardener." : "Robot gardeners will take over"
+        let settingsLabel: SKLabelNode = SKLabelNode(text: displayText)
         settingsLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
         addChild(settingsLabel)
     }
@@ -26,7 +27,7 @@ class GameOver: SKScene {
     }
     
     func startGame() {
-        GameManager.shared.transition(self, toScene: .Gameplay, transition:
+        GameManager.shared.transition(self, toScene: .MainMenu, transition:
                                         SKTransition.fade(with: UIColor.black, duration: 2))
     }
 }

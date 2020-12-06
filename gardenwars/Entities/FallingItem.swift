@@ -17,7 +17,7 @@ class FallingItem: GKEntity {
             texture = SKTexture(imageNamed: "image/thunder")
         }
         
-        let spriteComponent = SpriteComponent(texture: texture)
+        let spriteComponent = SpriteComponent(texture: texture, size: texture.size())
         addComponent(spriteComponent)
 
     }
