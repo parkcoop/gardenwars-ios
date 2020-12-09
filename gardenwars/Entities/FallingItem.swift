@@ -19,6 +19,9 @@ class FallingItem: GKEntity {
         
         let spriteComponent = SpriteComponent(texture: texture, size: texture.size())
         addComponent(spriteComponent)
+        let xRange = SKRange(lowerLimit: spriteComponent.node.size.width * 0.5, upperLimit: ScreenSize.width - spriteComponent.node.size.width * 0.5)
+        let yRange = SKRange(lowerLimit: 0, upperLimit: ScreenSize.height)
+        spriteComponent.node.constraints = [SKConstraint.positionX(xRange, y: yRange)]
 //        spriteComponent.node.position = CGPoint(x: 0, y: 5000)
 
     }

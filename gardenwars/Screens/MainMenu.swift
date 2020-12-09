@@ -1,7 +1,6 @@
 import SpriteKit
 
 class MainMenu: SKScene {
-    var background = SKSpriteNode(imageNamed: "image/sky")
     let logo = SKSpriteNode(imageNamed: "image/logo")
     var menuPhase = 1
     
@@ -14,22 +13,35 @@ class MainMenu: SKScene {
     private var chosenPlayerStillFrame: SKTexture?
     
     override func didMove(to view: SKView) {
-        background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
-        background.size = self.frame.size
-        background.zPosition = -5
-        logo.scale(to: CGSize(width: 200, height: 125))
-        landingSection.addChild(background)
+//        let background = SKSpriteNode(imageNamed: "image/sky")
+//
+//        background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
+//        background.size = self.frame.size
+//        background.zPosition = 1
+        logo.zPosition = 100
+        logo.scale(to: CGSize(width: 325, height: 200))
+        logo.position = CGPoint(x: ScreenSize.width / 3, y: ScreenSize.height / 2)
+//        addChild(background)
+//        landingSection.addChild(background)
         landingSection.addChild(logo)
+//
+//        let startLabel = SKLabelNode(fontNamed: systemFont)
+//        startLabel.text = "Play"
+//        startLabel.zPosition = 6
+//        startLabel.fontSize = 18
+//        startLabel.fontColor = UIColor.green
+//        startLabel.alpha = 1
+//        let startButton = SKSpriteNode(color: .white, size: CGSize(width: 200, height: 50))
+//        startButton.position = CGPoint(x: ScreenSize.width / 3, y: ScreenSize.height / 2 - 100)
+//        startLabel.position = startButton.position
+//
+//        startLabel.verticalAlignmentMode = .center
+//        startLabel.horizontalAlignmentMode = .center
         
-        let welcomeLabel = SKLabelNode(fontNamed: systemFont)
-        welcomeLabel.text = "Tap to begin"
-        welcomeLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 - 100)
-        logo.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
-        welcomeLabel.zPosition = 6
-        welcomeLabel.fontSize = 18
-        welcomeLabel.fontColor = UIColor.white
-        welcomeLabel.alpha = 1
-        landingSection.addChild(welcomeLabel)
+//        let button = SKButton(normalTexture: <#T##SKTexture!#>, selectedTexture: <#T##SKTexture!#>, disabledTexture: <#T##SKTexture?#>)
+        
+//        landingSection.addChild(startLabel)
+//        landingSection.addChild(startButton)
         addChild(landingSection)
         
         let chooseLabel = SKLabelNode(fontNamed: systemFont)
@@ -86,8 +98,11 @@ class MainMenu: SKScene {
     }
     
     func showChooseDifficulty() {
-        chooseCharacter.run(SKAction.move(by: CGVector(dx: 0, dy: 500), duration: 0.1))
-        chooseDifficulty.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 0.1))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+            self.chooseCharacter.run(SKAction.move(by: CGVector(dx: 0, dy: 500), duration: 0.1))
+            self.chooseDifficulty.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 0.1))
+        }
+        
     }
     
     func choosePlayerAnimation(player: String) {
@@ -116,63 +131,49 @@ class MainMenu: SKScene {
                     choosePlayerAnimation(player: "parker")
                     chosenCharacter = "parker"
                     enemyCharacter = "enemy"
-                    node.run(SKAction.repeat(
-                        SKAction.animate(
-                            with: chosenPlayerRightFrames,
-                            timePerFrame: 0.05,
-                            resize: false,
-                            restore: true
-                        ), count: 2
-                    ), withKey: "WALK_LEFT")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        self.showChooseDifficulty()
-                    }
+                    walkAnimation(node)
+                    showChooseDifficulty()
                 }
                 if node.name == "enemy" {
                     choosePlayerAnimation(player: "enemy")
                     enemyCharacter = "darla"
                     chosenCharacter = "enemy"
-                    node.run(SKAction.repeat(
-                        SKAction.animate(
-                            with: chosenPlayerRightFrames,
-                            timePerFrame: 0.05,
-                            resize: false,
-                            restore: true
-                        ), count: 2
-                    ), withKey: "WALK_LEFT")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        self.showChooseDifficulty()
-                    }
+                    walkAnimation(node)
+                    showChooseDifficulty()
                     
                 }
                 if node.name == "darla" {
                     choosePlayerAnimation(player: "darla")
                     chosenCharacter = "darla"
                     enemyCharacter = "parker"
-                    node.run(SKAction.repeat(
-                        SKAction.animate(
-                            with: chosenPlayerRightFrames,
-                            timePerFrame: 0.05,
-                            resize: false,
-                            restore: true
-                        ), count: 2
-                    ), withKey: "WALK_LEFT")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        self.showChooseDifficulty()
-                    }
+                    walkAnimation(node)
+                    showChooseDifficulty()
                 }
                 
                 if node.name == "easy" {
                     enemyPredictionTime = 25
+                    enemyTopSpeed = 1500
                     startGamePlay()
                 }
                 if node.name == "hard" {
                     enemyPredictionTime = 1
+                    enemyTopSpeed = 3000
                     startGamePlay()
                 }
             }
             
         }
+    }
+    
+    func walkAnimation(_ node: SKNode) {
+        node.run(SKAction.repeat(
+            SKAction.animate(
+                with: chosenPlayerRightFrames,
+                timePerFrame: 0.05,
+                resize: false,
+                restore: true
+            ), count: 2
+        ), withKey: "WALK_LEFT")
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -260,6 +261,6 @@ class MainMenu: SKScene {
     func startGamePlay() {
         currentLevel = 1
         GameManager.shared.transition(self, toScene: .Gameplay, transition:
-                                        SKTransition.fade(with: UIColor.black, duration: 2))
+                                        SKTransition.fade(with: UIColor.black, duration: 1))
     }
 }

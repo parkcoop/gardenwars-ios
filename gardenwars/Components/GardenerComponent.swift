@@ -8,6 +8,8 @@ class GardenerComponent: GKComponent {
     var currentItem: String? = nil
     var game: GamePlay?
     
+    var knockOutSound = SKAction.playSoundFileNamed("knockout.wav", waitForCompletion: false)
+    var electrocutionSound = SKAction.playSoundFileNamed("electrocute.mp3", waitForCompletion: false)
     override init() {
         super.init()
     }
@@ -18,9 +20,19 @@ class GardenerComponent: GKComponent {
     
     override func update(deltaTime seconds: TimeInterval) {
         super.update(deltaTime: seconds)
+       
         if let spriteComponent = entity?.component(ofType: SpriteComponent.self) {
-            
+           
             if let game = game {
+                if (health <= 0) {
+
+    //                spriteComponent.node.isPaused = true
+    //                spriteComponent.node.position = CGPoint(x: 50, y: 100)
+                    if let physicsBody = entity?.component(ofType: PhysicsComponent.self) {
+                        physicsBody.physicsBody.pinned = true
+                        spriteComponent.node.run(SKAction.colorize(with: .red, colorBlendFactor: 1, duration: 1))
+                    }
+                }
                 
                 if let movementComponent = entity?.component(ofType: MovementComponent.self) {
                     if self.currentItem != nil {
@@ -32,8 +44,12 @@ class GardenerComponent: GKComponent {
                 }
                 if (spriteComponent.node.calculateAccumulatedFrame().intersects(game.thunder.frame)),
                    game.childNode(withName: "thunder") !== nil {
-                    self.takeDamage(points: 10)
+                    if (health == 25) {
+                        game.run(knockOutSound)
+                    }
+                    self.takeDamage(healthPoints: 25)
                     game.thunder.removeFromParent()
+                    game.run(electrocutionSound)
                 }
                 
                 if (spriteComponent.node.frame.intersects(game.sun.frame)),
@@ -56,7 +72,7 @@ class GardenerComponent: GKComponent {
                     }
                 }
                 
-                if (spriteComponent.node.frame.intersects(game.soil1.frame)) {
+                if (spriteComponent.node.frame.intersects(CGRect(x: game.soil1.frame.midX, y: game.soil1.frame.minY, width: game.soil1.frame.width, height: 10))) {
                     if self.currentItem != nil {
                         if game.soil1.replenishSoil() {
                             self.scorePoints(points: 25)
@@ -68,7 +84,7 @@ class GardenerComponent: GKComponent {
                     }
                 }
                 
-                if (spriteComponent.node.frame.intersects(game.soil2.frame)) {
+                if (spriteComponent.node.frame.intersects(CGRect(x: game.soil2.frame.midX, y: game.soil2.frame.minY, width: game.soil2.frame.width, height: 10))) {
                     if self.currentItem != nil {
                         if game.soil2.replenishSoil() {
                             self.currentItem = nil
@@ -80,7 +96,7 @@ class GardenerComponent: GKComponent {
                     }
                 }
                 
-                if (spriteComponent.node.frame.intersects(game.soil3.frame)) {
+                if (spriteComponent.node.frame.intersects(CGRect(x: game.soil3.frame.midX, y: game.soil3.frame.minY, width: game.soil3.frame.width, height: 10))) {
                     if self.currentItem != nil {
                         if game.soil3.replenishSoil() {
                             self.currentItem = nil
@@ -104,8 +120,11 @@ class GardenerComponent: GKComponent {
         }
     }
     
-    func takeDamage(points: Int) {
-        self.health -= points
+    func takeDamage(healthPoints: Int) {
+        if self.health <= 0 {
+            return
+        }
+        self.health -= healthPoints
     }
     
     func scorePoints(points: Int) {

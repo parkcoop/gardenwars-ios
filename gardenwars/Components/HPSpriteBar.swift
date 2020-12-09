@@ -19,7 +19,6 @@ class HPSpriteBar: GKComponent {
         fatalError("init(coder:) has not been implemented")
     }
     func setProgress(_ value:CGFloat) {
-        print("Set progress bar to: \(value)")
         guard 0.0 ... 1.0 ~= value else { return }
         let originalSize = self.baseSprite.size
         var calculateFraction:CGFloat = 0.0

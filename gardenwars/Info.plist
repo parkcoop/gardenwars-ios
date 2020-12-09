@@ -22,6 +22,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>8-bit-pusab.ttf</string>
+	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -29,6 +33,7 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
+		<string>gamekit</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
 	<true/>
@@ -38,10 +43,6 @@
 	<array>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>8-bit-pusab.ttf</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

@@ -17,12 +17,14 @@ class HealthPoints: SKNode {
         hpBackground.scale(to: CGSize(width: 250, height: 67))
         hpBackground.zPosition = 0
         addChild(hpBackground)
-        scoreText.position = CGPoint(x: hpBackground.position.x - 45, y: hpBackground.position.y - 10)
+        scoreText.position = CGPoint(x: hpBackground.frame.minX + hpBackground.frame.width / 4 + 17.5, y: hpBackground.frame.maxY - 45)
+        scoreText.horizontalAlignmentMode = .center
+        healthText.horizontalAlignmentMode = .center
         scoreText.zPosition = 1
-        scoreText.fontSize = CGFloat.universalFont(size: 25)
-        healthText.position = CGPoint(x: hpBackground.position.x + 55, y: hpBackground.position.y - 10)
+        scoreText.fontSize = CGFloat.universalFont(size: 18)
+        healthText.position = CGPoint(x: hpBackground.frame.maxX - hpBackground.frame.width / 4, y: hpBackground.frame.maxY - 45)
         healthText.zPosition = 1
-        healthText.fontSize = CGFloat.universalFont(size: 25)
+        healthText.fontSize = CGFloat.universalFont(size: 18)
         addChild(scoreText)
         addChild(healthText)
     }

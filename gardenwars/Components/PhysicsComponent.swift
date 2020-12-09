@@ -7,7 +7,7 @@ class PhysicsComponent: GKComponent {
     
     
     init(texture: SKTexture, size: CGSize) {
-        physicsBody = SKPhysicsBody(texture: texture, size: size)
+        physicsBody = SKPhysicsBody(rectangleOf: size)
         physicsBody.allowsRotation = false
         physicsBody.categoryBitMask = UInt32(1)
         physicsBody.collisionBitMask = UInt32(2)
@@ -15,6 +15,8 @@ class PhysicsComponent: GKComponent {
         super.init()
         
     }
+    
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -78,7 +78,7 @@ class EnemyAgentComponent: GKComponent, GKAgentDelegate {
         let behavior = GKBehavior(goals: goals, andWeights: [15, 10, 5, 1])
         agent.behavior = behavior
         let position = node.position
-        agent.maxSpeed = 3000
+        agent.maxSpeed = Float(enemyTopSpeed)
         agent.maxAcceleration = 3000
         
         agent.radius = 100

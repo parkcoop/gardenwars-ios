@@ -13,6 +13,8 @@ class GameOver: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        player1Wins = 0
+        player2Wins = 0
         startGame()
     }
     

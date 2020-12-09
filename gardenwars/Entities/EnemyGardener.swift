@@ -34,17 +34,14 @@ class EnemyGardener: GKEntity, GKAgentDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-//
-//    func agentWillUpdate(_ agent: GKAgent) {
-//        <#code#>
-//    }
-//
+
     override func update(deltaTime seconds: TimeInterval) {
         guard let gardenComponent = self.component(ofType: GardenerComponent.self) else {
             fatalError("No garden component on AI gardener")
         }
         hpBarComponent.setProgress(CGFloat(Double(gardenComponent.health) / 100.00))
         coinDisplayComponent.setCoinAmount(String(gardenComponent.points))
+        
     }
     
     

@@ -23,13 +23,25 @@
 		4F12D1BC257C4961005D3B7F /* Level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F12D1BB257C4961005D3B7F /* Level3.sks */; };
 		4F12D1CC257C7BB9005D3B7F /* darla.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4F12D1CB257C7BB9005D3B7F /* darla.atlas */; };
 		4F1D58FC257D26B9009B9D89 /* 8-bit-pusab.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F1D58FB257D26B9009B9D89 /* 8-bit-pusab.ttf */; };
-		4F2BCE7825758EA100347D52 /* ssss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCE7725758EA100347D52 /* ssss.swift */; };
 		4F2BCE7D2575924D00347D52 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCE7C2575924D00347D52 /* PhysicsComponent.swift */; };
 		4F2BCE822575B47500347D52 /* GardeningState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BCE812575B47500347D52 /* GardeningState.swift */; };
 		4F30A2122559BC79003981FE /* HealthPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F30A2112559BC79003981FE /* HealthPoints.swift */; };
 		4F30A218255A16A2003981FE /* Flower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F30A217255A16A2003981FE /* Flower.swift */; };
 		4F30A225255A324B003981FE /* flower.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4F30A216255A1645003981FE /* flower.atlas */; };
 		4F3BB686257D744200122F25 /* EnemyCoinDisplayComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3BB685257D744200122F25 /* EnemyCoinDisplayComponent.swift */; };
+		4F3BB6A7257EDDE100122F25 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3BB6A6257EDDE100122F25 /* GameKit.framework */; };
+		4F3BB6B4257F028100122F25 /* Level1-medium.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6B3257F028100122F25 /* Level1-medium.sks */; };
+		4F3BB6BC257F052100122F25 /* Level2-medium.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6BB257F052100122F25 /* Level2-medium.sks */; };
+		4F3BB6C1257F053000122F25 /* Level3-medium.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6C0257F053000122F25 /* Level3-medium.sks */; };
+		4F3BB6C62580563100122F25 /* yellowcopter.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6C52580563100122F25 /* yellowcopter.wav */; };
+		4F3BB6CF25805CDE00122F25 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3BB6CE25805CDE00122F25 /* AVFoundation.framework */; };
+		4F3BB6D42580616B00122F25 /* yellowcopter-sting.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6D32580616B00122F25 /* yellowcopter-sting.wav */; };
+		4F3BB6DB258065BA00122F25 /* electrocute.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6D8258065BA00122F25 /* electrocute.mp3 */; };
+		4F3BB6DC258065BA00122F25 /* menutheme.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6D9258065BA00122F25 /* menutheme.wav */; };
+		4F3BB6DD258065BA00122F25 /* knockout.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6DA258065BA00122F25 /* knockout.wav */; };
+		4F3BB6E42580743500122F25 /* nextstage.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6E12580743500122F25 /* nextstage.wav */; };
+		4F3BB6E52580743500122F25 /* flowergrowth.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6E22580743500122F25 /* flowergrowth.wav */; };
+		4F3BB6E62580743500122F25 /* flowercomplete.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6E32580743500122F25 /* flowercomplete.wav */; };
 		4F41F6EA256B382100F29D54 /* EnemyAgentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F41F6E9256B382100F29D54 /* EnemyAgentComponent.swift */; };
 		4F41F6F0256B5BF000F29D54 /* FallingItemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F41F6EF256B5BF000F29D54 /* FallingItemComponent.swift */; };
 		4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DB02556F97900F59E35 /* MainMenu.swift */; };
@@ -90,13 +102,25 @@
 		4F12D1BB257C4961005D3B7F /* Level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Level3.sks; sourceTree = "<group>"; };
 		4F12D1CB257C7BB9005D3B7F /* darla.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = darla.atlas; sourceTree = "<group>"; };
 		4F1D58FB257D26B9009B9D89 /* 8-bit-pusab.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "8-bit-pusab.ttf"; sourceTree = "<group>"; };
-		4F2BCE7725758EA100347D52 /* ssss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ssss.swift; sourceTree = "<group>"; };
 		4F2BCE7C2575924D00347D52 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsComponent.swift; sourceTree = "<group>"; };
 		4F2BCE812575B47500347D52 /* GardeningState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardeningState.swift; sourceTree = "<group>"; };
 		4F30A2112559BC79003981FE /* HealthPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthPoints.swift; sourceTree = "<group>"; };
 		4F30A216255A1645003981FE /* flower.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = flower.atlas; sourceTree = "<group>"; };
 		4F30A217255A16A2003981FE /* Flower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flower.swift; sourceTree = "<group>"; };
 		4F3BB685257D744200122F25 /* EnemyCoinDisplayComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyCoinDisplayComponent.swift; sourceTree = "<group>"; };
+		4F3BB6A6257EDDE100122F25 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		4F3BB6B3257F028100122F25 /* Level1-medium.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "Level1-medium.sks"; sourceTree = "<group>"; };
+		4F3BB6BB257F052100122F25 /* Level2-medium.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "Level2-medium.sks"; sourceTree = "<group>"; };
+		4F3BB6C0257F053000122F25 /* Level3-medium.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "Level3-medium.sks"; sourceTree = "<group>"; };
+		4F3BB6C52580563100122F25 /* yellowcopter.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = yellowcopter.wav; sourceTree = "<group>"; };
+		4F3BB6CE25805CDE00122F25 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4F3BB6D32580616B00122F25 /* yellowcopter-sting.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "yellowcopter-sting.wav"; path = "../../../../../Downloads/yellowcopter-sting.wav"; sourceTree = "<group>"; };
+		4F3BB6D8258065BA00122F25 /* electrocute.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = electrocute.mp3; path = ../../../../../Downloads/electrocute.mp3; sourceTree = "<group>"; };
+		4F3BB6D9258065BA00122F25 /* menutheme.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = menutheme.wav; path = ../../../../../Downloads/menutheme.wav; sourceTree = "<group>"; };
+		4F3BB6DA258065BA00122F25 /* knockout.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = knockout.wav; path = ../../../../../Downloads/knockout.wav; sourceTree = "<group>"; };
+		4F3BB6E12580743500122F25 /* nextstage.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = nextstage.wav; path = ../../../../../Downloads/nextstage.wav; sourceTree = "<group>"; };
+		4F3BB6E22580743500122F25 /* flowergrowth.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = flowergrowth.wav; path = ../../../../../Downloads/flowergrowth.wav; sourceTree = "<group>"; };
+		4F3BB6E32580743500122F25 /* flowercomplete.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = flowercomplete.wav; path = ../../../../../Downloads/flowercomplete.wav; sourceTree = "<group>"; };
 		4F41F6E9256B382100F29D54 /* EnemyAgentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyAgentComponent.swift; sourceTree = "<group>"; };
 		4F41F6EF256B5BF000F29D54 /* FallingItemComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallingItemComponent.swift; sourceTree = "<group>"; };
 		4F4A7DB02556F97900F59E35 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
@@ -122,6 +146,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F3BB6CF25805CDE00122F25 /* AVFoundation.framework in Frameworks */,
+				4F3BB6A7257EDDE100122F25 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,8 +173,11 @@
 			children = (
 				4F7C89E925586DD90047169C /* LaunchScreen.storyboard */,
 				4F5126FF256E8BCD0024262D /* Level1.sks */,
+				4F3BB6B3257F028100122F25 /* Level1-medium.sks */,
 				4F12D1B3257C448C005D3B7F /* Level2.sks */,
+				4F3BB6BB257F052100122F25 /* Level2-medium.sks */,
 				4F12D1BB257C4961005D3B7F /* Level3.sks */,
+				4F3BB6C0257F053000122F25 /* Level3-medium.sks */,
 				4F4A7DB02556F97900F59E35 /* MainMenu.swift */,
 				4F4A7DCC2557007200F59E35 /* GamePlay.swift */,
 				4F726FF8255CD16E004376C5 /* GameOver.swift */,
@@ -207,11 +236,11 @@
 		4F11D7DD255351FB0020B931 = {
 			isa = PBXGroup;
 			children = (
-				4F2BCE7725758EA100347D52 /* ssss.swift */,
 				4F11D7E8255351FB0020B931 /* gardenwars */,
 				4F11D800255351FC0020B931 /* gardenwarsTests */,
 				4F11D80B255351FC0020B931 /* gardenwarsUITests */,
 				4F11D7E7255351FB0020B931 /* Products */,
+				4F3BB6A5257EDDE100122F25 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -260,6 +289,30 @@
 			path = gardenwarsUITests;
 			sourceTree = "<group>";
 		};
+		4F3BB6A5257EDDE100122F25 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4F3BB6CE25805CDE00122F25 /* AVFoundation.framework */,
+				4F3BB6A6257EDDE100122F25 /* GameKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4F3BB6CA2580569200122F25 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				4F3BB6E32580743500122F25 /* flowercomplete.wav */,
+				4F3BB6E22580743500122F25 /* flowergrowth.wav */,
+				4F3BB6E12580743500122F25 /* nextstage.wav */,
+				4F3BB6D8258065BA00122F25 /* electrocute.mp3 */,
+				4F3BB6DA258065BA00122F25 /* knockout.wav */,
+				4F3BB6D9258065BA00122F25 /* menutheme.wav */,
+				4F3BB6C52580563100122F25 /* yellowcopter.wav */,
+				4F3BB6D32580616B00122F25 /* yellowcopter-sting.wav */,
+			);
+			path = audio;
+			sourceTree = "<group>";
+		};
 		4F5126EC256C8A840024262D /* States */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +326,7 @@
 		4F78960A257CF14900B9709B /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				4F3BB6CA2580569200122F25 /* audio */,
 				4F78960E257CF19700B9709B /* fonts */,
 				4F11D7F6255351FC0020B931 /* Assets.xcassets */,
 				4F12D1CB257C7BB9005D3B7F /* darla.atlas */,
@@ -394,15 +448,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F3BB6BC257F052100122F25 /* Level2-medium.sks in Resources */,
+				4F3BB6C62580563100122F25 /* yellowcopter.wav in Resources */,
 				4F512700256E8BCD0024262D /* Level1.sks in Resources */,
+				4F3BB6E42580743500122F25 /* nextstage.wav in Resources */,
+				4F3BB6C1257F053000122F25 /* Level3-medium.sks in Resources */,
+				4F3BB6E62580743500122F25 /* flowercomplete.wav in Resources */,
+				4F3BB6D42580616B00122F25 /* yellowcopter-sting.wav in Resources */,
 				4F7C89EA25586DD90047169C /* LaunchScreen.storyboard in Resources */,
+				4F3BB6DC258065BA00122F25 /* menutheme.wav in Resources */,
 				4F1D58FC257D26B9009B9D89 /* 8-bit-pusab.ttf in Resources */,
+				4F3BB6B4257F028100122F25 /* Level1-medium.sks in Resources */,
+				4F3BB6E52580743500122F25 /* flowergrowth.wav in Resources */,
 				4F6EDB38257A773A0000AA48 /* enemy.atlas in Resources */,
 				4F30A225255A324B003981FE /* flower.atlas in Resources */,
 				4F12D1BC257C4961005D3B7F /* Level3.sks in Resources */,
 				4F11D7F7255351FC0020B931 /* Assets.xcassets in Resources */,
+				4F3BB6DB258065BA00122F25 /* electrocute.mp3 in Resources */,
 				4F12D1CC257C7BB9005D3B7F /* darla.atlas in Resources */,
 				4F12D1B4257C448C005D3B7F /* Level2.sks in Resources */,
+				4F3BB6DD258065BA00122F25 /* knockout.wav in Resources */,
 				4FB6B74F2555D81100002B31 /* parker.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -440,7 +505,6 @@
 				4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */,
 				4F726FE1255C521A004376C5 /* PauseScreenOverlay.swift in Sources */,
 				4F30A218255A16A2003981FE /* Flower.swift in Sources */,
-				4F2BCE7825758EA100347D52 /* ssss.swift in Sources */,
 				4F051179256AC23A00900ACE /* EntityManager.swift in Sources */,
 				4FF3E244257710D500C33FF7 /* HPSpriteBar.swift in Sources */,
 				4F3BB686257D744200122F25 /* EnemyCoinDisplayComponent.swift in Sources */,
