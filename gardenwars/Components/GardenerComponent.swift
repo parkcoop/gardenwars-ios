@@ -8,8 +8,9 @@ class GardenerComponent: GKComponent {
     var currentItem: String? = nil
     var game: GamePlay?
     
-    var knockOutSound = SKAction.playSoundFileNamed("knockout.wav", waitForCompletion: false)
-    var electrocutionSound = SKAction.playSoundFileNamed("electrocute.mp3", waitForCompletion: false)
+    var knockOutSound = SKAction.playSoundFileNamed(fileName: "knockout.wav", atVolume: masterEffectsVolume, waitForCompletion: false)
+    var electrocutionSound = SKAction.playSoundFileNamed(fileName: "electrocute.mp3", atVolume: masterEffectsVolume, waitForCompletion: false)
+    
     override init() {
         super.init()
     }
@@ -25,6 +26,13 @@ class GardenerComponent: GKComponent {
            
             if let game = game {
                 if (health <= 0) {
+                    if game.firstDeath == nil {
+                        if (entity?.component(ofType: EnemyAgentComponent.self) != nil) {
+                            game.firstDeath = 2
+                        } else {
+                            game.firstDeath = 1
+                        }
+                    }
 
     //                spriteComponent.node.isPaused = true
     //                spriteComponent.node.position = CGPoint(x: 50, y: 100)

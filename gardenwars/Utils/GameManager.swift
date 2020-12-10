@@ -1,6 +1,7 @@
 import Foundation
 import SpriteKit
 import GameplayKit
+import GameKit
 import AVFoundation
 
 
@@ -9,6 +10,12 @@ let menuTheme = Bundle.main.url(forResource: "menutheme", withExtension: "wav")!
 let mainTheme = Bundle.main.url(forResource: "yellowcopter", withExtension: "wav")!
 let finishTheme = Bundle.main.url(forResource: "yellowcopter-sting", withExtension: "wav")!
 
+
+
+func toggleGameCenterVisibility(_ visible: Bool) {
+    GKAccessPoint.shared.location = .topLeading
+    GKAccessPoint.shared.isActive = visible
+}
 
 func playMenuTheme() {
     do {
@@ -92,7 +99,11 @@ class GameManager {
         guard let scene = getScene(toScene) else { return }
         
         if let transition = transition {
-            scene.scaleMode = .resizeFill
+            if (DeviceType.isiPad || DeviceType.isiPadPro) {
+                scene.scaleMode = .resizeFill
+            } else {
+                scene.scaleMode = .resizeFill
+            }
             scene.anchorPoint = CGPoint(x: 0, y: 0)
             
             fromScene.view?.presentScene(scene, transition: transition)
@@ -111,64 +122,31 @@ class GameManager {
             playMenuTheme()
             return MainMenu(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
         case SceneType.Gameplay:
+            gameTimer = 0
+            timesecond = 0
             playBackgroundMusic()
-
-            if (DeviceType.isiPhoneX) {
-                return GamePlay(fileNamed: "Level1-medium")
-            } else {
-                return GamePlay(fileNamed: "Level1")
-            }
+            toggleGameCenterVisibility(false)
+            return loadResponsiveSizeLevel(level: 1)
         case SceneType.Level2:
-            if (DeviceType.isiPhoneX) {
-                return GamePlay(fileNamed: "Level2-medium")
-            } else {
-                return GamePlay(fileNamed: "Level2")
-            }
+            return loadResponsiveSizeLevel(level: 2)
         case SceneType.Level3:
-            if (DeviceType.isiPhoneX) {
-                return GamePlay(fileNamed: "Level3-medium")
-            } else {
-                return GamePlay(fileNamed: "Level3")
-            }
+            return loadResponsiveSizeLevel(level: 3)
         case SceneType.GameOver:
+            toggleGameCenterVisibility(true)
             playStinger()
             return GameOver(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
         }
     }
     
-    //    func run(_ fileName: String, onNode: SKNode) {
-    //            onNode.run(SKAction.playSoundFileNamed(fileName, waitForCompletion: false))
-    //    }
-    
-    //    func showAlert(on scene: SKScene, title: String, message: String, preferredStyle: UIAlertController.Style = .alert, actions: [UIAlertAction], animated: Bool = true, delay: Double = 0.0, completion: (() -> Swift.Void)? = nil) {
-    //        let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
-    //
-    //        for action in actions {
-    //            alert.addAction(action)
-    //        }
-    //
-    //        let wait = DispatchTime.now() + delay
-    //        DispatchQueue.main.asyncAfter(deadline: wait) {
-    //            scene.view?.window?.rootViewController?.present(alert, animated: animated, completion: completion)
-    //        }
-    //
-    //    }
-    
-    //    func share(on scene: SKScene, text: String, image: UIImage?, exculdeActivityTypes: [UIAlertController.Type] ) {
-    //        // text to share
-    //        //let text = "This is some text that I want to share."
-    //        guard let image = image else {return}
-    //        // set up activity view controller
-    //        let shareItems = [ text, image ] as [Any]
-    //        let activityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
-    //        activityViewController.popoverPresentationController?.sourceView = scene.view // so that iPads won't crash
-    //
-    //        // exclude some activity types from the list (optional)
-    //        //    activityViewController.excludedActivityTypes = exculdeActivityTypes
-    //
-    //        // present the view controller
-    //        scene.view?.window?.rootViewController?.present(activityViewController, animated: true, completion: nil)
-    //    }
+    func loadResponsiveSizeLevel(level: Int) -> SKScene? {
+        if (DeviceType.isiPhoneX) {
+            return GamePlay(fileNamed: "Level\(level)-medium")
+        } else if (DeviceType.isiPad || DeviceType.isiPadPro) {
+            return GamePlay(fileNamed: "Level\(level)-large")
+        } else {
+            return GamePlay(fileNamed: "Level\(level)")
+        }
+    }
     
 }
 

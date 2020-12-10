@@ -4,8 +4,8 @@ class Flower: SKSpriteNode {
     
     private var flowerFrames: SKTextureAtlas = SKTextureAtlas(named: "flower")
     var growthPhase = 1
-    var growthSound = SKAction.playSoundFileNamed("flowergrowth.wav", waitForCompletion: false)
-    var bloomSound = SKAction.playSoundFileNamed("flowercomplete.wav", waitForCompletion: false)
+    var growthSound = SKAction.playSoundFileNamed(fileName: "flowergrowth.wav", atVolume: masterEffectsVolume, waitForCompletion: false)
+    var bloomSound = SKAction.playSoundFileNamed(fileName: "flowercomplete.wav", atVolume: masterEffectsVolume, waitForCompletion: false)
 
     init(named name: String) {
         let texture = SKTexture(imageNamed: "image/soil")
@@ -29,11 +29,12 @@ class Flower: SKSpriteNode {
             return false
         }
         growthPhase += 1
-        self.texture = flowerFrames.textureNamed("flower\(growthPhase)")
         if (growthPhase == 6) {
             self.run(bloomSound)
+            self.texture = flowerFrames.textureNamed("flower\(Int.random(in: 6...10))")
         } else {
             self.run(growthSound)
+            self.texture = flowerFrames.textureNamed("flower\(growthPhase)")
         }
         return true
     }

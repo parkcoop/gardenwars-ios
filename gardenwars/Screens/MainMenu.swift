@@ -4,6 +4,11 @@ class MainMenu: SKScene {
     let logo = SKSpriteNode(imageNamed: "image/logo")
     var menuPhase = 1
     
+    let pseudoScreenSize = 1.5 * ScreenSize.height
+    
+    let titlePosition = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 + (ScreenSize.height / 6))
+    let bodyPosition = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 - 100)
+    
     var landingSection = SKNode()
     var chooseCharacter = SKNode()
     var chooseDifficulty = SKNode()
@@ -20,19 +25,22 @@ class MainMenu: SKScene {
 //        background.zPosition = 1
         logo.zPosition = 100
         logo.scale(to: CGSize(width: 325, height: 200))
-        logo.position = CGPoint(x: ScreenSize.width / 3, y: ScreenSize.height / 2)
+        logo.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 + (ScreenSize.height / 8))
+        
+//        logo.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 + (ScreenSize.height / 8))
+
 //        addChild(background)
 //        landingSection.addChild(background)
         landingSection.addChild(logo)
 //
-//        let startLabel = SKLabelNode(fontNamed: systemFont)
-//        startLabel.text = "Play"
-//        startLabel.zPosition = 6
-//        startLabel.fontSize = 18
-//        startLabel.fontColor = UIColor.green
-//        startLabel.alpha = 1
+        let startLabel = SKLabelNode(fontNamed: systemFont)
+        startLabel.text = "Tap the screen to begin"
+        startLabel.zPosition = 6
+        startLabel.fontSize = 18
+        startLabel.fontColor = UIColor.white
+        startLabel.alpha = 1
 //        let startButton = SKSpriteNode(color: .white, size: CGSize(width: 200, height: 50))
-//        startButton.position = CGPoint(x: ScreenSize.width / 3, y: ScreenSize.height / 2 - 100)
+        startLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 - 100)
 //        startLabel.position = startButton.position
 //
 //        startLabel.verticalAlignmentMode = .center
@@ -40,14 +48,14 @@ class MainMenu: SKScene {
         
 //        let button = SKButton(normalTexture: <#T##SKTexture!#>, selectedTexture: <#T##SKTexture!#>, disabledTexture: <#T##SKTexture?#>)
         
-//        landingSection.addChild(startLabel)
+        landingSection.addChild(startLabel)
 //        landingSection.addChild(startButton)
         addChild(landingSection)
         
         let chooseLabel = SKLabelNode(fontNamed: systemFont)
         chooseLabel.text = "Choose your gardener"
         chooseLabel.fontSize = 16
-        chooseLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height * 0.8)
+        chooseLabel.position = titlePosition
         chooseCharacter.addChild(chooseLabel)
         let parker = SKSpriteNode(imageNamed: "image/parker5")
         let enemy = SKSpriteNode(imageNamed: "image/enemy5")
@@ -63,12 +71,12 @@ class MainMenu: SKScene {
         darla.name = "darla"
         addChild(chooseCharacter)
         
-        chooseCharacter.position = CGPoint(x: 0, y: -500)
+        chooseCharacter.position = CGPoint(x: 0, y: -pseudoScreenSize)
         self.anchorPoint = CGPoint(x: 0, y: 0)
         
         let chooseDifficultyLabel = SKLabelNode(fontNamed: systemFont)
         chooseDifficultyLabel.text = "Choose difficulty"
-        chooseDifficultyLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height * 0.8)
+        chooseDifficultyLabel.position = titlePosition
         
         let easyLabel = SKLabelNode(fontNamed: systemFont)
         easyLabel.text = "Easy"
@@ -83,12 +91,12 @@ class MainMenu: SKScene {
         chooseDifficulty.addChild(chooseDifficultyLabel)
         chooseDifficulty.addChild(easyLabel)
         chooseDifficulty.addChild(hardLabel)
-        chooseDifficulty.position = CGPoint(x: 0, y: -500)
+        chooseDifficulty.position = CGPoint(x: 0, y: -pseudoScreenSize)
         addChild(chooseDifficulty)
     }
     
     func showChooseCharacter() {
-        landingSection.run(SKAction.move(by: CGVector(dx: 0, dy: 500), duration: 0.1))
+        landingSection.run(SKAction.move(by: CGVector(dx: 0, dy: pseudoScreenSize), duration: 0.1))
         chooseCharacter.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 0.1))
         
         //        self.removeAllChildren()
@@ -99,7 +107,7 @@ class MainMenu: SKScene {
     
     func showChooseDifficulty() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-            self.chooseCharacter.run(SKAction.move(by: CGVector(dx: 0, dy: 500), duration: 0.1))
+            self.chooseCharacter.run(SKAction.move(by: CGVector(dx: 0, dy: self.pseudoScreenSize), duration: 0.1))
             self.chooseDifficulty.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 0.1))
         }
         
@@ -151,7 +159,7 @@ class MainMenu: SKScene {
                 }
                 
                 if node.name == "easy" {
-                    enemyPredictionTime = 25
+                    enemyPredictionTime = 1
                     enemyTopSpeed = 1500
                     startGamePlay()
                 }

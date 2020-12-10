@@ -1,6 +1,6 @@
 import UIKit
 import SpriteKit
-
+import AVFoundation
 
 struct ScreenSize {
     static let width = UIScreen.main.bounds.size.width
@@ -15,7 +15,7 @@ struct DeviceType {
     static let isiPhone6 = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.maxLength == 667.0
     static let isiPhone6Plus = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.maxLength == 736.0
     static let isiPhoneX = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.maxLength > 812.0
-    static let isiPad = UIDevice.current.userInterfaceIdiom == .pad && ScreenSize.maxLength == 1024.0
+    static let isiPad = UIDevice.current.userInterfaceIdiom == .pad
     static let isiPadPro = UIDevice.current.userInterfaceIdiom == .pad && ScreenSize.maxLength == 1366.0
     
 }
@@ -55,6 +55,49 @@ public extension CGFloat {
     
 }
 
+public extension SKAction {
+
+    public class func playSoundFileNamed(fileName: String, atVolume: Float, waitForCompletion: Bool) -> SKAction {
+    
+    let nameOnly = URL(fileURLWithPath: fileName).deletingPathExtension().lastPathComponent
+    let fileExt  = fileName.pathExtension
+    
+    let soundPath = Bundle.main.url(forResource: nameOnly, withExtension: fileExt)
+    
+    var player: AVAudioPlayer!
+    do {
+       player = try AVAudioPlayer(contentsOf: soundPath!)
+    } catch {
+        debugPrint("Error with playing soundFile: \(error.localizedDescription)")
+    }
+    
+    player.volume = atVolume
+    
+    let playAction: SKAction = SKAction.run { () -> Void in
+        player.play()
+    }
+    
+    if(waitForCompletion){
+        let waitAction = SKAction.wait(forDuration: player.duration)
+        let groupAction: SKAction = SKAction.group([playAction, waitAction])
+        return groupAction
+    }
+    
+    return playAction
+ }
+}
+
+extension String {
+    var ns: NSString {
+        return self as NSString
+    }
+    var pathExtension: String {
+        return ns.pathExtension
+    }
+    var lastPathComponent: String {
+        return ns.lastPathComponent
+    }
+}
 extension SKSpriteNode {
     
     func scaleTo(screenWidthPercentage: CGFloat) {

@@ -22,6 +22,9 @@ class UIControls: SKNode {
         substrate.scale(to: stick.size)
         
         addChild(jumpButton)
+        stick.zPosition = 5000
+        substrate.zPosition = 5000
+        jumpButton.zPosition = 5000
         jumpButton.name = "jump"
         jumpButton.position = CGPoint(x: ((ScreenSize.width * 0.85)), y: ScreenSize.height * 0.25 )
         jumpButton.scale(to: CGSize(width: 75, height: 75))

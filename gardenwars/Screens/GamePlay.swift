@@ -19,6 +19,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     
     var hpDisplay = HealthPoints()
     var settingsMenu = PauseScreenOverlay()
+    let scoreLabel = SKLabelNode(fontNamed: systemFont)
     
     var entityManager: EntityManager!
     var enemyStateMachine: GKStateMachine!
@@ -49,17 +50,19 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     let soil3Agent = GKAgent2D()
     
     var nextLevelAnnouncement = SKAction.playSoundFileNamed("nextstage.wav", waitForCompletion: false)
-
+    
+    var firstDeath: Int?
     
     override func didMove(to view: SKView) {
+        scoreLabel.text = "00:00"
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
-//        view.showsFPS = false
-//        view.showsDrawCount = true
-//                view.showsPhysics = true
-//        let backgroundSound = SKAudioNode(fileNamed: "yellowcopter.wav")
-//        self.addChild(backgroundSound)
-//        
+        //        view.showsFPS = false
+        //        view.showsDrawCount = true
+        //                view.showsPhysics = true
+        //        let backgroundSound = SKAudioNode(fileNamed: "yellowcopter.wav")
+        //        self.addChild(backgroundSound)
+        //
         
         if let enemySprite = aiGardener.component(ofType: SpriteComponent.self) {
             if let hpBar = aiGardener.component(ofType: HPSpriteBar.self) {
@@ -70,7 +73,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
                     // Constrain the overlay node positions to the sprite node.
                     let xRange = SKRange(constantValue: hpBar.container.position.x)
                     let lowerYRange = SKRange(constantValue: hpBar.container.position.y + 50)
-                    let upperYRange = SKRange(constantValue: coinBar.container.position.y + 60)
+                    let upperYRange = SKRange(constantValue: coinBar.container.position.y + 55)
                     
                     let hpConstraint = SKConstraint.positionX(xRange, y: lowerYRange)
                     hpConstraint.referenceNode = enemySprite.node
@@ -90,10 +93,13 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         }
         self.agentSystem.addComponent(humanAgent)
         
-        
+        let offScreenPosition = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height + 100)
+
         sun.name = "sun"
+        sun.position = offScreenPosition
         addChild(sun)
         water.name = "water"
+        water.position = offScreenPosition
         addChild(water)
         thunder.name = "thunder"
         addChild(thunder)
@@ -101,38 +107,40 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         let platformRight = self.childNode(withName: "platformRight")
         let platform = self.childNode(withName: "platform")
         
-        soil1.position = CGPoint(x: platformLeft!.position.x, y: platformLeft!.position.y  + 100)
+        soil1.position = CGPoint(x: platformLeft!.position.x, y: platformLeft!.position.y  + 72.5)
         soil1.zPosition = 25
         addChild(soil1)
         
-        soil2.position = platformRight!.position
-        soil2.position = CGPoint(x: platformRight!.position.x, y: platformRight!.position.y  + 100)
+//        soil2.position = platformRight!.position
+        soil2.position = CGPoint(x: platformRight!.position.x, y: platformRight!.position.y + 72.5)
+//        soil2.position = CGPoint(x: platformRight!.position.x, y: platformRight!.position.y + 100)
         soil2.zPosition = 25
         addChild(soil2)
         
-        soil3.position = platform!.position
+//        soil3.position = platform!.position
         soil3.position = CGPoint(x: platform!.position.x, y: platform!.position.y + 90)
         soil3.zPosition = 25
         addChild(soil3)
-        soil1.physicsBody = SKPhysicsBody(rectangleOf: soil1.size)
-        soil1.physicsBody!.allowsRotation = false
-        soil1.physicsBody!.categoryBitMask = UInt32(1)
-        soil1.physicsBody!.collisionBitMask = UInt32(2)
-        soil1.physicsBody!.contactTestBitMask = UInt32(3)
-
-        soil2.physicsBody = SKPhysicsBody(rectangleOf: soil2.size)
-        soil2.physicsBody!.allowsRotation = false
-        soil2.physicsBody!.categoryBitMask = UInt32(1)
-        soil2.physicsBody!.collisionBitMask = UInt32(2)
-        soil2.physicsBody!.contactTestBitMask = UInt32(3)
-
-        soil3.physicsBody = SKPhysicsBody(rectangleOf: soil3.size)
-        soil3.physicsBody!.allowsRotation = false
-        soil3.physicsBody?.pinned = true
-        soil3.physicsBody!.categoryBitMask = UInt32(1)
-        soil3.physicsBody!.collisionBitMask = UInt32(2)
-        soil3.physicsBody!.contactTestBitMask = UInt32(3)
-
+//        soil1.physicsBody = SKPhysicsBody(rectangleOf: soil1.size)
+//        soil1.physicsBody!.allowsRotation = false
+//        soil1.physicsBody!.categoryBitMask = UInt32(1)
+//        soil1.physicsBody!.collisionBitMask = UInt32(2)
+//        soil1.physicsBody!.contactTestBitMask = UInt32(3)
+        
+////        soil2.physicsBody = SKPhysicsBody(rectangleOf: soil2.size)
+//        soil2.physicsBody?.isDynamic = true
+//        soil2.physicsBody!.allowsRotation = false
+//        soil2.physicsBody!.categoryBitMask = UInt32(1)
+//        soil2.physicsBody!.collisionBitMask = UInt32(2)
+//        soil2.physicsBody!.contactTestBitMask = UInt32(3)
+        
+////        soil3.physicsBody = SKPhysicsBody(rectangleOf: soil3.size)
+//        soil3.physicsBody!.allowsRotation = false
+//        soil3.physicsBody?.pinned = true
+//        soil3.physicsBody!.categoryBitMask = UInt32(1)
+//        soil3.physicsBody!.collisionBitMask = UInt32(2)
+//        soil3.physicsBody!.contactTestBitMask = UInt32(3)
+        
         soil1Agent.position = SIMD2<Float>(Float((soil1.position.x)), Float((soil1.position.y)))
         soil2Agent.position = SIMD2<Float>(Float((soil2.position.x)), Float((soil2.position.y)))
         soil3Agent.position = SIMD2<Float>(Float((soil3.position.x)), Float((soil3.position.y)))
@@ -188,7 +196,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         addChild(settingsNode)
         addChild(uiControls)
         addChild(hpDisplay)
-        
+        addChild(scoreLabel)
         if let humanGardener = humanGardener.component(ofType: GardenerComponent.self) {
             humanGardener.initGame(game: self)
             
@@ -198,6 +206,32 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             aiGardener.initGame(game: self)
             
         }
+        scoreLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height * 0.9)
+        scoreLabel.fontSize = 12
+        //        var timescore = Int()
+        //        let actionwait = SKAction.wait(forDuration: 1)
+        //        var timesecond = Int()
+        //        let actionrun = SKAction.run({
+        //                timescore += 1
+        //                timesecond += 1
+        //                if timesecond == 60 {timesecond = 0}
+        //            self.scoreLabel.text = "\(timescore/60):\(timesecond)"
+        //            })
+        //        scoreLabel.run(SKAction.repeatForever(SKAction.sequence([actionwait,actionrun])))
+        var leadingZero = ""
+        var leadingZeroMin = ""
+        var actionwait = SKAction.wait(forDuration: 1.0)
+        var actionrun = SKAction.run({
+            gameTimer += 1
+            timesecond += 1
+            if timesecond == 60 {timesecond = 0}
+            if gameTimer  / 60 <= 9 { leadingZeroMin = "0" } else { leadingZeroMin = "" }
+            if timesecond <= 9 { leadingZero = "0" } else { leadingZero = "" }
+            
+            self.scoreLabel.text = "\(leadingZeroMin)\(gameTimer/60):\(leadingZero)\(timesecond)"
+        })
+        self.scoreLabel.run(SKAction.repeatForever(SKAction.sequence([actionwait,actionrun])))
+        
         run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.run(addThunder),
@@ -211,11 +245,12 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
                 SKAction.wait(forDuration: Double.random(in: 1...3)),
                 SKAction.run(addWater),
                 SKAction.run(addThunder),
+                SKAction.wait(forDuration: Double.random(in: 1...3)),
                 SKAction.run({self.changeCurrentItemGoal(item: "sun")}),
                 SKAction.run(addThunder),
                 SKAction.run(addSun),
                 SKAction.wait(forDuration: Double.random(in: 1...3)),
-                SKAction.run({self.determineSoilPatchForAgent()}),
+//                SKAction.run({self.determineSoilPatchForAgent()}),
                 
             ])
         ))
@@ -223,7 +258,12 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     
     
     func changeCurrentItemGoal(item: String) {
-        
+        guard let aiGardeningComponent = aiGardener.component(ofType: GardenerComponent.self) else {
+            fatalError("No garden component on AI")
+        }
+        if (aiGardeningComponent.currentItem != nil) {
+            determineSoilPatchForAgent()
+        }
         let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
             self.childNode(withName: "platformLeft")!,
             self.childNode(withName: "platformRight")!
@@ -249,13 +289,13 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         var aiControlComponent: EnemyAgentComponent? {
             return aiGardener.component(ofType: EnemyAgentComponent.self)
         }
-//        if (enemyPredictionTime > 5) {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                aiControlComponent?.setUpAgent(with: goals)
-//            }
-//        } else {
-            aiControlComponent?.setUpAgent(with: goals)
-//        }
+        //        if (enemyPredictionTime > 5) {
+        //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        //                aiControlComponent?.setUpAgent(with: goals)
+        //            }
+        //        } else {
+        aiControlComponent?.setUpAgent(with: goals)
+        //        }
     }
     
     func determineSoilPatchForAgent() {
@@ -277,7 +317,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         
         let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: Double(enemyPredictionTime))
         
-        var goals: [GKGoal] = [gardeningGoal, avoidObstaclesGoal]
+        let goals: [GKGoal] = [gardeningGoal, avoidObstaclesGoal]
         var aiControlComponent: EnemyAgentComponent? {
             return aiGardener.component(ofType: EnemyAgentComponent.self)
         }
@@ -356,26 +396,41 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         
         if let human = entityManager.gardener(for: .team1),
            let humanGardener = human.component(ofType: GardenerComponent.self) {
-            hpDisplay.healthText.text = String(humanGardener.health)
-            hpDisplay.scoreText.text = String(humanGardener.points)
-            if (humanGardener.points >= 175) {
-                currentLevel += 1
-                player1Wins += 1
-                nextLevel(nextLevel: currentLevel)
+            if let ai = entityManager.gardener(for: .team2),
+               let aiGardener = ai.component(ofType: GardenerComponent.self) {
+                
+                hpDisplay.healthText.text = String(humanGardener.health)
+                hpDisplay.scoreText.text = String(humanGardener.points)
+                
+                if (humanGardener.points >= 175) {
+                    roundCompleted(winningPlayer: 1)
+                }
+                if (aiGardener.points >= 175) {
+                    roundCompleted(winningPlayer: 2)
+                }
+                
+                // Both players are dead, one with highest points wins, otherwise whoever died first wins round
+                if (humanGardener.health <= 0),
+                   (aiGardener.health <= 0) {
+                    if (humanGardener.points > aiGardener.points) {
+                        roundCompleted(winningPlayer: 1)
+                    } else if (humanGardener.points < aiGardener.points) {
+                        roundCompleted(winningPlayer: 2)
+                    } else {
+                        if let existingDeath = firstDeath {
+                            if existingDeath == 1 {
+                                roundCompleted(winningPlayer: 2)
+                            } else {
+                                roundCompleted(winningPlayer: 1)
+                            }
+                        }
+                    }
+                }
             }
-            
         }
         aiGardener.update(deltaTime: deltaTime)
-        if let ai = entityManager.gardener(for: .team2),
-           let aiGardener = ai.component(ofType: GardenerComponent.self) {
-            if (aiGardener.points >= 175) {
-                currentLevel += 1
-                player2Wins += 1
-                nextLevel(nextLevel: currentLevel)
-            }
-            
-        }
-
+        
+        
         // MARK: Joystick controls for player
         if let component = humanGardener.component(ofType: SpriteComponent.self),
            !playerDisabled {
@@ -391,14 +446,24 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func roundCompleted(winningPlayer: Int) {
+        currentLevel += 1
+        if (winningPlayer == 1) {
+            player1Wins += 1
+        } else {
+            player2Wins += 1
+        }
+        nextLevel(nextLevel: currentLevel)
+    }
+    
     func nextLevel(nextLevel: Int) {
         switch nextLevel {
         case 2:
-            self.run(nextLevelAnnouncement)
+            //            self.run(nextLevelAnnouncement)
             GameManager.shared.transition(self, toScene: .Level2, transition:
                                             SKTransition.push(with: SKTransitionDirection.left, duration: 1))
         case 3:
-            self.run(nextLevelAnnouncement)
+            //            self.run(nextLevelAnnouncement)
             GameManager.shared.transition(self, toScene: .Level3, transition:
                                             SKTransition.fade(with: UIColor.black, duration: 1))
         default:
