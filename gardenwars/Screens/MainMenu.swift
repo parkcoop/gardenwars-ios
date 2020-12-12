@@ -165,7 +165,7 @@ class MainMenu: SKScene {
                 }
                 if node.name == "hard" {
                     enemyPredictionTime = 1
-                    enemyTopSpeed = 3000
+                    enemyTopSpeed = 3500
                     startGamePlay()
                 }
             }

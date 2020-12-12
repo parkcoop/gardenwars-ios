@@ -13,8 +13,8 @@ let finishTheme = Bundle.main.url(forResource: "yellowcopter-sting", withExtensi
 
 
 func toggleGameCenterVisibility(_ visible: Bool) {
-    GKAccessPoint.shared.location = .topLeading
-    GKAccessPoint.shared.isActive = visible
+//    GKAccessPoint.shared.location = .topLeading
+//    GKAccessPoint.shared.isActive = visible
 }
 
 func playMenuTheme() {

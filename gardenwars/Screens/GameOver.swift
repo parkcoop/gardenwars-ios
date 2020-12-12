@@ -7,12 +7,12 @@ class GameOver: SKScene {
     override func didMove(to view: SKView) {
         print("SUBMITTING TO", leaderboard)
         print("USER?", GKLocalPlayer.local)
-        leaderboard.submitScore(gameTimer, context: 1, player: GKLocalPlayer.local) { (error) in
-            if error != nil {
-                print(error!)
-            }
-            print("NICEEEEEE")
-        }
+//        leaderboard.submitScore(gameTimer, context: 1, player: GKLocalPlayer.local) { (error) in
+//            if error != nil {
+//                print(error!)
+//            }
+//            print("NICEEEEEE")
+//        }
         let displayText = player1Wins > player2Wins ? "Well done, gardener." : "Robot gardeners will take over"
         let endGameLabel: SKLabelNode = SKLabelNode(text: displayText)
         endGameLabel.fontName = systemFont

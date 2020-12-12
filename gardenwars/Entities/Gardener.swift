@@ -10,7 +10,7 @@ class Gardener: GKEntity {
         let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName), size: playerSpriteSize)
 //        spriteComponent.node.size = CGSize(width: 60, height: 100)
         let xRange = SKRange(lowerLimit: spriteComponent.node.size.width * 0.5, upperLimit: ScreenSize.width - spriteComponent.node.size.width * 0.5)
-        let yRange = SKRange(lowerLimit: 0, upperLimit: ScreenSize.height)
+        let yRange = SKRange(lowerLimit: spriteComponent.node.size.height * 0.75, upperLimit: ScreenSize.height - spriteComponent.node.size.height)
         spriteComponent.node.constraints = [SKConstraint.positionX(xRange, y: yRange)]
         addComponent(spriteComponent)
         

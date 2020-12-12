@@ -234,6 +234,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         
         run(SKAction.repeatForever(
             SKAction.sequence([
+                SKAction.run({self.changeCurrentItemGoal(item: "avoidThunder")}),
                 SKAction.run(addThunder),
                 SKAction.wait(forDuration: Double.random(in: 1...3)),
                 SKAction.run(addWater),
@@ -272,7 +273,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         
         let obtainSunGoal = GKGoal(toInterceptAgent: sunAgent, maxPredictionTime: Double(enemyPredictionTime))
         let obtainWaterGoal = GKGoal(toInterceptAgent: waterAgent, maxPredictionTime: Double(enemyPredictionTime))
-        //        let avoidShockGoal = GKGoal(toAvoid: [thunderAgent], maxPredictionTime: 5)
+                let avoidShockGoal = GKGoal(toAvoid: [thunderAgent], maxPredictionTime: 5)
         let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: Double(enemyPredictionTime))
         
         var goals: [GKGoal] = []
@@ -282,6 +283,8 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             goals = [obtainSunGoal, avoidObstaclesGoal]
         case "water":
             goals = [obtainWaterGoal, avoidObstaclesGoal]
+        case "avoidThunder":
+            goals = [avoidShockGoal, avoidObstaclesGoal]
         default:
             goals = []
         }
@@ -337,7 +340,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         thunder.position = CGPoint(x: actualX, y: ScreenSize.height)
         thunder.zPosition = 50000
         thunder.name = "thunder"
-        thunder.position = CGPoint(x: actualX, y: 555 + thunder.size.width/2)
+        thunder.position = CGPoint(x: actualX, y: ScreenSize.height + thunder.size.width/2)
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -50),
                                        duration: TimeInterval(actualDuration))
         thunder.run(actionMove)
@@ -355,7 +358,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         sun.physicsBody!.categoryBitMask = UInt32(1)
         sun.physicsBody!.collisionBitMask = UInt32(2)
         sun.physicsBody!.contactTestBitMask = UInt32(3)
-        sun.position = CGPoint(x: actualX, y: 555 + sun.size.width/2)
+        sun.position = CGPoint(x: actualX, y: ScreenSize.height + sun.size.width/2)
         sun.zPosition = 50000
     }
     func addWater() -> Void {
@@ -367,12 +370,12 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
         water.name = "water"
         water.size = CGSize(width: 50, height: 50)
-        water.position = CGPoint(x: actualX, y: 555 + water.size.width/2)
+        water.position = CGPoint(x: actualX, y: ScreenSize.height + water.size.width/2)
         water.physicsBody = SKPhysicsBody(rectangleOf: water.size)
         water.physicsBody!.categoryBitMask = UInt32(1)
         water.physicsBody!.collisionBitMask = UInt32(2)
         water.physicsBody!.contactTestBitMask = UInt32(3)
-        water.position = CGPoint(x: actualX, y: 555 + water.size.width/2)
+        water.position = CGPoint(x: actualX, y: ScreenSize.height + water.size.width/2)
         water.zPosition = 50000
     }
     
@@ -479,21 +482,34 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
             for node in touchedNode {
-                if node.name == "jump" {
-                    activeTouches[touch] = "jump"
-                    tapBegin(on: "jump")
+                if node.name == "rightSide" {
+                    activeTouches[touch] = "rightSide"
+                    tapBegin(on: "rightSide")
+                    uiControls.jumpButton.position = location
+                    let dimEffect = SKAction.sequence([SKAction.colorize(with: .gray, colorBlendFactor: 1, duration: 0.25), SKAction.colorize(with: .clear, colorBlendFactor: 0, duration: 0.25)])
+                    uiControls.jumpButton.run(dimEffect)
+
                 }
                 if node.name == "settings" {
                     openSettingsMenu()
                 }
+                if node.name == "leftSide" {
+                    uiControls.stick.position = location
+                    uiControls.substrate.position = location
+                    activeTouches[touch] = "joystick"
+                    tapBegin(on: "joystick")
+                    uiControls.stickActive = true
+                    uiControls.substrate.run(SKAction.colorize(with: .gray, colorBlendFactor: 1, duration: 0.25))
+                }
             }
-            if (uiControls.substrate.frame.contains(location)) {
-                activeTouches[touch] = "joystick"
-                tapBegin(on: "joystick")
-                uiControls.stickActive = true
-            } else {
-                uiControls.stickActive = false
-            }
+           
+//            if (uiControls.substrate.frame.contains(location)) {
+//                activeTouches[touch] = "joystick"
+//                tapBegin(on: "joystick")
+//                uiControls.stickActive = true
+//            } else {
+//                uiControls.stickActive = false
+//            }
         }
     }
     
@@ -519,7 +535,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     
     
     private func tapBegin(on button: String) {
-        if (button == "jump"),
+        if (button == "rightSide"),
            let component = humanGardener.component(ofType: PhysicsComponent.self) {
             component.physicsBody.velocity = CGVector(dx: 0, dy: 0)
             component.physicsBody.applyImpulse(CGVector(dx: 0, dy: 66))
@@ -556,6 +572,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             if let component = humanGardener.component(ofType: MovementComponent.self) {
                 component.faceForward()
             }
+            uiControls.substrate.run(SKAction.colorize(with: .clear, colorBlendFactor: 0, duration: 0.25))
         }
     }
     

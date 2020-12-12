@@ -11,6 +11,10 @@ class UIControls: SKNode {
     var jumpButton = SKSpriteNode(imageNamed: "image/jump")
     
     
+    var leftSideOfScreen = SKSpriteNode(color: .clear, size: CGSize(width: ScreenSize.width / 2, height: ScreenSize.height * 0.8))
+    var rightSideOfScreen = SKSpriteNode(color: .clear, size: CGSize(width: ScreenSize.width / 2, height: ScreenSize.height * 0.8))
+
+    
     override init() {
         super.init()
         addChild(stick)
@@ -18,6 +22,25 @@ class UIControls: SKNode {
         stick.position = CGPoint(x: 100, y: 100)
         substrate.position = stick.position
         stick.scale(to: CGSize(width: 150, height: 150))
+        
+        leftSideOfScreen.name = "leftSide"
+        rightSideOfScreen.name = "rightSide"
+        
+        leftSideOfScreen.position = CGPoint(x: ScreenSize.width / 4, y: (ScreenSize.height / 2 - ScreenSize.height * 0.2))
+        rightSideOfScreen.position = CGPoint(x: ScreenSize.width * 0.75, y: ScreenSize.height / 2 - ScreenSize.height * 0.2)
+
+        addChild(leftSideOfScreen)
+        addChild(rightSideOfScreen)
+        let substrateXRange = SKRange(lowerLimit: substrate.frame.width * 0.5, upperLimit: (ScreenSize.width / 2) - substrate.frame.width * 0.5)
+        let substrateYRange = SKRange(lowerLimit: substrate.frame.width * 0.5, upperLimit: ScreenSize.height - substrate.frame.width * 0.5)
+        let jumpButtonXRange = SKRange(lowerLimit: (ScreenSize.width / 2) + jumpButton.frame.width * 0.5, upperLimit: ScreenSize.width - jumpButton.frame.width * 0.5)
+        let jumpButtonYRange = SKRange(lowerLimit: jumpButton.frame.width * 0.5, upperLimit: (ScreenSize.height) - jumpButton.frame.width * 0.5)
+        
+        substrate.constraints = [SKConstraint.positionX(substrateXRange, y: substrateYRange)]
+        jumpButton.constraints = [SKConstraint.positionX(jumpButtonXRange, y: jumpButtonYRange)]
+//        addComponent(spriteComponent)
+        
+        
         
         substrate.scale(to: stick.size)
         
@@ -28,6 +51,9 @@ class UIControls: SKNode {
         jumpButton.name = "jump"
         jumpButton.position = CGPoint(x: ((ScreenSize.width * 0.85)), y: ScreenSize.height * 0.25 )
         jumpButton.scale(to: CGSize(width: 75, height: 75))
+        
+//        jumpButton.constraints = [SKConstraint.pos]
+        
     }
     
     

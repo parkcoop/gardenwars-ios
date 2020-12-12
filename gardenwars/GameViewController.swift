@@ -63,26 +63,26 @@ class GameViewController: UIViewController {
                 // Hide explicit game content
             }
 
-            if GKLocalPlayer.local.isMultiplayerGamingRestricted {
-                // Disable multiplayer game features
-            }
-
-            if GKLocalPlayer.local.isPersonalizedCommunicationRestricted {
-                // Disable in game communication UI
-            }
+//            if GKLocalPlayer.local.isMultiplayerGamingRestricted {
+//                // Disable multiplayer game features
+//            }
+//
+//            if GKLocalPlayer.local.isPersonalizedCommunicationRestricted {
+//                // Disable in game communication UI
+//            }
             
             // Perform any other configurations as needed (for example, access point)
             
-            GKLeaderboard.loadLeaderboards(IDs: ["com.parkercoop.gardenwars.besttimes"], completionHandler: { (leaderboards, error) in
-    //            leaderboard = leaderboards[0]!
-                if let bestTimes = leaderboards?[0] {
-                    leaderboard = bestTimes
-                }
-                print(leaderboard)
-                if (error != nil) {
-                    print("LEADERBOARDERROR", error)
-                }
-            })
+//            GKLeaderboard.loadLeaderboards(IDs: ["com.parkercoop.gardenwars.besttimes"], completionHandler: { (leaderboards, error) in
+//    //            leaderboard = leaderboards[0]!
+//                if let bestTimes = leaderboards?[0] {
+//                    leaderboard = bestTimes
+//                }
+//                print(leaderboard)
+//                if (error != nil) {
+//                    print("LEADERBOARDERROR", error)
+//                }
+//            })
             
             let parker = GKLocalPlayer.local
             print(parker)

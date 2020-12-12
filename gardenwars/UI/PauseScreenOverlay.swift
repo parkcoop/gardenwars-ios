@@ -1,7 +1,9 @@
 import SpriteKit
+import UIKit
 
 class PauseScreenOverlay: SKNode {
     var background = SKSpriteNode(imageNamed: "image/menu")
+//    let slider = UISlider(frame: CGRect(x: 250, y: 250, width: 280, height: 20))
 
     override init() {
         super.init()
@@ -11,6 +13,8 @@ class PauseScreenOverlay: SKNode {
         addChild(background)
         
     }
+    
+    
   
     required init?(coder aDecoder: NSCoder) {
         super.init(coder:aDecoder)
