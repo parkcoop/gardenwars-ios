@@ -19,7 +19,7 @@ class UIControls: SKNode {
         super.init()
         addChild(stick)
         addChild(substrate)
-        stick.position = CGPoint(x: 100, y: 100)
+        stick.position = CGPoint(x: 125, y: 125)
         substrate.position = stick.position
         stick.scale(to: CGSize(width: 150, height: 150))
         

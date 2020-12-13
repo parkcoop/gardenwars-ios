@@ -13,8 +13,11 @@ let finishTheme = Bundle.main.url(forResource: "yellowcopter-sting", withExtensi
 
 
 func toggleGameCenterVisibility(_ visible: Bool) {
-//    GKAccessPoint.shared.location = .topLeading
-//    GKAccessPoint.shared.isActive = visible
+    if #available(iOS 14, *) {
+        GKAccessPoint.shared.location = .topLeading
+        GKAccessPoint.shared.isActive = visible
+    }
+
 }
 
 func playMenuTheme() {
@@ -61,7 +64,7 @@ func playStinger() {
 var playerSpriteSize = CGSize(width: 40, height: 75)
 var chosenCharacter = "parker"
 var enemyCharacter = "enemy"
-var enemyPredictionTime = 1
+var enemyPredictionTime = 5
 var enemyTopSpeed = 750
 var systemFont = "8-bit-pusab"
 

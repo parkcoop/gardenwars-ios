@@ -24,8 +24,12 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     var entityManager: EntityManager!
     var enemyStateMachine: GKStateMachine!
     
-    let agentSystem = GKComponentSystem(componentClass: GKAgent2D.self)
-    
+    var agentSystem: GKComponentSystem<GKAgent2D>?
+    var obtainSunGoal: GKGoal!
+    var obtainWaterGoal: GKGoal!
+    var avoidShockGoal: GKGoal!
+    var avoidObstaclesGoal: GKGoal!
+    var obstacles: [GKObstacle]!
     var lastUpdateTimeInterval: TimeInterval = 0
     
     
@@ -40,6 +44,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     let waterAgent = GKAgent2D()
     let sunAgent = GKAgent2D()
     let thunderAgent = GKAgent2D()
+    var currentFallenItem = ""
     
     let soil1 = Flower(named: "soil1")
     let soil2 = Flower(named: "soil2")
@@ -54,15 +59,26 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     var firstDeath: Int?
     
     override func didMove(to view: SKView) {
-        scoreLabel.text = "00:00"
+        entityManager = EntityManager(scene: self)
+        agentSystem = GKComponentSystem(componentClass: GKAgent2D.self)
+        
+        obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
+            self.childNode(withName: "platformLeft")!,
+            self.childNode(withName: "platformRight")!
+        ])
+        obtainSunGoal = GKGoal(toInterceptAgent: sunAgent, maxPredictionTime: Double(enemyPredictionTime))
+        obtainWaterGoal = GKGoal(toInterceptAgent: waterAgent, maxPredictionTime: Double(enemyPredictionTime))
+        avoidShockGoal = GKGoal(toAvoid: [thunderAgent], maxPredictionTime: Double(enemyPredictionTime))
+        avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: Double(enemyPredictionTime))
+      
+        initiateAgents()
+
+        
+
+        
         physicsWorld.contactDelegate = self
         self.view?.isMultipleTouchEnabled = true
-        //        view.showsFPS = false
-        //        view.showsDrawCount = true
-        //                view.showsPhysics = true
-        //        let backgroundSound = SKAudioNode(fileNamed: "yellowcopter.wav")
-        //        self.addChild(backgroundSound)
-        //
+
         
         if let enemySprite = aiGardener.component(ofType: SpriteComponent.self) {
             if let hpBar = aiGardener.component(ofType: HPSpriteBar.self) {
@@ -88,92 +104,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        guard let humanAgent = humanGardener.component(ofType: MovementComponent.self)?.playerAgent else {
-            fatalError()
-        }
-        self.agentSystem.addComponent(humanAgent)
-        
         let offScreenPosition = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height + 100)
-
-        sun.name = "sun"
-        sun.position = offScreenPosition
-        addChild(sun)
-        water.name = "water"
-        water.position = offScreenPosition
-        addChild(water)
-        thunder.name = "thunder"
-        addChild(thunder)
-        let platformLeft = self.childNode(withName: "platformLeft")
-        let platformRight = self.childNode(withName: "platformRight")
-        let platform = self.childNode(withName: "platform")
-        
-        soil1.position = CGPoint(x: platformLeft!.position.x, y: platformLeft!.position.y  + 72.5)
-        soil1.zPosition = 25
-        addChild(soil1)
-        
-//        soil2.position = platformRight!.position
-        soil2.position = CGPoint(x: platformRight!.position.x, y: platformRight!.position.y + 72.5)
-//        soil2.position = CGPoint(x: platformRight!.position.x, y: platformRight!.position.y + 100)
-        soil2.zPosition = 25
-        addChild(soil2)
-        
-//        soil3.position = platform!.position
-        soil3.position = CGPoint(x: platform!.position.x, y: platform!.position.y + 90)
-        soil3.zPosition = 25
-        addChild(soil3)
-//        soil1.physicsBody = SKPhysicsBody(rectangleOf: soil1.size)
-//        soil1.physicsBody!.allowsRotation = false
-//        soil1.physicsBody!.categoryBitMask = UInt32(1)
-//        soil1.physicsBody!.collisionBitMask = UInt32(2)
-//        soil1.physicsBody!.contactTestBitMask = UInt32(3)
-        
-////        soil2.physicsBody = SKPhysicsBody(rectangleOf: soil2.size)
-//        soil2.physicsBody?.isDynamic = true
-//        soil2.physicsBody!.allowsRotation = false
-//        soil2.physicsBody!.categoryBitMask = UInt32(1)
-//        soil2.physicsBody!.collisionBitMask = UInt32(2)
-//        soil2.physicsBody!.contactTestBitMask = UInt32(3)
-        
-////        soil3.physicsBody = SKPhysicsBody(rectangleOf: soil3.size)
-//        soil3.physicsBody!.allowsRotation = false
-//        soil3.physicsBody?.pinned = true
-//        soil3.physicsBody!.categoryBitMask = UInt32(1)
-//        soil3.physicsBody!.collisionBitMask = UInt32(2)
-//        soil3.physicsBody!.contactTestBitMask = UInt32(3)
-        
-        soil1Agent.position = SIMD2<Float>(Float((soil1.position.x)), Float((soil1.position.y)))
-        soil2Agent.position = SIMD2<Float>(Float((soil2.position.x)), Float((soil2.position.y)))
-        soil3Agent.position = SIMD2<Float>(Float((soil3.position.x)), Float((soil3.position.y)))
-        
-        
-        enemyStateMachine = GKStateMachine(states: [
-            NormalState(game: self),
-            HoldingItemState(game: self)
-        ])
-        
-        enemyStateMachine.enter(NormalState.self)
-        
-        var aiControlComponent: EnemyAgentComponent? {
-            return aiGardener.component(ofType: EnemyAgentComponent.self)
-        }
-        
-        
-        
-        let agent = aiControlComponent?.setUpAgent(with: [])
-        self.agentSystem.addComponent(agent!)
-        
-        entityManager = EntityManager(scene: self)
-        
-        if let playerGardener = humanGardener.component(ofType: SpriteComponent.self) {
-            playerGardener.node.position = CGPoint(x: playerGardener.node.size.width, y: size.height/2)
-        }
-        entityManager.add(humanGardener)
-        
-        if let enemyGardener = aiGardener.component(ofType: SpriteComponent.self) {
-            enemyGardener.node.position = CGPoint(x: size.width - enemyGardener.node.size.width, y: size.height/2)
-        }
-        entityManager.add(aiGardener)
-        
         
         let background: SKSpriteNode
         if currentLevel == 1 {
@@ -197,40 +128,36 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         addChild(uiControls)
         addChild(hpDisplay)
         addChild(scoreLabel)
-        if let humanGardener = humanGardener.component(ofType: GardenerComponent.self) {
-            humanGardener.initGame(game: self)
-            
-        }
+        sun.name = "sun"
+        sun.position = offScreenPosition
+        addChild(sun)
+        water.name = "water"
+        water.position = offScreenPosition
+        addChild(water)
+        thunder.name = "thunder"
+        addChild(thunder)
+        let platformLeft = self.childNode(withName: "platformLeft")
+        let platformRight = self.childNode(withName: "platformRight")
+        let platform = self.childNode(withName: "platform")
         
-        if let aiGardener = aiGardener.component(ofType: GardenerComponent.self) {
-            aiGardener.initGame(game: self)
-            
-        }
-        scoreLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height * 0.9)
-        scoreLabel.fontSize = 12
-        //        var timescore = Int()
-        //        let actionwait = SKAction.wait(forDuration: 1)
-        //        var timesecond = Int()
-        //        let actionrun = SKAction.run({
-        //                timescore += 1
-        //                timesecond += 1
-        //                if timesecond == 60 {timesecond = 0}
-        //            self.scoreLabel.text = "\(timescore/60):\(timesecond)"
-        //            })
-        //        scoreLabel.run(SKAction.repeatForever(SKAction.sequence([actionwait,actionrun])))
-        var leadingZero = ""
-        var leadingZeroMin = ""
-        var actionwait = SKAction.wait(forDuration: 1.0)
-        var actionrun = SKAction.run({
-            gameTimer += 1
-            timesecond += 1
-            if timesecond == 60 {timesecond = 0}
-            if gameTimer  / 60 <= 9 { leadingZeroMin = "0" } else { leadingZeroMin = "" }
-            if timesecond <= 9 { leadingZero = "0" } else { leadingZero = "" }
-            
-            self.scoreLabel.text = "\(leadingZeroMin)\(gameTimer/60):\(leadingZero)\(timesecond)"
-        })
-        self.scoreLabel.run(SKAction.repeatForever(SKAction.sequence([actionwait,actionrun])))
+        soil1.position = CGPoint(x: CGFloat.random(in: (platformLeft!.frame.minX + soil1.frame.width / 2)...(platformLeft!.frame.maxX - soil1.frame.width / 2)), y: platformLeft!.position.y  + 72.5)
+        soil1.zPosition = 5
+        addChild(soil1)
+        
+        soil2.position = CGPoint(x: CGFloat.random(in: (platformRight!.frame.minX + soil2.frame.width / 2)...(platformRight!.frame.maxX - soil2.frame.width / 2)), y: platformRight!.position.y + 72.5)
+        soil2.zPosition = 5
+        addChild(soil2)
+        
+        soil3.position = CGPoint(x: platform!.position.x, y: platform!.position.y + 87.5)
+        soil3.zPosition = 5
+        addChild(soil3)
+        
+        soil1Agent.position = SIMD2<Float>(Float((soil1.position.x)), Float((soil1.position.y)))
+        soil2Agent.position = SIMD2<Float>(Float((soil2.position.x)), Float((soil2.position.y)))
+        soil3Agent.position = SIMD2<Float>(Float((soil3.position.x)), Float((soil3.position.y)))
+        
+        composeEntities()
+        startTimer()
         
         run(SKAction.repeatForever(
             SKAction.sequence([
@@ -251,42 +178,108 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
                 SKAction.run(addThunder),
                 SKAction.run(addSun),
                 SKAction.wait(forDuration: Double.random(in: 1...3)),
-//                SKAction.run({self.determineSoilPatchForAgent()}),
+                //                SKAction.run({self.determineSoilPatchForAgent()}),
                 
             ])
         ))
     }
     
+    func composeEntities() {
+        enemyStateMachine = GKStateMachine(states: [
+            NormalState(game: self),
+            HoldingItemState(game: self)
+        ])
+        
+        enemyStateMachine.enter(NormalState.self)
+        
+        
+        if let playerSprite = humanGardener.component(ofType: SpriteComponent.self) {
+            playerSprite.node.position = CGPoint(x: playerSprite.node.size.width, y: size.height/2)
+        }
+        entityManager.add(humanGardener)
+        
+        if let enemySprite = aiGardener.component(ofType: SpriteComponent.self) {
+            enemySprite.node.position = CGPoint(x: size.width - enemySprite.node.size.width, y: size.height/2)
+        }
+        entityManager.add(aiGardener)
+        if let humanGardener = humanGardener.component(ofType: GardenerComponent.self) {
+            humanGardener.initGame(game: self)
+        }
+        
+        if let aiGardener = aiGardener.component(ofType: GardenerComponent.self) {
+            aiGardener.initGame(game: self)
+        }
+    }
+    func startTimer() {
+        scoreLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height * 0.9)
+        scoreLabel.fontSize = 12
+        scoreLabel.text = displayTime
+        scoreLabel.zPosition = 50
+        var leadingZero = ""
+        var leadingZeroMin = ""
+        let actionwait = SKAction.wait(forDuration: 1.0)
+        let actionrun = SKAction.run({
+            gameTimer += 1
+            timesecond += 1
+            if timesecond == 60 {timesecond = 0}
+            if gameTimer  / 60 <= 9 { leadingZeroMin = "0" } else { leadingZeroMin = "" }
+            if timesecond <= 9 { leadingZero = "0" } else { leadingZero = "" }
+            displayTime = "\(leadingZeroMin)\(gameTimer/60):\(leadingZero)\(timesecond)"
+            self.scoreLabel.text = displayTime
+        })
+        self.scoreLabel.run(SKAction.repeatForever(SKAction.sequence([actionwait,actionrun])))
+    }
+    
+    func initiateAgents() {
+        var aiControlComponent: EnemyAgentComponent? {
+            return aiGardener.component(ofType: EnemyAgentComponent.self)
+        }
+        
+        
+        if let agent = aiControlComponent?.setUpAgent(with: [avoidShockGoal]),
+           self.agentSystem != nil {
+            self.agentSystem!.addComponent(agent)
+
+            if self.agentSystem != nil {
+                self.agentSystem!.addComponent(agent)
+            }
+        }
+        changeCurrentItemGoal(item: currentFallenItem)
+        guard let humanAgent = humanGardener.component(ofType: MovementComponent.self)?.playerAgent else {
+            fatalError()
+        }
+        if self.agentSystem != nil {
+            self.agentSystem!.addComponent(humanAgent)
+            self.agentSystem!.addComponent(soil1Agent)
+            self.agentSystem!.addComponent(soil2Agent)
+            self.agentSystem!.addComponent(soil3Agent)
+            self.agentSystem!.addComponent(waterAgent)
+            self.agentSystem!.addComponent(sunAgent)
+            self.agentSystem!.addComponent(thunderAgent)
+
+        }
+    }
     
     func changeCurrentItemGoal(item: String) {
+        currentFallenItem = item
         guard let aiGardeningComponent = aiGardener.component(ofType: GardenerComponent.self) else {
             fatalError("No garden component on AI")
         }
         if (aiGardeningComponent.currentItem != nil) {
             determineSoilPatchForAgent()
         }
-        let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [
-            self.childNode(withName: "platformLeft")!,
-            self.childNode(withName: "platformRight")!
-        ])
-        
-        
-        let obtainSunGoal = GKGoal(toInterceptAgent: sunAgent, maxPredictionTime: Double(enemyPredictionTime))
-        let obtainWaterGoal = GKGoal(toInterceptAgent: waterAgent, maxPredictionTime: Double(enemyPredictionTime))
-                let avoidShockGoal = GKGoal(toAvoid: [thunderAgent], maxPredictionTime: 5)
-        let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: Double(enemyPredictionTime))
-        
+       
         var goals: [GKGoal] = []
         
         switch item {
         case "sun":
-            goals = [obtainSunGoal, avoidObstaclesGoal]
+            goals = [avoidShockGoal, obtainSunGoal, avoidObstaclesGoal]
         case "water":
-            goals = [obtainWaterGoal, avoidObstaclesGoal]
+            goals = [avoidShockGoal, obtainWaterGoal, avoidObstaclesGoal]
         case "avoidThunder":
             goals = [avoidShockGoal, avoidObstaclesGoal]
         default:
-            goals = []
+            goals = [avoidShockGoal]
         }
         
         var aiControlComponent: EnemyAgentComponent? {
@@ -317,9 +310,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         } else {
             gardeningGoal = GKGoal(toSeekAgent: soil3Agent)
         }
-        
-        let avoidObstaclesGoal = GKGoal(toAvoid: obstacles, maxPredictionTime: Double(enemyPredictionTime))
-        
+                
         let goals: [GKGoal] = [gardeningGoal, avoidObstaclesGoal]
         var aiControlComponent: EnemyAgentComponent? {
             return aiGardener.component(ofType: EnemyAgentComponent.self)
@@ -332,24 +323,22 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     func addThunder() -> Void {
         if childNode(withName: "thunder") === nil {
             self.addChild(thunder)
-            agentSystem.addComponent(thunderAgent)
         }
+        thunder.removeAllActions()
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
-        let actualDuration = CGFloat.random(in: CGFloat(1.0)...CGFloat(3.0))
+        let actualDuration = CGFloat.random(in: CGFloat(2.0)...CGFloat(4.0))
         thunder.size = CGSize(width: 50, height: 50)
         thunder.position = CGPoint(x: actualX, y: ScreenSize.height)
         thunder.zPosition = 50000
         thunder.name = "thunder"
         thunder.position = CGPoint(x: actualX, y: ScreenSize.height + thunder.size.width/2)
-        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: -50),
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: ScreenSize.height * 0.5),
                                        duration: TimeInterval(actualDuration))
         thunder.run(actionMove)
     }
     func addSun() -> Void {
         if childNode(withName: "sun") === nil {
             self.addChild(sun)
-            agentSystem.addComponent(sunAgent)
-            
         }
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
         sun.size = CGSize(width: 50, height: 50)
@@ -364,8 +353,6 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     func addWater() -> Void {
         if childNode(withName: "water") === nil {
             self.addChild(water)
-            agentSystem.addComponent(waterAgent)
-            
         }
         let actualX = CGFloat.random(in: 0...ScreenSize.width)
         water.name = "water"
@@ -382,12 +369,14 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     
     // MARK: Update loop function
     override func update(_ currentTime: TimeInterval) {
+        print(thunderAgent.position, thunder.position)
         let deltaTime = currentTime - lastUpdateTimeInterval
         lastUpdateTimeInterval = currentTime
         
         entityManager.update(deltaTime)
-        
-        agentSystem.update(deltaTime: deltaTime)
+        if let agentSystem = agentSystem {
+            agentSystem.update(deltaTime: deltaTime)
+        }
         enemyStateMachine.update(deltaTime: deltaTime)
         //        adjustGoalsBasedOnState()
         
@@ -460,18 +449,16 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
     }
     
     func nextLevel(nextLevel: Int) {
+        let sceneTransition = SKTransition.fade(with: .clear, duration: 0.25)
         switch nextLevel {
         case 2:
             //            self.run(nextLevelAnnouncement)
-            GameManager.shared.transition(self, toScene: .Level2, transition:
-                                            SKTransition.push(with: SKTransitionDirection.left, duration: 1))
+            GameManager.shared.transition(self, toScene: .Level2, transition: sceneTransition)
         case 3:
             //            self.run(nextLevelAnnouncement)
-            GameManager.shared.transition(self, toScene: .Level3, transition:
-                                            SKTransition.fade(with: UIColor.black, duration: 1))
+            GameManager.shared.transition(self, toScene: .Level3, transition: sceneTransition)
         default:
-            GameManager.shared.transition(self, toScene: .GameOver, transition:
-                                            SKTransition.fade(with: UIColor.black, duration: 1))
+            GameManager.shared.transition(self, toScene: .GameOver, transition: sceneTransition)
         }
         
     }
@@ -488,7 +475,7 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
                     uiControls.jumpButton.position = location
                     let dimEffect = SKAction.sequence([SKAction.colorize(with: .gray, colorBlendFactor: 1, duration: 0.25), SKAction.colorize(with: .clear, colorBlendFactor: 0, duration: 0.25)])
                     uiControls.jumpButton.run(dimEffect)
-
+                    
                 }
                 if node.name == "settings" {
                     openSettingsMenu()
@@ -502,14 +489,14 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
                     uiControls.substrate.run(SKAction.colorize(with: .gray, colorBlendFactor: 1, duration: 0.25))
                 }
             }
-           
-//            if (uiControls.substrate.frame.contains(location)) {
-//                activeTouches[touch] = "joystick"
-//                tapBegin(on: "joystick")
-//                uiControls.stickActive = true
-//            } else {
-//                uiControls.stickActive = false
-//            }
+            
+            //            if (uiControls.substrate.frame.contains(location)) {
+            //                activeTouches[touch] = "joystick"
+            //                tapBegin(on: "joystick")
+            //                uiControls.stickActive = true
+            //            } else {
+            //                uiControls.stickActive = false
+            //            }
         }
     }
     
@@ -583,7 +570,12 @@ class GamePlay: SKScene, SKPhysicsContactDelegate {
         if self.view!.scene?.isPaused == true {
             self.view!.scene?.isPaused = false
             settingsMenu.removeFromParent()
+            self.agentSystem = GKComponentSystem(componentClass: GKAgent2D.self)
+            initiateAgents()
             return
+        }
+        if self.agentSystem != nil {
+            self.agentSystem = nil
         }
         self.view!.scene?.isPaused = true
         //        loadPauseBGScreen()

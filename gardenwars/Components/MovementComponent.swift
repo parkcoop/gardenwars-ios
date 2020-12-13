@@ -8,9 +8,9 @@ import SpriteKit
 import GameplayKit
 
 class MovementComponent: GKComponent, GKAgentDelegate {
-    private var player1LeftFrames: [SKTexture] = []
-    private var player1RightFrames: [SKTexture] = []
-    private var player1StillFrame: SKTexture?
+    private var spriteLeftFrames: [SKTexture] = []
+    private var spriteRightFrames: [SKTexture] = []
+    private var spriteStillFrame: SKTexture?
     
     var playerAgent: GKAgent2D? = GKAgent2D()
     var playerTexture: String
@@ -25,66 +25,66 @@ class MovementComponent: GKComponent, GKAgentDelegate {
     init(texture: String) {
         self.playerTexture = texture
         super.init()
-        let player1AnimatedAtlas = SKTextureAtlas(named: playerTexture)
+        let spriteAnimatedAtlas = SKTextureAtlas(named: playerTexture)
         var leftFrames: [SKTexture] = []
         var rightFrames: [SKTexture] = []
         for i in 2...4 {
-            let player1TextureName = "\(playerTexture)\(i)"
-            leftFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
+            let spriteTextureName = "\(playerTexture)\(i)"
+            leftFrames.append(spriteAnimatedAtlas.textureNamed(spriteTextureName))
         }
         for i in 6...8 {
-            let player1TextureName = "\(playerTexture)\(i)"
-            rightFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
+            let spriteTextureName = "\(playerTexture)\(i)"
+            rightFrames.append(spriteAnimatedAtlas.textureNamed(spriteTextureName))
         }
         playerAgent?.delegate = self
 
         let behavior = GKBehavior()
         playerAgent?.behavior = behavior
-        player1StillFrame = player1AnimatedAtlas.textureNamed("\(playerTexture)5")
-        player1LeftFrames = leftFrames
-        player1RightFrames = rightFrames
+        spriteStillFrame = spriteAnimatedAtlas.textureNamed("\(playerTexture)5")
+        spriteLeftFrames = leftFrames
+        spriteRightFrames = rightFrames
     }
     
     func holdItemFrames(item: String) {
-        let player1AnimatedAtlas = SKTextureAtlas(named: playerTexture)
+        let spriteAnimatedAtlas = SKTextureAtlas(named: playerTexture)
         var leftFrames: [SKTexture] = []
         var rightFrames: [SKTexture] = []
         for i in 2...4 {
-            let player1TextureName = "\(playerTexture)\(item)\(i)"
-            leftFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
+            let spriteTextureName = "\(playerTexture)\(item)\(i)"
+            leftFrames.append(spriteAnimatedAtlas.textureNamed(spriteTextureName))
         }
         for i in 6...8 {
-            let player1TextureName = "\(playerTexture)\(item)\(i)"
-            rightFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
+            let spriteTextureName = "\(playerTexture)\(item)\(i)"
+            rightFrames.append(spriteAnimatedAtlas.textureNamed(spriteTextureName))
         }
         playerAgent?.delegate = self
 
         let behavior = GKBehavior()
         playerAgent?.behavior = behavior
-        player1StillFrame = player1AnimatedAtlas.textureNamed("\(playerTexture)\(item)5")
-        player1LeftFrames = leftFrames
-        player1RightFrames = rightFrames
+        spriteStillFrame = spriteAnimatedAtlas.textureNamed("\(playerTexture)\(item)5")
+        spriteLeftFrames = leftFrames
+        spriteRightFrames = rightFrames
     }
     
     func resetFrames() {
-        let player1AnimatedAtlas = SKTextureAtlas(named: playerTexture)
+        let spriteAnimatedAtlas = SKTextureAtlas(named: playerTexture)
         var leftFrames: [SKTexture] = []
         var rightFrames: [SKTexture] = []
         for i in 2...4 {
-            let player1TextureName = "\(playerTexture)\(i)"
-            leftFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
+            let spriteTextureName = "\(playerTexture)\(i)"
+            leftFrames.append(spriteAnimatedAtlas.textureNamed(spriteTextureName))
         }
         for i in 6...8 {
-            let player1TextureName = "\(playerTexture)\(i)"
-            rightFrames.append(player1AnimatedAtlas.textureNamed(player1TextureName))
+            let spriteTextureName = "\(playerTexture)\(i)"
+            rightFrames.append(spriteAnimatedAtlas.textureNamed(spriteTextureName))
         }
         playerAgent?.delegate = self
 
         let behavior = GKBehavior()
         playerAgent?.behavior = behavior
-        player1StillFrame = player1AnimatedAtlas.textureNamed("\(playerTexture)5")
-        player1LeftFrames = leftFrames
-        player1RightFrames = rightFrames
+        spriteStillFrame = spriteAnimatedAtlas.textureNamed("\(playerTexture)5")
+        spriteLeftFrames = leftFrames
+        spriteRightFrames = rightFrames
     }
 
     func move(direction: String) {
@@ -97,30 +97,30 @@ class MovementComponent: GKComponent, GKAgentDelegate {
     
     private func walkLeft() -> Void {
         node.removeAllActions()
-        node.run(SKAction.repeatForever(
+        node.run(SKAction.repeat(
             SKAction.animate(
-                with: player1LeftFrames,
+                with: spriteLeftFrames,
                 timePerFrame: 0.05,
                 resize: false,
                 restore: false
-            )
+            ), count: 2
         ), withKey: "WALK_LEFT")
     }
     
     private func walkRight() -> Void {
         node.removeAllActions()
-        node.run(SKAction.repeatForever(
+        node.run(SKAction.repeat(
             SKAction.animate(
-                with: player1RightFrames,
+                with: spriteRightFrames,
                 timePerFrame: 0.05,
                 resize: false,
                 restore: false
-            )
+            ), count: 2
         ), withKey: "WALK_RIGHT")
     }
     
     func faceForward() -> Void {
-        node.texture = player1StillFrame
+        node.texture = spriteStillFrame
         node.removeAllActions()
     }
     

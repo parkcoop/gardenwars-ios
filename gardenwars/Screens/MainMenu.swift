@@ -13,43 +13,27 @@ class MainMenu: SKScene {
     var chooseCharacter = SKNode()
     var chooseDifficulty = SKNode()
     
+    let playerNames = ["parker", "enemy", "flowergirl", "darla"]
+    
     private var chosenPlayerLeftFrames: [SKTexture] = []
     private var chosenPlayerRightFrames: [SKTexture] = []
     private var chosenPlayerStillFrame: SKTexture?
     
     override func didMove(to view: SKView) {
-//        let background = SKSpriteNode(imageNamed: "image/sky")
-//
-//        background.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
-//        background.size = self.frame.size
-//        background.zPosition = 1
         logo.zPosition = 100
         logo.scale(to: CGSize(width: 325, height: 200))
         logo.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 + (ScreenSize.height / 8))
-        
-//        logo.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 + (ScreenSize.height / 8))
 
-//        addChild(background)
-//        landingSection.addChild(background)
         landingSection.addChild(logo)
-//
         let startLabel = SKLabelNode(fontNamed: systemFont)
         startLabel.text = "Tap the screen to begin"
         startLabel.zPosition = 6
         startLabel.fontSize = 18
         startLabel.fontColor = UIColor.white
         startLabel.alpha = 1
-//        let startButton = SKSpriteNode(color: .white, size: CGSize(width: 200, height: 50))
         startLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 - 100)
-//        startLabel.position = startButton.position
-//
-//        startLabel.verticalAlignmentMode = .center
-//        startLabel.horizontalAlignmentMode = .center
-        
-//        let button = SKButton(normalTexture: <#T##SKTexture!#>, selectedTexture: <#T##SKTexture!#>, disabledTexture: <#T##SKTexture?#>)
-        
+
         landingSection.addChild(startLabel)
-//        landingSection.addChild(startButton)
         addChild(landingSection)
         
         let chooseLabel = SKLabelNode(fontNamed: systemFont)
@@ -60,15 +44,24 @@ class MainMenu: SKScene {
         let parker = SKSpriteNode(imageNamed: "image/parker5")
         let enemy = SKSpriteNode(imageNamed: "image/enemy5")
         let darla = SKSpriteNode(imageNamed: "image/darla5")
+        let flowerGirl = SKSpriteNode(imageNamed: "image/flowergirl5")
+        
         chooseCharacter.addChild(parker)
-        parker.position = CGPoint(x: ScreenSize.width * 0.25, y: ScreenSize.height * 0.4)
-        parker.name = "parker"
+        parker.position = CGPoint(x: ScreenSize.width * 0.15, y: ScreenSize.height * 0.4)
+        parker.name = playerNames[0]
+        
         chooseCharacter.addChild(enemy)
-        enemy.position = CGPoint(x: ScreenSize.width * 0.5, y: ScreenSize.height * 0.4)
-        enemy.name = "enemy"
+        enemy.position = CGPoint(x: ScreenSize.width * 0.385, y: ScreenSize.height * 0.4)
+        enemy.name = playerNames[1]
+
+        chooseCharacter.addChild(flowerGirl)
+        flowerGirl.position = CGPoint(x: ScreenSize.width * 0.615, y: ScreenSize.height * 0.4)
+        flowerGirl.name = playerNames[2]
+        
         chooseCharacter.addChild(darla)
-        darla.position = CGPoint(x: ScreenSize.width * 0.75, y: ScreenSize.height * 0.4)
-        darla.name = "darla"
+        darla.position = CGPoint(x: ScreenSize.width * 0.85, y: ScreenSize.height * 0.4)
+        darla.name = playerNames[3]
+        
         addChild(chooseCharacter)
         
         chooseCharacter.position = CGPoint(x: 0, y: -pseudoScreenSize)
@@ -98,9 +91,6 @@ class MainMenu: SKScene {
     func showChooseCharacter() {
         landingSection.run(SKAction.move(by: CGVector(dx: 0, dy: pseudoScreenSize), duration: 0.1))
         chooseCharacter.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 0.1))
-        
-        //        self.removeAllChildren()
-        
         menuPhase = 2
         
     }
@@ -111,6 +101,11 @@ class MainMenu: SKScene {
             self.chooseDifficulty.run(SKAction.move(to: CGPoint(x: 0, y: 0), duration: 0.1))
         }
         
+    }
+    
+    func choosePlayerAndSetRandomEnemy(player: String) {
+        chosenCharacter = player
+        enemyCharacter = playerNames.filter({ $0 != chosenCharacter}).randomElement() ?? "parker"
     }
     
     func choosePlayerAnimation(player: String) {
@@ -135,37 +130,18 @@ class MainMenu: SKScene {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
             for node in touchedNode {
-                if node.name == "parker" {
-                    choosePlayerAnimation(player: "parker")
-                    chosenCharacter = "parker"
-                    enemyCharacter = "enemy"
+                if playerNames.contains(node.name ?? "") {
+                    choosePlayerAnimation(player: node.name!)
+                    choosePlayerAndSetRandomEnemy(player: node.name!)
                     walkAnimation(node)
                     showChooseDifficulty()
                 }
-                if node.name == "enemy" {
-                    choosePlayerAnimation(player: "enemy")
-                    enemyCharacter = "darla"
-                    chosenCharacter = "enemy"
-                    walkAnimation(node)
-                    showChooseDifficulty()
-                    
-                }
-                if node.name == "darla" {
-                    choosePlayerAnimation(player: "darla")
-                    chosenCharacter = "darla"
-                    enemyCharacter = "parker"
-                    walkAnimation(node)
-                    showChooseDifficulty()
-                }
-                
                 if node.name == "easy" {
-                    enemyPredictionTime = 1
                     enemyTopSpeed = 1500
                     startGamePlay()
                 }
                 if node.name == "hard" {
-                    enemyPredictionTime = 1
-                    enemyTopSpeed = 3500
+                    enemyTopSpeed = 3000
                     startGamePlay()
                 }
             }
@@ -188,83 +164,8 @@ class MainMenu: SKScene {
         if menuPhase == 1 {
             showChooseCharacter()
         }
-        for touch in touches {
-            let location = touch.location(in: self)
-            let touchedNode = self.nodes(at: location)
-            for node in touchedNode {
-                
-                if menuPhase == 2 {
-                    //                    showChooseDifficulty()
-                    
-                    //                    if node.name == "parker" {
-                    //                        choosePlayerAnimation(player: "parker")
-                    //                        chosenCharacter = "parker"
-                    //                        enemyCharacter = "enemy"
-                    //                        node.run(SKAction.repeat(
-                    //                            SKAction.animate(
-                    //                                with: chosenPlayerRightFrames,
-                    //                                timePerFrame: 0.05,
-                    //                                resize: false,
-                    //                                restore: true
-                    //                            ), count: 2
-                    //                        ), withKey: "WALK_LEFT")
-                    //                        showChooseDifficulty()
-                    //        //                    startGamePlay()
-                    //                    }
-                    //                    if node.name == "enemy" {
-                    ////                        choosePlayerAnimation(player: "enemy")
-                    ////                        enemyCharacter = "darla"
-                    ////                        chosenCharacter = "enemy"
-                    ////                        node.run(SKAction.repeat(
-                    ////                            SKAction.animate(
-                    ////                                with: chosenPlayerRightFrames,
-                    ////                                timePerFrame: 0.05,
-                    ////                                resize: false,
-                    ////                                restore: true
-                    ////                            ), count: 2
-                    ////                        ), withKey: "WALK_LEFT")
-                    //                        showChooseDifficulty()
-                    //
-                    //        //                    startGamePlay()
-                    //                    }
-                    //                    if node.name == "darla" {
-                    ////                        choosePlayerAnimation(player: "darla")
-                    ////                        chosenCharacter = "darla"
-                    ////                        enemyCharacter = "parker"
-                    ////                        node.run(SKAction.repeat(
-                    ////                            SKAction.animate(
-                    ////                                with: chosenPlayerRightFrames,
-                    ////                                timePerFrame: 0.05,
-                    ////                                resize: false,
-                    ////                                restore: true
-                    ////                            ), count: 2
-                    ////                        ), withKey: "WALK_LEFT")
-                    //                        showChooseDifficulty()
-                    //
-                    //        //                    startGamePlay()
-                    //                    }
-                }
-                
-            }
-        }
         
     }
-    
-    
-    func setupNodes() {
-        
-    }
-    
-    
-    func addNodes() {
-        
-    }
-    
-    
-    @objc func startGamePlayNotification(_ info:Notification) {
-        startGamePlay()
-    }
-    
     
     func startGamePlay() {
         currentLevel = 1

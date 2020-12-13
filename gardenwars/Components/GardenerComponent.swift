@@ -21,9 +21,9 @@ class GardenerComponent: GKComponent {
     
     override func update(deltaTime seconds: TimeInterval) {
         super.update(deltaTime: seconds)
-       
+        
         if let spriteComponent = entity?.component(ofType: SpriteComponent.self) {
-           
+            
             if let game = game {
                 if (health <= 0) {
                     if game.firstDeath == nil {
@@ -34,8 +34,6 @@ class GardenerComponent: GKComponent {
                         }
                     }
 
-    //                spriteComponent.node.isPaused = true
-    //                spriteComponent.node.position = CGPoint(x: 50, y: 100)
                     if let physicsBody = entity?.component(ofType: PhysicsComponent.self) {
                         physicsBody.physicsBody.pinned = true
                         spriteComponent.node.run(SKAction.colorize(with: .red, colorBlendFactor: 1, duration: 1))
@@ -61,7 +59,8 @@ class GardenerComponent: GKComponent {
                 }
                 
                 if (spriteComponent.node.frame.intersects(game.sun.frame)),
-                   game.childNode(withName: "sun") !== nil {
+                   game.childNode(withName: "sun") !== nil,
+                   self.health != 0 {
                     self.grabItem(item: "sun")
                     game.sun.removeFromParent()
                     if (entity?.component(ofType: EnemyAgentComponent.self) != nil) {
@@ -72,7 +71,8 @@ class GardenerComponent: GKComponent {
                 }
                 
                 if (spriteComponent.node.frame.intersects(game.water.frame)),
-                   game.childNode(withName: "water") !== nil {
+                   game.childNode(withName: "water") !== nil,
+                   self.health != 0 {
                     self.grabItem(item: "water")
                     game.water.removeFromParent()
                     if (entity?.component(ofType: EnemyAgentComponent.self) != nil) {

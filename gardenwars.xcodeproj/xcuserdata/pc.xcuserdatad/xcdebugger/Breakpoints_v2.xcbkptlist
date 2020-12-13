@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F3639466-6649-409E-88A7-28D78F631F74"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "gardenwars/Screens/MainMenu.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "didMove(to:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "AE5526AF-488F-4F71-BE5B-E05496A528AE"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -39,38 +23,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E11F9C68-25A0-42AF-97E3-FC3B21FFE663"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "gardenwars/Screens/GamePlay.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "24AF2C1E-0221-4811-BA19-9B23E9CCD88A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "gardenwars/Screens/GamePlay.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "D35A6AEF-5488-4B4D-AC6E-EB906AF0658E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -78,8 +30,8 @@
             filePath = "gardenwars/Utils/GameManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "playBackgroundMusic()"
             landmarkType = "9">
          </BreakpointContent>
@@ -94,8 +46,8 @@
             filePath = "gardenwars/Utils/GameManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
             landmarkName = "playMenuTheme()"
             landmarkType = "9">
          </BreakpointContent>
@@ -110,8 +62,8 @@
             filePath = "gardenwars/Utils/GameManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
             landmarkName = "toggleGameCenterVisibility(_:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -126,8 +78,8 @@
             filePath = "gardenwars/Screens/GameOver.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "10"
-            endingLineNumber = "10"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
             landmarkName = "didMove(to:)"
             landmarkType = "7">
             <Locations>
@@ -167,22 +119,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6E814F13-17F4-421A-A99A-069AEDA8C736"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "gardenwars/Screens/GamePlay.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "3E206EEF-4E18-4530-A6E0-A12ECAFCD4F9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -190,8 +126,8 @@
             filePath = "gardenwars/Utils/GameManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "loadResponsiveSizeLevel(level:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -199,33 +135,97 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "55577540-992F-4EC7-B64F-DD24683D6B34"
+            uuid = "A26F1B02-528E-4516-A72E-EA4A4B6F1289"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "gardenwars/Screens/GamePlay.swift"
+            filePath = "gardenwars/Components/MovementComponent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "holdItemFrames(item:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EC5FF04C-343A-45FB-A98D-F8AE3F9A5B95"
+            uuid = "B0C76BE6-B708-4193-9D81-CEC3225CE2D8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "gardenwars/Screens/GamePlay.swift"
+            filePath = "gardenwars/Screens/MainMenu.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "choosePlayerAndSetRandomEnemy(player:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B0C76BE6-B708-4193-9D81-CEC3225CE2D8 - 76d13ea3c47b201c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Garden_Wars.MainMenu.choosePlayerAndSetRandomEnemy(player: Swift.String) -&gt; ()"
+                  moduleName = "Garden Wars"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pc/Projects/gardenwars/gardenwars/Screens/MainMenu.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "172">
+               </Location>
+               <Location
+                  uuid = "B0C76BE6-B708-4193-9D81-CEC3225CE2D8 - ad0633d31e7c386b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String) -&gt; Swift.Bool in Garden_Wars.MainMenu.choosePlayerAndSetRandomEnemy(player: Swift.String) -&gt; ()"
+                  moduleName = "Garden Wars"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pc/Projects/gardenwars/gardenwars/Screens/MainMenu.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "108"
+                  endingLineNumber = "108"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A8E7E455-85FD-4B2E-A173-A85B2DFB2E75"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "gardenwars/Components/EnemyAgentComponent.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "agentWillUpdate(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8BADED26-A94A-4DA8-8B40-94B40EC1ED53"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "gardenwars/Components/EnemyAgentComponent.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "agentWillUpdate(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

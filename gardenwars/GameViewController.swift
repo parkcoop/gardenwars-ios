@@ -11,6 +11,7 @@ var leaderboard: GKLeaderboard!
 
 var gameTimer: Int = Int()
 var timesecond = Int()
+var displayTime: String = "00:00"
 
 var masterMusicVolume: Float = 0.25
 var masterEffectsVolume: Float = 0.25
@@ -62,30 +63,29 @@ class GameViewController: UIViewController {
             if GKLocalPlayer.local.isUnderage {
                 // Hide explicit game content
             }
+            if #available(iOS 13, *) {
+                if GKLocalPlayer.local.isMultiplayerGamingRestricted {
+                    // Disable multiplayer game features
+                }
+                if #available(iOS 14, *) {
+                    if GKLocalPlayer.local.isPersonalizedCommunicationRestricted {
+                        // Disable in game communication UI
+                    }
+                    
+                    GKLeaderboard.loadLeaderboards(IDs: ["com.parkercoop.gardenwars.besttimes"], completionHandler: { (leaderboards, error) in
+            //            leaderboard = leaderboards[0]!
+                        if let bestTimes = leaderboards?[0] {
+                            leaderboard = bestTimes
+                        }
+                        print(leaderboard)
+                        if (error != nil) {
+                            print("LEADERBOARDERROR", error)
+                        }
+                    })
+                }
+               
+            }
 
-//            if GKLocalPlayer.local.isMultiplayerGamingRestricted {
-//                // Disable multiplayer game features
-//            }
-//
-//            if GKLocalPlayer.local.isPersonalizedCommunicationRestricted {
-//                // Disable in game communication UI
-//            }
-            
-            // Perform any other configurations as needed (for example, access point)
-            
-//            GKLeaderboard.loadLeaderboards(IDs: ["com.parkercoop.gardenwars.besttimes"], completionHandler: { (leaderboards, error) in
-//    //            leaderboard = leaderboards[0]!
-//                if let bestTimes = leaderboards?[0] {
-//                    leaderboard = bestTimes
-//                }
-//                print(leaderboard)
-//                if (error != nil) {
-//                    print("LEADERBOARDERROR", error)
-//                }
-//            })
-            
-            let parker = GKLocalPlayer.local
-            print(parker)
         }
       
 

@@ -35,36 +35,19 @@ class EnemyAgentComponent: GKComponent, GKAgentDelegate {
         if let agent = agent as? GKAgent2D  {
             node.position = CGPoint(x: CGFloat(agent.position.x), y: CGFloat(agent.position.y))
         }
-//        guard let animation = entity?.component(ofType: MovementComponent.self) else {
-//            fatalError()
-//        }
-////        print(node.physicsBody!.velocity)
-//        if node.physicsBody!.velocity.dx > 0 {
-//            animation.move(direction: "left")
-//        } else if node.physicsBody!.velocity.dx < 0 {
-//            animation.move(direction: "right")
-//        } else {
-//            animation.faceForward()
-//        }
     }
     
     func agentWillUpdate(_ agent: GKAgent) {
-        if let agent = agent as? GKAgent2D  {
-            agent.position = float2(Float((node.position.x)), Float((node.position.y)))
-        }
-        guard let aiEnemyBody = entity?.component(ofType: PhysicsComponent.self) else {
-            fatalError("Enemy needs a physics component")
-        }
-        guard let animation = entity?.component(ofType: MovementComponent.self) else {
-            fatalError("Enemy needs animation/movement component")
-        }
-//        print(node.physicsBody!.velocity.dx, aiEnemyBody.physicsBody.velocity.dx)
-        if node.physicsBody!.velocity.dx > 0 {
-            animation.move(direction: "left")
-        } else if node.physicsBody!.velocity.dx < 0 {
-            animation.move(direction: "right")
-        } else {
-            animation.faceForward()
+        if let agent = agent as? GKAgent2D,
+           let animation = entity?.component(ofType: MovementComponent.self) {
+            agent.position = SIMD2<Float>(Float((node.position.x)), Float((node.position.y)))
+            if agent.velocity.x < 0 {
+                animation.move(direction: "left")
+            } else if agent.velocity.x > 0 {
+                animation.move(direction: "right")
+            } else {
+                animation.faceForward()
+            }
         }
     }
     //// MARK: `lol` omg
@@ -79,7 +62,7 @@ class EnemyAgentComponent: GKComponent, GKAgentDelegate {
         agent.behavior = behavior
         let position = node.position
         agent.maxSpeed = Float(enemyTopSpeed)
-        agent.maxAcceleration = 3000
+        agent.maxAcceleration = Float(Double(enemyTopSpeed) * 0.5)
         
         agent.radius = 100
         agent.position = vector_float2(Float(position.x), Float(position.y))
