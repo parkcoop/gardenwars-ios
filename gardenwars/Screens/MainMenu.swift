@@ -9,6 +9,9 @@ class MainMenu: SKScene {
     let titlePosition = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 + (ScreenSize.height / 6))
     let bodyPosition = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 - 100)
     
+    let settingsMenu = PauseScreenOverlay()
+
+    var settingsMenuOpened = false
     var landingSection = SKNode()
     var chooseCharacter = SKNode()
     var chooseDifficulty = SKNode()
@@ -20,10 +23,18 @@ class MainMenu: SKScene {
     private var chosenPlayerStillFrame: SKTexture?
     
     override func didMove(to view: SKView) {
+        settingsMenu.exitLabel.removeFromParent()
+
+        let settingsNode = SKSpriteNode(imageNamed: "image/settings")
+        settingsNode.position = CGPoint(x: ScreenSize.width - 50, y: ScreenSize.height - 50)
+        settingsNode.scale(to: CGSize(width: 25, height: 25))
+        settingsNode.name = "settings"
+        addChild(settingsNode)
+        
         logo.zPosition = 100
         logo.scale(to: CGSize(width: 325, height: 200))
         logo.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 + (ScreenSize.height / 8))
-
+        
         landingSection.addChild(logo)
         let startLabel = SKLabelNode(fontNamed: systemFont)
         startLabel.text = "Tap the screen to begin"
@@ -32,7 +43,7 @@ class MainMenu: SKScene {
         startLabel.fontColor = UIColor.white
         startLabel.alpha = 1
         startLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2 - 100)
-
+        
         landingSection.addChild(startLabel)
         addChild(landingSection)
         
@@ -53,7 +64,7 @@ class MainMenu: SKScene {
         chooseCharacter.addChild(enemy)
         enemy.position = CGPoint(x: ScreenSize.width * 0.385, y: ScreenSize.height * 0.4)
         enemy.name = playerNames[1]
-
+        
         chooseCharacter.addChild(flowerGirl)
         flowerGirl.position = CGPoint(x: ScreenSize.width * 0.615, y: ScreenSize.height * 0.4)
         flowerGirl.name = playerNames[2]
@@ -130,22 +141,76 @@ class MainMenu: SKScene {
             let location = touch.location(in: self)
             let touchedNode = self.nodes(at: location)
             for node in touchedNode {
-                if playerNames.contains(node.name ?? "") {
-                    choosePlayerAnimation(player: node.name!)
-                    choosePlayerAndSetRandomEnemy(player: node.name!)
-                    walkAnimation(node)
-                    showChooseDifficulty()
+                if settingsMenuOpened {
+                    switch node.name {
+                    case "close":
+                        openSettingsMenu()
+                        break
+                    case "enableMusic":
+                        backgroundMusicPlayer.volume = 0.25
+                        musicVolume = 0.25
+                        settingsMenu.musicLabel.text = "Disable music"
+                        settingsMenu.musicLabel.name = "disableMusic"
+    //                    musicVolume
+                        break
+                    case "disableMusic":
+                        backgroundMusicPlayer.volume = 0.00
+                        musicVolume = 0.00
+                        settingsMenu.musicLabel.text = "Enable music"
+                        settingsMenu.musicLabel.name = "enableMusic"
+                        break
+                    case "disableFx":
+                        effectsEnabled = false
+                        settingsMenu.soundEffectsLabel.text = "Enable sound effects"
+                        settingsMenu.soundEffectsLabel.name = "enableFx"
+                        break
+                    case "enableFx":
+                        effectsEnabled = true
+                        settingsMenu.soundEffectsLabel.text = "Disable sound effects"
+                        settingsMenu.soundEffectsLabel.name = "disableFx"
+                        break
+                    
+                    case "exit":
+                        GameManager.shared.transition(self.scene!, toScene: .MainMenu, transition:
+                                                        SKTransition.fade(with: UIColor.black, duration: 1))
+                    default:
+                        return
+                    }
+                } else {
+                    if node.name == "settings" {
+                        openSettingsMenu()
+                    }
+                    if playerNames.contains(node.name ?? "") {
+                        choosePlayerAnimation(player: node.name!)
+                        choosePlayerAndSetRandomEnemy(player: node.name!)
+                        walkAnimation(node)
+                        showChooseDifficulty()
+                    }
+                    if node.name == "easy" {
+                        enemyTopSpeed = 125
+                        startGamePlay()
+                    }
+                    if node.name == "hard" {
+                        enemyTopSpeed = 250
+                        startGamePlay()
+                    }
                 }
-                if node.name == "easy" {
-                    enemyTopSpeed = 1500
-                    startGamePlay()
-                }
-                if node.name == "hard" {
-                    enemyTopSpeed = 3000
-                    startGamePlay()
-                }
+        
+                
+        
             }
             
+        }
+    }
+    
+    func openSettingsMenu() -> Void {
+        if settingsMenuOpened == true {
+            settingsMenu.removeFromParent()
+            settingsMenuOpened = false
+        } else {
+            addChild(settingsMenu)
+            settingsMenuOpened = true
+            settingsMenu.zPosition = 5000000
         }
     }
     
@@ -169,7 +234,7 @@ class MainMenu: SKScene {
     
     func startGamePlay() {
         currentLevel = 1
-        GameManager.shared.transition(self, toScene: .Gameplay, transition:
+        GameManager.shared.transition(self, toScene: .Level1, transition:
                                         SKTransition.fade(with: UIColor.black, duration: 1))
     }
 }

@@ -12,9 +12,16 @@ class GameOver: SKScene {
         
         let displayText = player1Wins > player2Wins ? "Well done, gardener." : "Robot gardeners will take over."
         let endGameLabel: SKLabelNode = SKLabelNode(text: displayText)
+        
+        let creditText = "Created by Parker Cooper | Artwork by Andriw Tapanes"
+        let creditLabel = SKLabelNode(text: creditText)
+        creditLabel.fontName = systemFont
+        creditLabel.fontSize = 12
+        creditLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height * 0.1)
+        addChild(creditLabel)
         endGameLabel.fontName = systemFont
         endGameLabel.position = CGPoint(x: ScreenSize.width / 2, y: ScreenSize.height / 2)
-        endGameLabel.fontSize = 12
+        endGameLabel.fontSize = 18
         addChild(endGameLabel)
     }
     

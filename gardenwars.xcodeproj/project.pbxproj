@@ -42,6 +42,7 @@
 		4F3BB6E42580743500122F25 /* nextstage.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6E12580743500122F25 /* nextstage.wav */; };
 		4F3BB6E52580743500122F25 /* flowergrowth.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6E22580743500122F25 /* flowergrowth.wav */; };
 		4F3BB6E62580743500122F25 /* flowercomplete.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4F3BB6E32580743500122F25 /* flowercomplete.wav */; };
+		4F3FA2012588F31300A22C1F /* flowergirl.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4F3FA2002588F31300A22C1F /* flowergirl.atlas */; };
 		4F41F6EA256B382100F29D54 /* EnemyAgentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F41F6E9256B382100F29D54 /* EnemyAgentComponent.swift */; };
 		4F41F6F0256B5BF000F29D54 /* FallingItemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F41F6EF256B5BF000F29D54 /* FallingItemComponent.swift */; };
 		4F4A7DB12556F97900F59E35 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A7DB02556F97900F59E35 /* MainMenu.swift */; };
@@ -62,8 +63,7 @@
 		4FD1612125715C7800179989 /* EnemyGardener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1612025715C7800179989 /* EnemyGardener.swift */; };
 		4FF3E244257710D500C33FF7 /* HPSpriteBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3E243257710D500C33FF7 /* HPSpriteBar.swift */; };
 		4FF3E2492577289200C33FF7 /* FlowerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3E2482577289200C33FF7 /* FlowerComponent.swift */; };
-		4FF5901F2586733B0019186A /* flowergirl.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4FF5901E2586733B0019186A /* flowergirl.atlas */; };
-		4FF59025258673B00019186A /* flowergirl.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4FF59024258673B00019186A /* flowergirl.atlas */; };
+		4FF5902A258703EE0019186A /* DeathComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF59029258703EE0019186A /* DeathComponent.swift */; };
 		4FFDDC4025599FEC00EB8A28 /* UIControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFDDC3F25599FEC00EB8A28 /* UIControls.swift */; };
 /* End PBXBuildFile section */
 
@@ -126,6 +126,7 @@
 		4F3BB6E12580743500122F25 /* nextstage.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = nextstage.wav; path = ../../../../../Downloads/nextstage.wav; sourceTree = "<group>"; };
 		4F3BB6E22580743500122F25 /* flowergrowth.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = flowergrowth.wav; path = ../../../../../Downloads/flowergrowth.wav; sourceTree = "<group>"; };
 		4F3BB6E32580743500122F25 /* flowercomplete.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = flowercomplete.wav; path = ../../../../../Downloads/flowercomplete.wav; sourceTree = "<group>"; };
+		4F3FA2002588F31300A22C1F /* flowergirl.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = flowergirl.atlas; sourceTree = "<group>"; };
 		4F41F6E9256B382100F29D54 /* EnemyAgentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyAgentComponent.swift; sourceTree = "<group>"; };
 		4F41F6EF256B5BF000F29D54 /* FallingItemComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallingItemComponent.swift; sourceTree = "<group>"; };
 		4F4A7DB02556F97900F59E35 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
@@ -146,8 +147,7 @@
 		4FD1612025715C7800179989 /* EnemyGardener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyGardener.swift; sourceTree = "<group>"; };
 		4FF3E243257710D500C33FF7 /* HPSpriteBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPSpriteBar.swift; sourceTree = "<group>"; };
 		4FF3E2482577289200C33FF7 /* FlowerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowerComponent.swift; sourceTree = "<group>"; };
-		4FF5901E2586733B0019186A /* flowergirl.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = flowergirl.atlas; path = ../../../../../Desktop/flowergirl.atlas; sourceTree = "<group>"; };
-		4FF59024258673B00019186A /* flowergirl.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = flowergirl.atlas; path = ../../../../Desktop/flowergirl.atlas; sourceTree = "<group>"; };
+		4FF59029258703EE0019186A /* DeathComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeathComponent.swift; sourceTree = "<group>"; };
 		4FFDDC3F25599FEC00EB8A28 /* UIControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControls.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,6 +223,7 @@
 				4FF3E243257710D500C33FF7 /* HPSpriteBar.swift */,
 				4F3BB685257D744200122F25 /* EnemyCoinDisplayComponent.swift */,
 				4FF3E2482577289200C33FF7 /* FlowerComponent.swift */,
+				4FF59029258703EE0019186A /* DeathComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -273,9 +274,9 @@
 				4F78960A257CF14900B9709B /* Assets */,
 				4F5126EC256C8A840024262D /* States */,
 				4F05115C256ABEF900900ACE /* UI */,
-				4F05115B256ABEF000900ACE /* Utils */,
 				4F05115A256ABED700900ACE /* Components */,
 				4F051159256ABECB00900ACE /* Entities */,
+				4F05115B256ABEF000900ACE /* Utils */,
 				4F051152256ABE7100900ACE /* Screens */,
 				4F11D7E9255351FB0020B931 /* AppDelegate.swift */,
 				4F11D7F1255351FB0020B931 /* GameViewController.swift */,
@@ -342,7 +343,7 @@
 				4F3BB6CA2580569200122F25 /* audio */,
 				4F78960E257CF19700B9709B /* fonts */,
 				4F11D7F6255351FC0020B931 /* Assets.xcassets */,
-				4FF59024258673B00019186A /* flowergirl.atlas */,
+				4F3FA2002588F31300A22C1F /* flowergirl.atlas */,
 				4F12D1CB257C7BB9005D3B7F /* darla.atlas */,
 				4F6EDB37257A773A0000AA48 /* enemy.atlas */,
 				4F30A216255A1645003981FE /* flower.atlas */,
@@ -354,7 +355,6 @@
 		4F78960E257CF19700B9709B /* fonts */ = {
 			isa = PBXGroup;
 			children = (
-				4FF5901E2586733B0019186A /* flowergirl.atlas */,
 				4F1D58FB257D26B9009B9D89 /* 8-bit-pusab.ttf */,
 			);
 			path = fonts;
@@ -463,11 +463,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FF5901F2586733B0019186A /* flowergirl.atlas in Resources */,
+				4F3FA2012588F31300A22C1F /* flowergirl.atlas in Resources */,
 				4F3BB6BC257F052100122F25 /* Level2-medium.sks in Resources */,
 				4F3BB6C62580563100122F25 /* yellowcopter.wav in Resources */,
 				4F512700256E8BCD0024262D /* Level1.sks in Resources */,
-				4FF59025258673B00019186A /* flowergirl.atlas in Resources */,
 				4F3BB6E42580743500122F25 /* nextstage.wav in Resources */,
 				4F3BB6C1257F053000122F25 /* Level3-medium.sks in Resources */,
 				4F616AC825825B5B00DBD2BC /* Level2-large.sks in Resources */,
@@ -538,6 +537,7 @@
 				4FFDDC4025599FEC00EB8A28 /* UIControls.swift in Sources */,
 				4F2BCE822575B47500347D52 /* GardeningState.swift in Sources */,
 				4F0511D7256AD55400900ACE /* MovementComponent.swift in Sources */,
+				4FF5902A258703EE0019186A /* DeathComponent.swift in Sources */,
 				4F11D7F2255351FB0020B931 /* GameViewController.swift in Sources */,
 				4F11D7EA255351FB0020B931 /* AppDelegate.swift in Sources */,
 				4F726FF9255CD16E004376C5 /* GameOver.swift in Sources */,
@@ -704,7 +704,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.parkercoop.gardenwars;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -724,7 +724,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.parkercoop.gardenwars;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

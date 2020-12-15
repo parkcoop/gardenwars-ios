@@ -8,8 +8,8 @@ class GardenerComponent: GKComponent {
     var currentItem: String? = nil
     var game: GamePlay?
     
-    var knockOutSound = SKAction.playSoundFileNamed(fileName: "knockout.wav", atVolume: masterEffectsVolume, waitForCompletion: false)
-    var electrocutionSound = SKAction.playSoundFileNamed(fileName: "electrocute.mp3", atVolume: masterEffectsVolume, waitForCompletion: false)
+    var knockOutSound = SKAction.playSoundFileNamed(fileName: "knockout.wav", atVolume: 0.25, waitForCompletion: false)
+    var electrocutionSound = SKAction.playSoundFileNamed(fileName: "electrocute.mp3", atVolume: 0.25, waitForCompletion: false)
     
     override init() {
         super.init()
@@ -26,6 +26,8 @@ class GardenerComponent: GKComponent {
             
             if let game = game {
                 if (health <= 0) {
+                    spriteComponent.node.color = .red
+
                     if game.firstDeath == nil {
                         if (entity?.component(ofType: EnemyAgentComponent.self) != nil) {
                             game.firstDeath = 2
@@ -33,10 +35,15 @@ class GardenerComponent: GKComponent {
                             game.firstDeath = 1
                         }
                     }
-
+                    if let enemyAgent = entity?.component(ofType: EnemyAgentComponent.self) {
+                        game.agentSystem?.removeComponent(enemyAgent.agent)
+                    }
+                    if let animation = entity?.component(ofType: MovementComponent.self) {
+                        animation.faceForward()
+                    }
                     if let physicsBody = entity?.component(ofType: PhysicsComponent.self) {
                         physicsBody.physicsBody.pinned = true
-                        spriteComponent.node.run(SKAction.colorize(with: .red, colorBlendFactor: 1, duration: 1))
+  
                     }
                 }
                 
@@ -50,12 +57,13 @@ class GardenerComponent: GKComponent {
                 }
                 if (spriteComponent.node.calculateAccumulatedFrame().intersects(game.thunder.frame)),
                    game.childNode(withName: "thunder") !== nil {
-                    if (health == 25) {
+                    if (health == 20),
+                       effectsEnabled {
                         game.run(knockOutSound)
                     }
-                    self.takeDamage(healthPoints: 25)
+                    self.takeDamage(healthPoints: 20)
                     game.thunder.removeFromParent()
-                    game.run(electrocutionSound)
+                    if effectsEnabled { game.run(electrocutionSound) }
                 }
                 
                 if (spriteComponent.node.frame.intersects(game.sun.frame)),
@@ -63,6 +71,7 @@ class GardenerComponent: GKComponent {
                    self.health != 0 {
                     self.grabItem(item: "sun")
                     game.sun.removeFromParent()
+                    game.agentSystem?.removeComponent(game.sunAgent)
                     if (entity?.component(ofType: EnemyAgentComponent.self) != nil) {
                         game.enemyStateMachine.enter(HoldingItemState.self)
                     }
@@ -75,6 +84,7 @@ class GardenerComponent: GKComponent {
                    self.health != 0 {
                     self.grabItem(item: "water")
                     game.water.removeFromParent()
+                    game.agentSystem?.removeComponent(game.waterAgent)
                     if (entity?.component(ofType: EnemyAgentComponent.self) != nil) {
                         game.enemyStateMachine.enter(HoldingItemState.self)
                     }

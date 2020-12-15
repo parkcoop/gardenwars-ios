@@ -5,7 +5,10 @@ import GameKit
 import AVFoundation
 
 
-var backgroundMusicPlayer: AVAudioPlayer!
+var backgroundMusicPlayer = AVAudioPlayer()
+//backgroundMusicPlayer.volume = 0.25
+
+var musicVolume: Float = 0.25
 let menuTheme = Bundle.main.url(forResource: "menutheme", withExtension: "wav")!
 let mainTheme = Bundle.main.url(forResource: "yellowcopter", withExtension: "wav")!
 let finishTheme = Bundle.main.url(forResource: "yellowcopter-sting", withExtension: "wav")!
@@ -24,7 +27,7 @@ func playMenuTheme() {
     do {
         backgroundMusicPlayer = try AVAudioPlayer(contentsOf: menuTheme)
         backgroundMusicPlayer.numberOfLoops = 250
-        backgroundMusicPlayer.volume = 0.05
+        backgroundMusicPlayer.volume = musicVolume
 //        backgroundMusicPlayer.currentTime = TimeInterval(2)
         backgroundMusicPlayer.play()
 
@@ -38,7 +41,7 @@ func playBackgroundMusic() {
     do {
         backgroundMusicPlayer = try AVAudioPlayer(contentsOf: mainTheme)
         backgroundMusicPlayer.numberOfLoops = 5
-        backgroundMusicPlayer.volume = 0.05
+        backgroundMusicPlayer.volume = musicVolume
 //        backgroundMusicPlayer.currentTime = TimeInterval(2)
         backgroundMusicPlayer.play()
 
@@ -52,7 +55,7 @@ func playStinger() {
     do {
         backgroundMusicPlayer = try AVAudioPlayer(contentsOf: finishTheme)
         backgroundMusicPlayer.numberOfLoops = 0
-        backgroundMusicPlayer.volume = 0.05
+        backgroundMusicPlayer.volume = musicVolume
         backgroundMusicPlayer.play()
 
     }
@@ -72,7 +75,7 @@ class GameManager {
     
     enum SceneType {
         case MainMenu,
-             Gameplay,
+             Level1,
              Level2,
              Level3,
              GameOver
@@ -124,7 +127,7 @@ class GameManager {
         case SceneType.MainMenu:
             playMenuTheme()
             return MainMenu(size: CGSize(width: ScreenSize.width, height: ScreenSize.height))
-        case SceneType.Gameplay:
+        case SceneType.Level1:
             gameTimer = 0
             timesecond = 0
             playBackgroundMusic()

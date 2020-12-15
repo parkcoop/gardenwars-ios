@@ -21,7 +21,6 @@ class EnemyAgentComponent: GKComponent, GKAgentDelegate {
     
     override init() {
         agent = GKAgent2D()
-
         super.init()
 
     }
@@ -29,7 +28,6 @@ class EnemyAgentComponent: GKComponent, GKAgentDelegate {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     func agentDidUpdate(_ agent: GKAgent) {
         if let agent = agent as? GKAgent2D  {
@@ -50,19 +48,13 @@ class EnemyAgentComponent: GKComponent, GKAgentDelegate {
             }
         }
     }
-    //// MARK: `lol` omg
-    func getPosition() -> vector_float2 {
-        let position = node.position
-        
-        return vector_float2(Float(position.x), Float(position.y))
-    }
     
     func setUpAgent(with goals: [GKGoal]) -> GKAgent2D {
-        let behavior = GKBehavior(goals: goals, andWeights: [15, 10, 5, 1])
+        let behavior = GKBehavior(goals: goals, andWeights: [15, 10, 5])
         agent.behavior = behavior
         let position = node.position
         agent.maxSpeed = Float(enemyTopSpeed)
-        agent.maxAcceleration = Float(Double(enemyTopSpeed) * 0.5)
+        agent.maxAcceleration = Float(Double(enemyTopSpeed) * 0.1)
         
         agent.radius = 100
         agent.position = vector_float2(Float(position.x), Float(position.y))

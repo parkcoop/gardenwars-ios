@@ -11,7 +11,7 @@ class EnemyGardener: GKEntity, GKAgentDelegate {
         
         let spriteComponent = SpriteComponent(texture: SKTexture(imageNamed: imageName), size: playerSpriteSize)
         let xRange = SKRange(lowerLimit: spriteComponent.node.size.width * 0.5, upperLimit: ScreenSize.width - spriteComponent.node.size.width * 0.5)
-        let yRange = SKRange(lowerLimit: spriteComponent.node.size.height * 0.75, upperLimit: ScreenSize.height - spriteComponent.node.size.height)
+        let yRange = SKRange(lowerLimit: spriteComponent.node.size.height * 0.75, upperLimit: ScreenSize.height * 0.7)
         spriteComponent.node.constraints = [SKConstraint.positionX(xRange, y: yRange)]
         
         addComponent(spriteComponent)

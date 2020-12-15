@@ -13,8 +13,9 @@ var gameTimer: Int = Int()
 var timesecond = Int()
 var displayTime: String = "00:00"
 
-var masterMusicVolume: Float = 0.25
-var masterEffectsVolume: Float = 0.25
+var musicEnabled = true
+
+var effectsEnabled = true
 
 class GameViewController: UIViewController {
     
