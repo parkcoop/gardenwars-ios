@@ -13,7 +13,7 @@ class GameOver: SKScene {
         let displayText = player1Wins > player2Wins ? "Well done, gardener." : "Robot gardeners will take over."
         let endGameLabel: SKLabelNode = SKLabelNode(text: displayText)
         
-        let creditText = "Created by Parker Cooper | Artwork by Andriw Tapanes"
+        let creditText = "Created by Parker Cooper | Artwork by Michelle Hey & Andrew T."
         let creditLabel = SKLabelNode(text: creditText)
         creditLabel.fontName = systemFont
         creditLabel.fontSize = 12

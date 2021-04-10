@@ -181,15 +181,19 @@ class MainMenu: SKScene {
                     default:
                         return
                     }
+                    return
                 } else {
                     if node.name == "settings" {
                         openSettingsMenu()
+                        break
                     }
                     if playerNames.contains(node.name ?? "") {
+                        if settingsMenuOpened {return}
                         choosePlayerAnimation(player: node.name!)
                         choosePlayerAndSetRandomEnemy(player: node.name!)
                         walkAnimation(node)
                         showChooseDifficulty()
+                        break
                     }
                     if node.name == "easy" {
                         enemyTopSpeed = 125
@@ -231,7 +235,7 @@ class MainMenu: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if menuPhase == 1 {
+        if menuPhase == 1 && !settingsMenuOpened {
             showChooseCharacter()
         }
         
