@@ -16,7 +16,7 @@ class MainMenu: SKScene {
     var chooseCharacter = SKNode()
     var chooseDifficulty = SKNode()
     
-    let playerNames = ["parker", "enemy", "flowergirl", "darla"]
+    let playerNames = ["parker", "enemy", "flowergirl", "darla", "michelle"]
     
     private var chosenPlayerLeftFrames: [SKTexture] = []
     private var chosenPlayerRightFrames: [SKTexture] = []
@@ -55,23 +55,28 @@ class MainMenu: SKScene {
         let parker = SKSpriteNode(imageNamed: "image/parker5")
         let enemy = SKSpriteNode(imageNamed: "image/enemy5")
         let darla = SKSpriteNode(imageNamed: "image/darla5")
+        let michelle = SKSpriteNode(imageNamed: "image/michelle5")
         let flowerGirl = SKSpriteNode(imageNamed: "image/flowergirl5")
         
         chooseCharacter.addChild(parker)
-        parker.position = CGPoint(x: ScreenSize.width * 0.15, y: ScreenSize.height * 0.4)
+        parker.position = CGPoint(x: ScreenSize.width * 0.125, y: ScreenSize.height * 0.4)
         parker.name = playerNames[0]
         
         chooseCharacter.addChild(enemy)
-        enemy.position = CGPoint(x: ScreenSize.width * 0.385, y: ScreenSize.height * 0.4)
+        enemy.position = CGPoint(x: ScreenSize.width * 0.315, y: ScreenSize.height * 0.4)
         enemy.name = playerNames[1]
         
         chooseCharacter.addChild(flowerGirl)
-        flowerGirl.position = CGPoint(x: ScreenSize.width * 0.615, y: ScreenSize.height * 0.4)
+        flowerGirl.position = CGPoint(x: ScreenSize.width * 0.5, y: ScreenSize.height * 0.4)
         flowerGirl.name = playerNames[2]
         
         chooseCharacter.addChild(darla)
-        darla.position = CGPoint(x: ScreenSize.width * 0.85, y: ScreenSize.height * 0.4)
+        darla.position = CGPoint(x: ScreenSize.width * 0.685, y: ScreenSize.height * 0.4)
         darla.name = playerNames[3]
+        
+        chooseCharacter.addChild(michelle)
+        michelle.position = CGPoint(x: ScreenSize.width * 0.875, y: ScreenSize.height * 0.4)
+        michelle.name = playerNames[4]
         
         addChild(chooseCharacter)
         

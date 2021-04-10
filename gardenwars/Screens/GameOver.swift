@@ -6,9 +6,9 @@ class GameOver: SKScene {
     
     override func didMove(to view: SKView) {
        
-        if player1Wins > player2Wins {
+//        if player1Wins > player2Wins {
             submitScore()
-        }
+//        }
         
         let displayText = player1Wins > player2Wins ? "Well done, gardener." : "Robot gardeners will take over."
         let endGameLabel: SKLabelNode = SKLabelNode(text: displayText)
@@ -36,7 +36,7 @@ class GameOver: SKScene {
     func submitScore() {
         if #available(iOS 14, *) {
             if GKLocalPlayer.local.isAuthenticated {
-                leaderboard.submitScore(gameTimer, context: 1, player: GKLocalPlayer.local) { (error) in
+                leaderboard.submitScore(gameTimer, context: 0, player: GKLocalPlayer.local) { (error) in
                     if error != nil {
                         print(error!)
                     }
